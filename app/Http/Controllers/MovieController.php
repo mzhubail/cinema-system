@@ -17,6 +17,14 @@ class MovieController extends Controller
     }
   }
 
+  /** Converts duration from number of minutes to hh:mm format */
+  function minutesToDuration(int $minutes): string
+  {
+    $h = $minutes / 60;
+    $m = $minutes % 60;
+    return sprintf("%02d:%02d", $h, $m);
+  }
+
   public function show_add_movie()
   {
     return view('add_movie');
@@ -27,7 +35,9 @@ class MovieController extends Controller
     // Add image validation
     $input = $request->all();
     $input['duration'] = self::durationToSeconds($input['duration']);
-    $input['imgPath'] = $request->file('poster-img')->store('posters');
+    $input['imgPath'] = $request
+      ->file('poster-img')
+      ->storePublicly('posters');
     Movie::create($input);
     return view(
       'add_movie',
@@ -35,6 +45,24 @@ class MovieController extends Controller
         'message' => [
           'content' => 'Image uploaded successfully'
         ]
+      ]
+    );
+  }
+
+  public function show(Request $request)
+  {
+    if (!$request->has('id'))
+      die("no image id was given");
+    $movie =
+      Movie::where('id', $request->id)
+      ->first();
+    if ($movie === null)
+      die("No movie was found");
+    return view(
+      'movie_details',
+      [
+        'movie' => $movie,
+        'formatted_duration' => self::minutesToDuration($movie->duration),
       ]
     );
   }
