@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,8 @@ Route::match(["get", "post"], '/test', function (Request $request) {
     );
 });
 
-Route::get('/login', [LoginController::class, 'show']);
+Route::get('/login', [LoginController::class, 'show'])
+    ->name("login");
 // Route::get('/login', function () { return (new LoginController())->show(); } );
 Route::post('/login', [LoginController::class, 'store']);
 // Route::post('/login', 'LoginController@login');
@@ -40,3 +43,12 @@ Route::post('/login', [LoginController::class, 'store']);
 //     print_r($request->all());
 //     die();
 // });
+
+Route::resource('customer', CustomerController::class)
+    ->only(['index', 'store']);
+
+
+Route::view('test_show_user_template', 'show_user');
+
+Route::get('/register', [RegisterController::class, 'show']);
+Route::post('/register', [RegisterController::class, 'register']);
