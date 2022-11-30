@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,6 @@ Route::view('test_show_user_template', 'show_user');
 
 Route::get('/register', [RegisterController::class, 'show']);
 Route::post('/register', [RegisterController::class, 'register']);
+
+Route::get('/add_movie', [MovieController::class, 'show_add_movie']);
+Route::post('/add_movie', [MovieController::class, 'store']);
