@@ -18,9 +18,9 @@ use App\Http\Controllers\MovieController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::match(["get", "post"], '/test', function (Request $request) {
     // $request->session()->flush();
@@ -38,7 +38,7 @@ Route::match(["get", "post"], '/test', function (Request $request) {
 Route::get('/login', [LoginController::class, 'show'])
     ->name("login");
 // Route::get('/login', function () { return (new LoginController())->show(); } );
-Route::post('/login', [LoginController::class, 'store']);
+Route::post('/login', [LoginController::class, 'login']);
 // Route::post('/login', 'LoginController@login');
 // Route::post('/login', function(Request $request) {
 //     print_r($request->all());
@@ -60,3 +60,22 @@ Route::post('/add_movie', [MovieController::class, 'store']);
 Route::get('/movie_details', [MovieController::class, 'show']);
 
 Route::get('/browse_movies', [MovieController::class, 'browse']);
+
+Route::get('/', function () {
+    if (session()->has('isAdmin')) {
+        return session("isAdmin") ?
+            view('home.admin') :
+            view('home.customer');
+    } else {
+        return redirect('login');
+    }
+});
+
+Route::any('view_session', function () {
+    dd(session()->all());
+});
+
+Route::get('/logout', function () {
+    session()->flush();
+    return redirect('login');
+});

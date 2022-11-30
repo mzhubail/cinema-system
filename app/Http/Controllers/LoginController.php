@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\http\Request;
 
 class LoginController extends Controller
@@ -17,59 +18,42 @@ class LoginController extends Controller
     return view('login');
   }
 
-  public function store(Request $request)
+  public function login()
   {
-    try {
-      $db = new \PDO(
-        'mysql:host=localhost;dbname=tmp0;charset=utf8',
-        'root',
-        ''
-      );
-      $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    $request = request();
 
-      $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
-      $query = $db->prepare("SELECT hash, id FROM `users` WHERE email=?");
-
-      $status = $query->execute([
-        $_POST["email"]
-      ]);
-      if ($query->rowCount() === 0) {
-        die("Email not found");
+    foreach (config('admin_credentials') as $id => list($email, $hash)) {
+      if (
+        $request->email == $email &&
+        password_verify($request->password, $hash)
+      ) {
+        session([
+          'userId' => $id,
+          'isAdmin' => true,
+        ]);
+        return redirect('/');
       }
-
-      $row = $query->fetch();
-      $hash = $row->hash;
-
-      $flag = password_verify($_POST["password"], $hash);
-
-      // TODO: set 'isAdmin' to indicate whether the user is an admin or customer
-      if ($flag) {
-        // session_start();
-        // $_SESSION['userId'] = $row->id;
-      }
-      // TODO: Redirect to home page when users signs in
-      // return view("login");
-      echo $flag ? "success" : "failure";
-    } catch (\PDOException $e) {
-      die($e->getMessage());
     }
-    // print_r($request->getContent());
-    // print_r($request->query('email'));
-    // dd($request->getContent());
-    // dd($request->all());
-    // die();
-    // if ($request->collect()->isEmpty())
-    //   die("no input was given");
-    // print_r(Request::input("email"));
-    // dd($request->only("email", "password"));
-    // dd(request()->all());
-    // request()->input(
-    // die();
-    // print_r($request == request() ? "y" : "n");
-    // dd($request, request());
-    // die();
-    // return view("test_view")
-    //   ->with("r", request());
-    // return view("test_view", ["r" => request()]);
+
+    $customer = Customer::select('id', 'hash')
+      ->where('email', $request->email)
+      ->first();
+
+    if ($customer === null)
+      die("Email doesn't exist");
+
+    if (!password_verify(
+      password: $request->password,
+      hash: $customer->hash
+    )) {
+      die("invalid passsword");
+    }
+
+    session([
+      'userId' => $customer->id,
+      'isAdmin' => false,
+    ]);
+
+    return redirect('/');
   }
 }

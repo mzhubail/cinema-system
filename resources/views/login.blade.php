@@ -4,6 +4,7 @@
 
 @section('main')
   <form action="" method="post" class="container" style="max-width: var(--breakpoint-md);">
+    @csrf
     <div class="card">
       <h4 class="card-header">Login</h4>
       <div class="card-body">

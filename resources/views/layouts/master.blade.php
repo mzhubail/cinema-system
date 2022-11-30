@@ -56,7 +56,7 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a href="logout.php" class="nav-link">Log Out</a>
+          <a href="logout" class="nav-link">Log Out</a>
         </li>
         <li class="nav-item">
           <!-- <a href="#" class="nav-link"><i class="bi bi-person-circle"></i></a> -->
