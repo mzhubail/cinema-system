@@ -16,7 +16,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="rYear-input">Release year</label>
-              <input class="form-control" type="number" name="releaseYear" id="rYear-input">
+              <input class="form-control" type="number" name="release-year" id="rYear-input">
             </div>
           </div>
           <div class="form-row">

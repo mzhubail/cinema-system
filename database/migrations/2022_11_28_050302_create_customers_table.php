@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string("email");
             $table->date("birthday");
             $table->string("hash", 255);
-            $table->integer("credit");
+            $table->integer("credit")
+                ->default(0);
+
             $table->timestamps();
 
             $table->unique("email");

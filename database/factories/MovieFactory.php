@@ -21,13 +21,13 @@ class MovieFactory extends Factory
             // 'id' => fake()->unique()->randomNumber(nbDigits: 100, strict: false),
             // 'id' => self::$currentId++,
             'title' => fake()->realText('32'),
-            'releaseYear' => fake()->year(),
+            'release_year' => fake()->year(),
             'lang' => fake()->randomElement(["ar", "en", "hu"]),
             'duration' => fake()->numberBetween(0, 180),
             'rating' => fake()->randomFloat(1, 0, 10),
             'genre' => fake()->randomElement(config('constants.genres')),
             'desc' => fake()->realText(maxNbChars: 400),
-            'imgPath' => fake()->randomElement(Storage::files('posters')),
+            'img_path' => fake()->randomElement(Storage::files('posters')),
         ];
     }
     private static $currentId = 1;

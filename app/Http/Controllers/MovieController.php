@@ -35,7 +35,7 @@ class MovieController extends Controller
     // Add image validation
     $input = $request->all();
     $input['duration'] = self::durationToSeconds($input['duration']);
-    $input['imgPath'] = $request
+    $input['img_path'] = $request
       ->file('poster-img')
       ->storePublicly('posters');
     Movie::create($input);
@@ -80,7 +80,7 @@ class MovieController extends Controller
     $header = [
       "id" => "ID",
       "title" => "Title",
-      "releaseYear" => "Release Year",
+      "release_year" => "Release Year",
       "lang" => "Language",
       "duration" => "Duration",
       "rating" => "Rating",

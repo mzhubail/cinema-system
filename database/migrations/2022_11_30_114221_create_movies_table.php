@@ -18,7 +18,7 @@ return new class extends Migration
       $table->id();
       $table->string('title');
       $table->integer(
-        'releaseYear',
+        'release_year',
         autoIncrement: false,
         unsigned: true
       );
@@ -38,7 +38,7 @@ return new class extends Migration
         config('constants.genres'),
       );
       $table->string('desc', 511);
-      $table->string('imgPath', 255);
+      $table->string('img_path', 255);
       $table->timestamps();
     });
     Movie::factory()->count(10)->create();

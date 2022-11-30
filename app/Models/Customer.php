@@ -36,7 +36,7 @@ class Customer extends Model
      *
      * @var array
      */
-    protected $attributes = [
-        'credit' => 0,
-    ];
+    // protected $attributes = [
+    //     'credit' => 0,
+    // ];
 }

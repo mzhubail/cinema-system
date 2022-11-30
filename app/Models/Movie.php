@@ -16,12 +16,12 @@ class Movie extends Model
      */
     protected $fillable = [
         'title',
-        'releaseYear',
+        'release_year',
         'lang',
         'duration',
         'rating',
         'genre',
         'desc',
-        'imgPath',
+        'img_path',
     ];
 }
