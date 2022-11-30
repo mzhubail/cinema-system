@@ -26,7 +26,7 @@
 <body>
 
   <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="index.php">Navbar</a>
+    <a class="navbar-brand" href="/">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -73,13 +73,16 @@
     </div>
   </nav>
 
-@isset($message)
-        <header>
-          <div class="alert alert-primary border text-center" role="alert">
-            {{ $message['content'] }}
-          </div>
-        </header>
-@endisset
+  @if (session()->has('message'))
+    <?php [$content, $code] = session('message'); ?>
+    <header>
+      <div class="alert alert-primary border text-center" role="alert">
+        {{ $content }}
+        {{-- {{ print_r(session('alert'), true); }} --}}
+        {{-- <?php dd(session('message')) ?> --}}
+      </div>
+    </header>
+  @endif
 
 
   {{-- <?php if ("" !== $this->alert_message) { ?>

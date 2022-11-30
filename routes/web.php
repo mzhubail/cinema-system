@@ -69,7 +69,8 @@ Route::get('/', function () {
     } else {
         return redirect('login');
     }
-});
+})
+->name('home');
 
 Route::any('view_session', function () {
     dd(session()->all());

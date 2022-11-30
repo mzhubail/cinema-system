@@ -39,14 +39,17 @@ class LoginController extends Controller
       ->where('email', $request->email)
       ->first();
 
-    if ($customer === null)
-      die("Email doesn't exist");
+    if ($customer === null) {
+      session()->flash('message', ["Email doesn't exist", "error"]);
+      return redirect()->back();
+    }
 
     if (!password_verify(
       password: $request->password,
       hash: $customer->hash
     )) {
-      die("invalid passsword");
+      session()->flash('message', ["Invalid password", "error"]);
+      return redirect()->back();
     }
 
     session([
