@@ -66,4 +66,26 @@ class MovieController extends Controller
       ]
     );
   }
+
+  public function browse()
+  {
+    $movies = Movie::get();
+    $header = [
+      "id" => "ID",
+      "title" => "Title",
+      "releaseYear" => "Release Year",
+      "lang" => "Language",
+      "duration" => "Duration",
+      "rating" => "Rating",
+      "genre" => "Genre"
+    ];
+
+    return view(
+      'browse_movies',
+      [
+        'movies' => $movies,
+        'header' => $header,
+      ]
+    );
+  }
 }

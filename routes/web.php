@@ -58,3 +58,5 @@ Route::get('/add_movie', [MovieController::class, 'show_add_movie']);
 Route::post('/add_movie', [MovieController::class, 'store']);
 
 Route::get('/movie_details', [MovieController::class, 'show']);
+
+Route::get('/browse_movies', [MovieController::class, 'browse']);
