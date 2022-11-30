@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,11 @@ Route::post('/add_movie', [MovieController::class, 'store']);
 Route::get('/movie_details', [MovieController::class, 'show']);
 
 Route::get('/browse_movies', [MovieController::class, 'browse']);
+
+Route::get('/add_branch', [BranchController::class, 'show_add']);
+Route::post('/add_branch', [BranchController::class, 'store']);
+
+Route::get('/browse_branches', [BranchController::class, 'browse']);
 
 Route::get('/', function () {
     if (session()->has('isAdmin')) {
