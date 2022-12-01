@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\HallController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,3 +87,9 @@ Route::get('/logout', function () {
     session()->flush();
     return redirect('login');
 });
+
+
+Route::get('/add_hall', [HallController::class, 'show_add']);
+Route::post('/add_hall', [HallController::class, 'store']);
+
+Route::get('/browse_halls', [HallController::class, 'browse']);

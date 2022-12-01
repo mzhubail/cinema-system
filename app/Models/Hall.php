@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class Hall extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,6 @@ class Branch extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'addr',
+        'letter',
     ];
-
-    /** Return the halls belonging to this branch */
-    public function halls() {
-        return $this->hasMany(Hall::class);
-    }
 }

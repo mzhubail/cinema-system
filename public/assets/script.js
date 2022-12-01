@@ -26,7 +26,7 @@ $(document).ready(() => {
 function timeSlotsTableHandler(e) {
   header = ["ID", "Branch Name", "Hall letter", "Date", "Time"];
   mid = e.target.value
-  $.getJSON(`ajax/get_time_slots.php?mid=${mid}`)
+  $.getJSON(`api/get_time_slots?mid=${mid}`)
     .done((data) => {
       if (data.length === 0) {
         // TODO: add message to be displayed in case no time slot exists
@@ -65,7 +65,7 @@ function timeSlotsTableHandler(e) {
  */
 function hallsSelectHandler(e) {
   bid = e.target.value
-  $.getJSON(`ajax/get_halls.php?bid=${bid}`)
+  $.getJSON(`api/get_halls?bid=${bid}`)
     .done((data) => {
       // Ensure halls exist
       if (data.length === 0) {
@@ -93,7 +93,7 @@ function hallsSelectHandler(e) {
 function hallsTableHandler(e) {
   header = ["ID", "Letter", ""];
   bid = e.target.value
-  $.getJSON(`ajax/get_halls.php?bid=${bid}`)
+  $.getJSON(`api/get_halls?bid=${bid}`)
     .done((data) => {
       // Ensure halls exist
       if (data.length === 0) {
@@ -118,7 +118,7 @@ function hallsTableHandler(e) {
         content += `<tr>
             <td> ${element.id} </td>
             <td> ${element.letter} </td>
-            <td> <a href="edit_hall.php?id=${element.id}"> Edit </a> </td>
+            <td> <a href="edit_hall?id=${element.id}"> Edit </a> </td>
           </tr>`
       });
       content += '</tbody> </table>'
