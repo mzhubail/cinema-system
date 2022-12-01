@@ -37,12 +37,16 @@ class HallController extends Controller
   {
     return view(
       'hall.browse',
-      ['branches' => Branch::get()]
+      [
+        'branches' => Branch::get(),
+        'branch_id' => $request->bid,
+      ]
     );
   }
 
-  public function show_halls(Request $request) {
-    if (! $request->has('bid'))
+  public function show_halls(Request $request)
+  {
+    if (!$request->has('bid'))
       die();
     $branch = Branch::find($request->bid);
     if ($branch === null)

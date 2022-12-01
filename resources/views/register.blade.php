@@ -44,7 +44,7 @@
             </label>
           </div>
         </div>
-        <div class="form-group">Already have an account? <a href="./login.php">Log in</a> </div>
+        <div class="form-group">Already have an account? <a href="./login">Log in</a> </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Sign in</button>
         </div>

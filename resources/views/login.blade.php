@@ -28,7 +28,7 @@
             </label>
           </div>
         </div>
-        <div class="form-group">Don't have an account yet? <a href="./register.php">Sign up</a> </div>
+        <div class="form-group">Don't have an account yet? <a href="./register">Sign up</a> </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Sign in</button>
         </div>

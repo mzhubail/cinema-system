@@ -12,6 +12,7 @@ $(document).ready(() => {
     .change(hallsSelectHandler)
   $("[data-ajax='fetch-halls-table']")
     .change(hallsTableHandler)
+    .change()
 
   $('.custom-file-input')
     .change(e => setFilename(e.target))

@@ -12,7 +12,7 @@
           <select class="form-control" id="branch-input" data-ajax="fetch-halls-table">
             <option hidden disabled selected value> -- Choose a branch -- </option>
             @foreach ($branches as $branch)
-              <option value="{{ $branch['id'] }}">
+              <option value="{{ $branch['id'] }}" @selected($branch['id'] == $branch_id)>
                 {{ $branch['name'] }}
               </option>
             @endforeach
