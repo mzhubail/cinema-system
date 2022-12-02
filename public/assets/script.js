@@ -6,13 +6,7 @@ newCell = s => newTag("td", s)
 // newCell = s => `<td> ${s} </td>`
 
 $(document).ready(() => {
-  $("[data-ajax='fetch-time-slots-table']")
-    .change(timeSlotsTableHandler)
-  $("[data-ajax='fetch-halls-select']")
-    .change(hallsSelectHandler)
-  $("[data-ajax='fetch-halls-table']")
-    .change(hallsTableHandler)
-    .change()
+  $("[onchange]").change()
 
   $('.custom-file-input')
     .change(e => setFilename(e.target))
@@ -26,7 +20,7 @@ $(document).ready(() => {
  */
 function timeSlotsTableHandler(e) {
   header = ["ID", "Branch Name", "Hall letter", "Date", "Time"];
-  mid = e.target.value
+  mid = e.value
   $.getJSON(`api/get_time_slots?mid=${mid}`)
     .done((data) => {
       if (data.length === 0) {
@@ -47,8 +41,8 @@ function timeSlotsTableHandler(e) {
         j = element
         content += `<tr>
             <td> ${element.id} </td>
-            <td> ${element.branchName} </td>
-            <td> ${element.hallLetter} </td>
+            <td> ${element.branch_name} </td>
+            <td> ${element.hall_letter} </td>
             <td> ${element.date} </td>
             <td> ${element.time} </td>
           </tr>`
@@ -65,7 +59,7 @@ function timeSlotsTableHandler(e) {
  * Used in add_time_slots.php to fetch halls and place them as options in #hall-input
  */
 function hallsSelectHandler(e) {
-  bid = e.target.value
+  bid = e.value
   $.getJSON(`api/get_halls?bid=${bid}`)
     .done((data) => {
       // Ensure halls exist
@@ -93,7 +87,8 @@ function hallsSelectHandler(e) {
 
 function hallsTableHandler(e) {
   header = ["ID", "Letter", ""];
-  bid = e.target.value
+  // bid = e.target.value
+  bid = e.value
   $.getJSON(`api/get_halls?bid=${bid}`)
     .done((data) => {
       // Ensure halls exist

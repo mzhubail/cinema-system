@@ -9,7 +9,7 @@
       <div class="form-group row">
         <label for="branch-input" class="col-form-label col-md-3"> Branch </label>
         <div class="col-md-9">
-          <select class="form-control" id="branch-input" data-ajax="fetch-halls-table">
+          <select class="form-control" id="branch-input" onchange="hallsTableHandler(this)">
             <option hidden disabled selected value> -- Choose a branch -- </option>
             @foreach ($branches as $branch)
               <option value="{{ $branch['id'] }}" @selected($branch['id'] == $branch_id)>

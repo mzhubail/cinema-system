@@ -19,7 +19,7 @@ class Branch extends Model
         'addr',
     ];
 
-    /** Return the halls belonging to this branch */
+    /** Returns the halls belonging to this branch */
     public function halls() {
         return $this->hasMany(Hall::class);
     }

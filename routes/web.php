@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\TimeSlotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,3 +94,10 @@ Route::get('/add_hall', [HallController::class, 'show_add']);
 Route::post('/add_hall', [HallController::class, 'store']);
 
 Route::get('/browse_halls', [HallController::class, 'browse']);
+
+
+Route::get('/add_time_slot', [TimeSlotController::class, 'show_add']);
+Route::post('/add_time_slot', [TimeSlotController::class, 'store']);
+
+Route::get('/browse_time_slots', [TimeSlotController::class, 'browse']);
+
