@@ -15,4 +15,5 @@
   <a class="btn btn-primary" href="./add_time_slot"> Add Time Slot </a>
   <br>
   <br>
+  <a class="btn btn-primary" href="/show_conflicts"> Show Time Slot conflicts </a>
 @endsection

@@ -100,4 +100,5 @@ Route::get('/add_time_slot', [TimeSlotController::class, 'show_add']);
 Route::post('/add_time_slot', [TimeSlotController::class, 'store']);
 
 Route::get('/browse_time_slots', [TimeSlotController::class, 'browse']);
+Route::get('/show_conflicts', [TimeSlotController::class, 'show_conflicts']);
 

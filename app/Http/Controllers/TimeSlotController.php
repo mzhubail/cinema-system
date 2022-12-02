@@ -124,6 +124,7 @@ class TimeSlotController extends Controller
     );
   }
 
+  // TOOD: perhaps add duration and/or end time
   public function show_time_slots(Request $request)
   {
     if (!$request->has('mid'))
@@ -149,6 +150,38 @@ class TimeSlotController extends Controller
     // return response()->json($halls_info);
     return response()->json(
       $query->get()
+    );
+  }
+
+  private static $conflict_query = <<<'SQL'
+    SELECT  tsA.id AS id_a,
+            tsB.id AS id_b,
+            tsA.hall_id AS hall_id,
+            mA.title AS title_a,
+            mB.title AS title_b,
+            mA.duration AS duration_a,
+            mB.duration AS duration_b,
+            tsA.start_time AS start_time_a,
+            tsB.start_time AS start_time_b,
+            ADDTIME(tsA.start_time, SEC_TO_TIME(mA.duration*60)) AS end_time_a,
+            ADDTIME(tsB.start_time, SEC_TO_TIME(mB.duration*60)) AS end_time_b
+    FROM    `time_slots` tsA, `time_slots` tsB,
+            `movies` mA, `movies` mB
+    WHERE   tsA.id < tsB.id
+    AND     tsA.movie_id = mA.id
+    AND     tsB.movie_id = mB.id
+    AND     tsA.hall_id = tsB.hall_id
+    AND     tsA.start_time < ADDTIME(tsB.start_time, SEC_TO_TIME(mB.duration*60))
+    AND     ADDTIME(tsA.start_time, SEC_TO_TIME(mA.duration*60)) > tsB.start_time
+    ORDER BY tsA.hall_id, tsA.start_time
+  SQL;
+
+  public function show_conflicts()
+  {
+    $conflicts = DB::select(self::$conflict_query);
+    return view(
+      'time_slot.show_conflict',
+      ['conflicts' => $conflicts]
     );
   }
 }
