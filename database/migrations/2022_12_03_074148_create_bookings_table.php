@@ -39,9 +39,13 @@ return new class extends Migration
       )->default('pending');
       $table->timestamps();
     });
-    Booking::factory()
-      ->count(100)
-      ->create();
+    for ($i = 0; $i < 50; $i++)
+      Booking::factory()
+        ->count(1)
+        ->create();
+    // Booking::factory()
+    //   ->count(100)
+    //   ->create();
   }
 
   /**

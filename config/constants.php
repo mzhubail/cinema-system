@@ -25,4 +25,5 @@ return [
     'canceled',
     'suspended',
   ],
+  'avoid_conflicts' => true,
 ];

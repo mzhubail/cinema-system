@@ -16,12 +16,14 @@ class BookingController extends Controller
   public function store(Request $request)
   {
     // dd($request->all());
-    self::has_conflict(
-      TimeSlot::find($request->time_slot_id),
-      $request->customer_id,
-      $request->row,
-      $request->seats_start,
-      $request->seats_end,
+    dd(
+      self::has_conflict(
+        TimeSlot::find($request->time_slot_id),
+        $request->customer_id,
+        $request->row,
+        $request->seats_start,
+        $request->seats_end,
+      )
     );
   }
 
