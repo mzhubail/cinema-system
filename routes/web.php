@@ -108,4 +108,8 @@ Route::get('/show_conflicts', [TimeSlotController::class, 'show_conflicts']);
 Route::get('/browse_bookings', [BookingController::class, 'browse']);
 Route::get('/show_booking_conflicts', [BookingController::class, 'show_conflicts']);
 
+// TODO: remove.  These are only intended for testing
+Route::get('/add_booking', [BookingController::class, 'show_add']);
+Route::post('/add_booking', [BookingController::class, 'store']);
+
 

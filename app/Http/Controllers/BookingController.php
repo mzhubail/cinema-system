@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+  public function show_add()
+  {
+    return view('booking.add');
+  }
+
+  public function store(Request $request)
+  {
+    // dd($request->all());
+    self::has_conflict(
+      TimeSlot::find($request->time_slot_id),
+      $request->customer_id,
+      $request->row,
+      $request->seats_start,
+      $request->seats_end,
+    );
+  }
+
   public function browse()
   {
   }
@@ -44,5 +62,22 @@ class BookingController extends Controller
     $conflicts = DB::select(self::$conflict_query);
     // dd($conflicts);
     return view('booking.conflict_table', ['conflicts' => $conflicts]);
+  }
+
+  public static function has_conflict(TimeSlot $time_slot, $customer_id, $row, $seats_start, $seats_end)
+  {
+    $query = $time_slot->bookings()
+      ->where('row', '=', $row)
+      ->whereRaw('seats_start <= ?', [$seats_end])
+      ->whereRaw('seats_end >= ?', [$seats_start]);
+    // dd(
+    //   $query,
+    //   $query->toSql(),
+    //   $query->get()->map(function ($item) {
+    //     return $item->attributesToArray();
+    //   }),
+    // );
+    // dd($query->count() !== 0);
+    return $query->count() !== 0;
   }
 }

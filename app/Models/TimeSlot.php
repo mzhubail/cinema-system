@@ -19,4 +19,9 @@ class TimeSlot extends Model
         'hall_id',
         'movie_id',
     ];
+
+    /** Returns the bookings belonging to this time_slot */
+    public function bookings() {
+        return $this->hasMany(Booking::class);
+    }
 }
