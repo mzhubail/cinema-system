@@ -14,4 +14,15 @@ return [
     'superhero',
     'adventure',
   ],
+  'payment_methods' => [
+    'paypal',
+    'apple-pay',
+    'benefit-pay',
+  ],
+  'booking_statuses' => [
+    'pending',
+    'complete',
+    'canceled',
+    'suspended',
+  ],
 ];

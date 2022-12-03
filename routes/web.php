@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
@@ -100,5 +101,11 @@ Route::get('/add_time_slot', [TimeSlotController::class, 'show_add']);
 Route::post('/add_time_slot', [TimeSlotController::class, 'store']);
 
 Route::get('/browse_time_slots', [TimeSlotController::class, 'browse']);
+// TODO: fix route link
 Route::get('/show_conflicts', [TimeSlotController::class, 'show_conflicts']);
+
+
+Route::get('/browse_bookings', [BookingController::class, 'browse']);
+Route::get('/show_booking_conflicts', [BookingController::class, 'show_conflicts']);
+
 
