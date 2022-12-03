@@ -9,14 +9,16 @@
       border-right: 2px solid #dee2e6;
     }
 
-    tr :nth-child(5) {
+    tr :nth-child(6) {
       border-right: 2px solid #dee2e6;
     }
   </style>
 @endsection
 
 @section('main')
-  @isset($conflicts)
+  @empty($conflicts)
+    <h4>No Time Slot conflicts where found</h4>
+  @else
     <div class="card">
       <h4 class="card-header"> Time Slot Conflicts </h4>
       <div class="card-body">
@@ -30,6 +32,7 @@
                     <th> Time Slot ID </th>
                     <th> Movie Title </th>
                     <th> Start Time </th>
+                    <th> Duration </th>
                     <th> End Time </th>
                   @endforeach
                 </tr>
@@ -44,10 +47,12 @@
                     <td> {{ $conflict->id_a }} </td>
                     <td> {{ $conflict->title_a }} </td>
                     <td> {{ $conflict->start_time_a }} </td>
+                    <td> {{ $conflict->duration_a }} </td>
                     <td> {{ $conflict->end_time_a }} </td>
                     <td> {{ $conflict->id_b }} </td>
                     <td> {{ $conflict->title_b }} </td>
                     <td> {{ $conflict->start_time_b }} </td>
+                    <td> {{ $conflict->duration_b }} </td>
                     <td> {{ $conflict->end_time_b }} </td>
                   </tr>
                 @endforeach
@@ -57,7 +62,5 @@
         </div>
       </div>
     </div>
-  @else
-    <h4>No conflicts where found</h4>
-  @endisset
+  @endempty
 @endsection

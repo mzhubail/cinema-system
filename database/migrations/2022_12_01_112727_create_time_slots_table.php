@@ -22,9 +22,9 @@ return new class extends Migration
       $table->foreignIdFor(Movie::class);
       $table->timestamps();
     });
-    TimeSlot::factory()
-      ->count(50)
-      ->create();
+    for ($i = 0; $i < 50; $i++)
+      TimeSlot::factory()
+        ->create();
   }
 
   /**

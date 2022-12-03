@@ -15,6 +15,7 @@ class TimeSlotController extends Controller
 {
   // TODO: make proper use of `has_conflict`
   // TODO: maybe use `whereRaw`
+  // TODO: cleanup
   public static function has_conflict(Hall $hall, DateTimeImmutable $start_time, $duration)
   {
     // Hall::where('
@@ -48,12 +49,11 @@ class TimeSlotController extends Controller
       //     ->take(1)
       // ])
       // ->whereBetween('time', [$day, $next_day]);
-      ->whereDay('start_time', $start_time)
-      ->whereDate('created_at', '2016-12-31')
-      ->where('start_time', '<', $endTime)
+      // ->whereDay('start_time', $start_time)
+      ->where('start_time', '<=', $endTime)
       ->where(
         DB::raw('ADDTIME(start_time, SEC_TO_TIME(duration * 60))'),
-        '>',
+        '>=',
         $start_time
       )
       ->select([
@@ -63,7 +63,7 @@ class TimeSlotController extends Controller
       ])
       // ->withCasts(['endTime' => 'DateTime' ])
     ;
-    $query->dd();
+    // $query->dd();
     // $query->dd();
     // dd(
     //   $query,
@@ -75,7 +75,8 @@ class TimeSlotController extends Controller
     //   $start_time,
     //   $endTime,
     // );
-    dd($query->count() !== 0);
+    // dd($query->count() !== 0);
+    return $query->count() !== 0;
   }
 
   public function show_add()
@@ -100,11 +101,15 @@ class TimeSlotController extends Controller
     //   Hall::find($request->hid)
     // );
 
-    // self::has_conflict(
-    //   Hall::find($request->hid),
-    //   new DateTimeImmutable($datetime),
-    //   Movie::find($request->mid)->duration,
-    // );
+    if (self::has_conflict(
+      Hall::find($request->hid),
+      new DateTimeImmutable($datetime),
+      Movie::find($request->mid)->duration,
+    )) {
+      session()->flash('message', ["Conflict!", "error"]);
+      return redirect()->refresh();
+    }
+    return;
 
     $time_slot = new TimeSlot();
     $time_slot->start_time = new DateTimeImmutable($request->date . " " . $request->time);

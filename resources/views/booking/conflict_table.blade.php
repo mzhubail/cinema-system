@@ -7,14 +7,19 @@
     .custom-alignment {
       text-align: center !important;
     }
+
     .custom-alignment th {
       vertical-align: middle !important;
     }
   </style>
 @endsection
 
+{{-- TODO: Consider a better format for table.  Display conflicting records one
+  under the other instead of side by side --}}
 @section('main')
   @empty($conflicts)
+    <h4>No booking conflicts where found</h4>
+  @else
     <div class="card">
       <h4 class="card-header"> Booking Conflicts </h4>
       <div class="card-body">
@@ -58,8 +63,5 @@
         </div>
       </div>
     </div>
-  @else
-    <h4>No booking conflicts where found</h4>
   @endempty
 @endsection
-

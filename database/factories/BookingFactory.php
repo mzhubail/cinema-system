@@ -30,6 +30,7 @@ class BookingFactory extends Factory
     } while (
       config('constants.avoid_conflicts') &&
       BookingController::has_conflict(
+        // TODO: cleaner way of accessing both the model and its id
         TimeSlot::find($time_slot_id)->first(),
         $customer_id,
         $row,

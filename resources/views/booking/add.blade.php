@@ -1,3 +1,4 @@
+// TODO: perhaps rename this
 @extends('layouts.master')
 
 @section('title', '')
