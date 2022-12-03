@@ -14,6 +14,7 @@ use Ramsey\Uuid\Type\Time;
 class TimeSlotController extends Controller
 {
   // TODO: make proper use of `has_conflict`
+  // TODO: maybe use `whereRaw`
   public static function has_conflict(Hall $hall, DateTimeImmutable $start_time, $duration)
   {
     // Hall::where('

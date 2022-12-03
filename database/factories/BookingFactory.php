@@ -27,13 +27,16 @@ class BookingFactory extends Factory
       $row = fake()->numberBetween(0, 7);
 
       $ts = TimeSlot::find($time_slot_id);
-    } while (BookingController::has_conflict(
-      TimeSlot::find($time_slot_id)->first(),
-      $customer_id,
-      $row,
-      $seats_start,
-      $seats_end,
-    ));
+    } while (
+      config('constants.avoid_conflicts') &&
+      BookingController::has_conflict(
+        TimeSlot::find($time_slot_id)->first(),
+        $customer_id,
+        $row,
+        $seats_start,
+        $seats_end,
+      )
+    );
 
     return [
       'payment_method' => fake()->randomElement(config('constants.payment_methods')),

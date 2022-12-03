@@ -14,7 +14,7 @@
 @endsection
 
 @section('main')
-  @isset($conflicts)
+  @empty($conflicts)
     <div class="card">
       <h4 class="card-header"> Booking Conflicts </h4>
       <div class="card-body">
@@ -59,7 +59,7 @@
       </div>
     </div>
   @else
-    <h4>No conflicts where found</h4>
-  @endisset
+    <h4>No booking conflicts where found</h4>
+  @endempty
 @endsection
 

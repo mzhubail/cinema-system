@@ -1,3 +1,4 @@
+{{-- TODO: rename to conflict.blade.php --}}
 @extends('layouts.master')
 
 @section('title', 'Browse Branches')

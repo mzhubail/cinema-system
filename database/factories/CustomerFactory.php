@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
         // $pass = fake()->password(minLength: 8, maxLength: 10);
         // $pass = fake()->realText(maxNbChars: 10);
         // self::$passwords[] = $pass;
-        $fName = fake()->firstName();
+        $fName = fake()->unique()->firstName();
         return [
             //
             "fName" => $fName,
