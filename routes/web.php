@@ -10,6 +10,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\TimeSlotController;
+use App\Models\Booking;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,4 +113,5 @@ Route::get('/show_booking_conflicts', [BookingController::class, 'show_conflicts
 Route::get('/add_booking', [BookingController::class, 'show_add']);
 Route::post('/add_booking', [BookingController::class, 'store']);
 
-
+Route::get('/choose_seats', [BookingController::class, 'seats_picker_user']);
+Route::post('/choose_seats', [BookingController::class, 'recieve_seats']);

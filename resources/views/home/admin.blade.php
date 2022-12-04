@@ -16,4 +16,7 @@
   <br>
   <br>
   <a class="btn btn-primary" href="/show_conflicts"> Show Time Slot conflicts </a>
+  <br>
+  <br>
+  <a class="btn btn-primary" href="/show_seats"> Show Seats </a>
 @endsection

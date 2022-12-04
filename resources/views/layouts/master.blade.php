@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   {{-- <?= $this->meta ?> --}}
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- <link href="/static/favicon.ico" rel="icon"> -->
 
   <!-- Bootstrap CSS -->
@@ -78,7 +79,7 @@
       <div class="alert alert-primary border text-center" role="alert">
         {{ $content }}
         {{-- {{ print_r(session('alert'), true); }} --}}
-        {{-- <?php dd(session('message')) ?> --}}
+        {{-- <?php dd(session('message')); ?> --}}
       </div>
     </header>
   @endif
@@ -108,9 +109,8 @@ Data provided for free by <a href="https://iextrading.com/developer">IEX</a>. Vi
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
     integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
   <script src="assets/script.js"></script>
-  {{-- <?php
-  $this->script();
-  ?> --}}
+
+  @yield('script')
 </body>
 
 </html>

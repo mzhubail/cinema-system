@@ -82,4 +82,14 @@ class BookingController extends Controller
     // dd($query->count() !== 0);
     return $query->count() !== 0;
   }
+
+  public function seats_picker_user()
+  {
+    return view('booking.seats_picker_user');
+  }
+
+  public function recieve_seats(Request $request)
+  {
+    dd($request->all());
+  }
 }
