@@ -19,34 +19,13 @@ class BookingFactory extends Factory
    */
   public function definition()
   {
-    do {
-      $seats_start = fake()->numberBetween(0, 29);
-      $seats_end = fake()->numberBetween($seats_start, 29);
-      $time_slot_id = fake()->randomElement(TimeSlot::select('id')->get());
-      $customer_id = fake()->randomElement(Customer::select('id')->get());
-      $row = fake()->numberBetween(0, 7);
-
-      $ts = TimeSlot::find($time_slot_id);
-    } while (
-      false
-      // config('constants.avoid_conflicts') &&
-      // BookingController::has_conflict(
-      //   // TODO: cleaner way of accessing both the model and its id
-      //   TimeSlot::find($time_slot_id)->first(),
-      //   $customer_id,
-      //   $row,
-      //   $seats_start,
-      //   $seats_end,
-      // )
-    );
+    $time_slot_id = fake()->randomElement(TimeSlot::select('id')->get());
+    $customer_id = fake()->randomElement(Customer::select('id')->get());
 
     return [
       'payment_method' => fake()->randomElement(config('constants.payment_methods')),
       'time_slot_id' => $time_slot_id,
       'customer_id' => $customer_id,
-      // 'row' => $row,
-      // 'seats_start' => $seats_start,
-      // 'seats_end' => $seats_end,
     ];
   }
 }

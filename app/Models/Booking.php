@@ -22,4 +22,14 @@ class Booking extends Model
     'seats_start',
     'seats_end',
   ];
+
+  public function time_slot()
+  {
+    return $this->belongsTo(TimeSlot::class);
+  }
+
+  public function seats()
+  {
+    return $this->hasMany(Seats::class);
+  }
 }
