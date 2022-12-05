@@ -33,14 +33,12 @@
     $states = ['', '', '', '', '', '', '', '', '', '', 'selected', 'occupied'];
   @endphp
   <div class="plane">
-    {{-- <div class="screen"></div>
-    <p>Screen</p> --}}
+    {{-- TODO: add screen --}}
 
     <div id="rows-container">
       @foreach (range('A', 'E') as $i)
         <div>
           @foreach (range(1, 15) as $j)
-            {{-- <div @class(['seat', 'occupied' => !rand(0, 4)]) id="{{ $i . sprintf('%02d', $j) }}"></div> --}}
             <div class="seat {{ $states[rand(0, count($states) - 1)] }}" id="{{ $i . sprintf('%02d', $j) }}"></div>
           @endforeach
         </div>
