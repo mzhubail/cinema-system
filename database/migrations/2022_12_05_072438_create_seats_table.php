@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Booking;
+use App\Models\Seat;
+use App\Models\TimeSlot;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,8 +18,14 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Booking::class);
+            $table->unsignedTinyInteger('row');
+            $table->unsignedTinyInteger('column');
             $table->timestamps();
         });
+        for ($i = 0; $i < 500; $i++)
+            Seat::factory()
+                ->create();
     }
 
     /**

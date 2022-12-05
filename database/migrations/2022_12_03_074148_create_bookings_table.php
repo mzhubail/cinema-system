@@ -29,10 +29,6 @@ return new class extends Migration
       $table->foreignIdFor(Customer::class)
         ->constrained();
 
-      $table->unsignedTinyInteger('row');
-      $table->unsignedTinyInteger('seats_start');
-      $table->unsignedTinyInteger('seats_end');
-
       $table->enum(
         'status',
         ['pending', 'complete', 'canceled', 'suspended']

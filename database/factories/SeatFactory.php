@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Booking;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,13 @@ class SeatFactory extends Factory
      */
     public function definition()
     {
+        $booking_id = fake()->randomElement(Booking::get())->id;
+        $row = fake()->numberBetween(0, 12);
+        $column = fake()->numberBetween(0, 12);
         return [
-            //
+            'booking_id' => $booking_id,
+            'row' => $row,
+            'column' => $column,
         ];
     }
 }
