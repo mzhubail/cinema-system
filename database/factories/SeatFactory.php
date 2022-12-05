@@ -25,7 +25,7 @@ class SeatFactory extends Factory
         } while (
             config('constants.avoid_conflicts') &&
             SeatController::has_conflict(
-                $booking->time_slot(),
+                $booking->time_slot,
                 $row,
                 $column
             )

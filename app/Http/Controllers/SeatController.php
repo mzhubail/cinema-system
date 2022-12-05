@@ -10,19 +10,22 @@ class SeatController extends Controller
 {
     public function check_has_conflict(Request $request)
     {
-        SeatController::has_conflict(
-            TimeSlot::find($request->ts),
-            $request->row,
-            $request->column
+        dd(
+            SeatController::has_conflict(
+                TimeSlot::find($request->ts),
+                $request->row,
+                $request->column
+            )
         );
     }
 
     public static function has_conflict(TimeSlot $time_slot, $row, $column)
     {
         $query = <<<'SQL'
-            SELECT  time_slots.id AS time_slot_id,
-                    bookings.id AS booking_id,
-                    `row`, `column`
+            -- SELECT  time_slots.id AS time_slot_id,
+            --         bookings.id AS booking_id,
+            --         `row`, `column`
+            SELECT  COUNT(*) AS c
             FROM    `time_slots`, `bookings`, `seats`
             WHERE   time_slots.id = ?
             AND     time_slots.id = bookings.time_slot_id
@@ -31,8 +34,7 @@ class SeatController extends Controller
             AND     seats.column = ?
         SQL;
 
-        dd(
-            DB::select($query, [$time_slot->id, $row, $column])
-        );
+        $count = DB::select($query, [$time_slot->id, $row, $column])[0]->c;
+        return $count !== 0;
     }
 }
