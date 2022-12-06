@@ -20,7 +20,7 @@
 
   <title> Title -- @yield('title') </title>
 
-  @yield('style')
+  @stack('styles')
 </head>
 
 <body>
@@ -110,7 +110,7 @@ Data provided for free by <a href="https://iextrading.com/developer">IEX</a>. Vi
     integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
   <script src="assets/script.js"></script>
 
-  @yield('script')
+  @stack('scripts')
 </body>
 
 </html>
