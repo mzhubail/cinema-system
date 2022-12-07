@@ -24,4 +24,10 @@ class TimeSlot extends Model
     public function bookings() {
         return $this->hasMany(Booking::class);
     }
+
+    /** Returns the seats belonging to the time slot */
+    public function seats()
+    {
+        return $this->hasManyThrough(Seat::class, Booking::class);
+    }
 }

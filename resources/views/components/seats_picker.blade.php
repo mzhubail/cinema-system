@@ -49,6 +49,9 @@
 @endpush
 
 @push('scripts')
+  <script>
+    seats = {{ Illuminate\Support\Js::from($seats) }};
+  </script>
   <script src="assets/seats-picker.js"></script>
 @endpush
 
@@ -58,6 +61,7 @@
 @endphp
 <div class="plane">
   {{-- TODO: add screen --}}
+  <br>
 
   <div id="rows-container">
     <div class="seat-row">
