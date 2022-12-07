@@ -14,8 +14,6 @@
   </style>
 @endsection
 
-{{-- TODO: Consider a better format for table.  Display conflicting records one
-  under the other instead of side by side --}}
 @section('main')
   @empty($conflicts)
     <h4>No booking conflicts where found</h4>

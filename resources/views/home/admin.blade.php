@@ -15,8 +15,9 @@
   <a class="btn btn-primary" href="./add_time_slot"> Add Time Slot </a>
   <br>
   <br>
-  <a class="btn btn-primary" href="/show_conflicts"> Show Time Slot conflicts </a>
+  <a class="btn btn-primary" href="/show_time_conflicts"> Show Time Slot conflicts </a>
+  <a class="btn btn-primary" href="/show_seat_conflicts"> Show Seat conflicts </a>
   <br>
   <br>
-  <a class="btn btn-primary" href="/show_seats"> Show Seats </a>
+  <a class="btn btn-primary" href="/view_seats"> Show Seats </a>
 @endsection
