@@ -49,6 +49,9 @@
 @endpush
 
 @push('scripts')
+  <script>
+    pushedSeats = {{ Illuminate\Support\Js::from($seats) }};
+  </script>
   <script src="assets/seats-picker.js"></script>
 @endpush
 
@@ -69,7 +72,7 @@
       <div class="seat-row">
         <div> {{ $i }} </div>
         @foreach (range(1, 15) as $j)
-          <div @class(['seat', 'occupied' => isset($seats[$i . sprintf('%02d', $j)])])></div>
+          <div class='seat' id="{{ $i . sprintf('%02d', $j) }}"></div>
         @endforeach
       </div>
     @endforeach

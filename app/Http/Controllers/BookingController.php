@@ -87,20 +87,24 @@ class BookingController extends Controller
 
   public function seats_picker_user(Request $request)
   {
-    $seats = TimeSlot::find(1)
-        ->seats()
-        ->get(['row', 'column']);
-    // $seats->each(fn ($item) => unset($item['laravel_through_key'
-    $seats_ = [];
-    foreach ($seats as ['row' => $r, 'column' => $c]) {
+    $seatsRaw =
+      TimeSlot::find(1)
+      // fake()->randomElement(TimeSlot::get())
+      ->seats()
+      ->get(['row', 'column']);
+
+    // Convert seats from array into a code format, like 'E01'
+    $seatsCode = $seatsRaw->map(function ($item) {
+      ['row' => $r, 'column' => $c] = $item;
       $code = chr(ord('A') + $r);
       $code .= sprintf('%02d', $c + 1);
-      $seats_[$code] = true;
-    }
+      return $code;
+    });
+
     return view(
       'booking.choose_seats',
       [
-        'seats' => $seats_,
+        'seats' => $seatsCode,
       ]
     );
   }
