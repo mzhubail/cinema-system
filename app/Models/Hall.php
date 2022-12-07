@@ -18,10 +18,15 @@ class Hall extends Model
     'letter',
   ];
 
-  // TODO: figure what on earth is going on with this comment
-  /** Returns the TimeSlots belonging to this Hall */
+  /** Get the TimeSlots belonging to this Hall */
   public function time_slots()
   {
     return $this->hasMany(TimeSlot::class);
+  }
+
+  /** Get the branch this hall belongs to */
+  public function branch()
+  {
+    return $this->belongsTo(Branch::class);
   }
 }

@@ -25,7 +25,7 @@ class Movie extends Model
     'img_path',
   ];
 
-  /** Returns the TimeSlots belonging to this Movie */
+  /** Get the time slots belonging to this movie */
   public function time_slots()
   {
     return $this->hasMany(TimeSlot::class);

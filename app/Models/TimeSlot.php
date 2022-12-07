@@ -20,13 +20,13 @@ class TimeSlot extends Model
     'movie_id',
   ];
 
-  /** Returns the bookings belonging to this time_slot */
+  /** Get the bookings belonging to this time slot */
   public function bookings()
   {
     return $this->hasMany(Booking::class);
   }
 
-  /** Returns the seats belonging to the time slot */
+  /** Get the seats belonging to this time slot */
   public function seats()
   {
     return $this->hasManyThrough(Seat::class, Booking::class);

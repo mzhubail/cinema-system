@@ -23,11 +23,13 @@ class Booking extends Model
     'seats_end',
   ];
 
+  /** Get the time_slot this booking belongs to */
   public function time_slot()
   {
     return $this->belongsTo(TimeSlot::class);
   }
 
+  /** Get the seats of this booking */
   public function seats()
   {
     return $this->hasMany(Seats::class);

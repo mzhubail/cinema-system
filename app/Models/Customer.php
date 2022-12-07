@@ -39,4 +39,9 @@ class Customer extends Model
   // protected $attributes = [
   //     'credit' => 0,
   // ];
+
+  /** Get the bookings this customer has made */
+  public function bookings() {
+    return $this->hasMany(Booking::class);
+  }
 }
