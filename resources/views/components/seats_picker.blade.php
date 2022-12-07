@@ -49,16 +49,10 @@
 @endpush
 
 @push('scripts')
-  <script>
-    seats = {{ Illuminate\Support\Js::from($seats) }};
-  </script>
   <script src="assets/seats-picker.js"></script>
 @endpush
 
 
-@php
-  $states = ['', '', '', '', '', '', '', '', '', '', 'selected', 'occupied'];
-@endphp
 <div class="plane">
   {{-- TODO: add screen --}}
   <br>
@@ -75,7 +69,7 @@
       <div class="seat-row">
         <div> {{ $i }} </div>
         @foreach (range(1, 15) as $j)
-          <div class="seat {{ $states[rand(0, count($states) - 1)] }}" id="{{ $i . sprintf('%02d', $j) }}"></div>
+          <div @class(['seat', 'occupied' => isset($seats[$i . sprintf('%02d', $j)])])></div>
         @endforeach
       </div>
     @endforeach

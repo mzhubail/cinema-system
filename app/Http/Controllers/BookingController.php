@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\Models\Seat;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -83,9 +85,24 @@ class BookingController extends Controller
     return $query->count() !== 0;
   }
 
-  public function seats_picker_user()
+  public function seats_picker_user(Request $request)
   {
-    return view('booking.seats_picker_user');
+    $seats = TimeSlot::find(1)
+        ->seats()
+        ->get(['row', 'column']);
+    // $seats->each(fn ($item) => unset($item['laravel_through_key'
+    $seats_ = [];
+    foreach ($seats as ['row' => $r, 'column' => $c]) {
+      $code = chr(ord('A') + $r);
+      $code .= sprintf('%02d', $c + 1);
+      $seats_[$code] = true;
+    }
+    return view(
+      'booking.choose_seats',
+      [
+        'seats' => $seats_,
+      ]
+    );
   }
 
   public function recieve_seats(Request $request)
