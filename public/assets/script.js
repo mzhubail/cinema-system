@@ -56,6 +56,40 @@ function timeSlotsTableHandler(e) {
 }
 
 /**
+ * Used in browse_time_slots.php to fetch time slots info and output them in a table
+ *
+ * Assumes the existance of an empty container #ts-table for the output
+ */
+function timeSlotsSelectHandler(e) {
+  hid = e.value
+  if (hid === '')
+    return
+  $.getJSON(`api/get_time_slots?hid=${hid}`)
+    .done((data) => {
+      // Ensure time slots exist
+      if (data.length === 0) {
+        $("#time-slot-input")
+          // Disable time slot input
+          .attr("disabled", "disabled")
+          .empty()
+          .append("<option hidden disabled selected value> -- No time slots exist -- </option>")
+        return
+      }
+      // Convert data to options
+      content = data.map((data) => {
+        return `<option value="${data.id}"> ${data.id} | ${data.start_time} </option>`;
+      })
+      content.unshift("<option hidden disabled selected value> -- Choose a time slot -- </option>")
+      $("#time-slot-input")
+        // Enable halls input
+        .removeAttr("disabled")
+        // Add options
+        .empty()
+        .append(content)
+    })
+}
+
+/**
  * Used in add_time_slots.php to fetch halls and place them as options in #hall-input
  */
 function hallsSelectHandler(e) {

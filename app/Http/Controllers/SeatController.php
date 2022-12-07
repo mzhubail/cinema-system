@@ -37,4 +37,27 @@ class SeatController extends Controller
         $count = DB::select($query, [$time_slot->id, $row, $column])[0]->c;
         return $count !== 0;
     }
+
+    public function serve_seats(Request $request)
+    {
+        if (!$request->has('tsid')) return;
+
+        $seatsRaw =
+            TimeSlot::find($request->tsid)
+            // fake()->randomElement(TimeSlot::get())
+            ->seats()
+            ->get(['row', 'column']);
+
+        // Convert seats from array into a code format, like 'E01'
+        // TODO: move into separate function
+        $seatsCode = $seatsRaw->map(function ($item) {
+            ['row' => $r, 'column' => $c] = $item;
+            $code = chr(ord('A') + $r);
+            $code .= sprintf('%02d', $c + 1);
+            return $code;
+        });
+        return response()->json(
+            $seatsCode
+        );
+    }
 }

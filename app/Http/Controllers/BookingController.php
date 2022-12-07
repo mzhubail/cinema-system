@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Branch;
 use App\Models\Seat;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
@@ -105,6 +106,7 @@ class BookingController extends Controller
       'booking.choose_seats',
       [
         'seats' => $seatsCode,
+        'branches' => Branch::get(),
       ]
     );
   }

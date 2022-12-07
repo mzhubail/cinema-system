@@ -133,30 +133,36 @@ class TimeSlotController extends Controller
   // TOOD: perhaps add duration and/or end time
   public function show_time_slots(Request $request)
   {
-    if (!$request->has('mid'))
-      die();
-    // $time_slots = TimeSlot::find($request->mid);
-    // if ($time_slots === null)
-    //   die();
-    // TODO: update queries to use cast, and format date in view
-    $query = DB::table('time_slots')
-      ->join('halls', 'halls.id', '=', 'time_slots.hall_id')
-      ->join('branches', 'branches.id', '=', 'halls.branch_id')
-      ->select([
-        "halls.letter   as hall_letter",
-        "branches.name  as branch_name",
-        "time_slots.id  as id",
-        // "time           as datetime",
-        DB::raw('DATE_FORMAT(`start_time`, "%d-%m-%Y")  as date'),
-        DB::raw('DATE_FORMAT(`start_time`, "%H:%i")     as time'),
-      ])
-      ->where("time_slots.movie_id", "=", $request->mid);
-    // dd($query, $query->toSql(), $query->get());
+    if ($request->has('mid')) {
+      // $time_slots = TimeSlot::find($request->mid);
+      // if ($time_slots === null)
+      //   die();
+      // TODO: update queries to use cast, and format date in view
+      $query = DB::table('time_slots')
+        ->join('halls', 'halls.id', '=', 'time_slots.hall_id')
+        ->join('branches', 'branches.id', '=', 'halls.branch_id')
+        ->select([
+          "halls.letter   as hall_letter",
+          "branches.name  as branch_name",
+          "time_slots.id  as id",
+          // "time           as datetime",
+          DB::raw('DATE_FORMAT(`start_time`, "%d-%m-%Y")  as date'),
+          DB::raw('DATE_FORMAT(`start_time`, "%H:%i")     as time'),
+        ])
+        ->where("time_slots.movie_id", "=", $request->mid);
+      // dd($query, $query->toSql(), $query->get());
 
-    // return response()->json($halls_info);
-    return response()->json(
-      $query->get()
-    );
+      // return response()->json($halls_info);
+      return response()->json(
+        $query->get()
+      );
+    } elseif ($request->has('hid')) {
+      return response()->json(
+        Hall::find($request->hid)
+          ->time_slots()
+          ->get(['id', 'start_time'])
+      );
+    }
   }
 
   private static $conflict_query = <<<'SQL'

@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/get_halls', [HallController::class, 'show_halls']);
 Route::get('/get_time_slots', [TimeSlotController::class, 'show_time_slots']);
 
+Route::get('/get_seats', [SeatController::class, 'serve_seats']);
+
 
 // TODO: Perhaps remove
 Route::get('/get_bookings', [TimeSlotController::class, 'show_bookings']);

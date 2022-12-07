@@ -1,7 +1,9 @@
 function resetSeats(seats) {
   $('.seat').each(function () {
     if (seats.includes(this.id))
-      this.classList.add('occupied')
+      this.classList.value = 'seat occupied'
+    else
+      this.classList.value = 'seat'
   })
 }
 
@@ -32,3 +34,13 @@ $(document).ready(() => {
       })
   })
 })
+
+function seatsPickerHandler(element) {
+  tsid = element.value
+  if (tsid === '')
+    return
+  $.getJSON(`api/get_seats?tsid=${tsid}`)
+    .done((data) => {
+      resetSeats(data)
+    })
+}
