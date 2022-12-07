@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+  // TODO: remove
   public function show_add()
   {
     return view('booking.add');

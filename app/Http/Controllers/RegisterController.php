@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
+  /**
+   * Show registration page
+   */
   public function show() {
     return view("register");
   }
+
+
+
+  /**
+   * Register a new user
+   */
   public function register(Request $request) {
     $input = $request->all();
     $input["hash"] = password_hash(

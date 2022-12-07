@@ -17,6 +17,8 @@ class MovieController extends Controller
     }
   }
 
+
+
   /** Converts duration from number of minutes to hh:mm format */
   static public function minutesToDuration(int $minutes): string
   {
@@ -25,11 +27,21 @@ class MovieController extends Controller
     return sprintf("%02d:%02d", $h, $m);
   }
 
+
+
+  /**
+   * Show the form for adding a movie
+   */
   public function show_add_movie()
   {
     return view('movie.add');
   }
 
+
+
+  /**
+   * Store a new movie in database
+   */
   public function store(Request $request)
   {
     // Add image validation
@@ -61,6 +73,11 @@ class MovieController extends Controller
     );
   }
 
+
+
+  /**
+   * List the movies stored in the database
+   */
   public function browse()
   {
     $movies = Movie::get();

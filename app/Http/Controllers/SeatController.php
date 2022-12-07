@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SeatController extends Controller
 {
+  // TODO: remove, used for testing
   public function check_has_conflict(Request $request)
   {
     dd(
@@ -20,8 +21,14 @@ class SeatController extends Controller
     );
   }
 
+
+
+  /**
+   * Check if the given seat within the time slot would conflict with other seats
+   */
   public static function has_conflict(TimeSlot $time_slot, $row, $column)
   {
+    // Seek a seat with the same time slot, row, and column
     $query = <<<'SQL'
         -- SELECT  time_slots.id AS time_slot_id,
         --         bookings.id AS booking_id,
@@ -39,6 +46,11 @@ class SeatController extends Controller
     return $count !== 0;
   }
 
+
+
+  /**
+   * This query is used to look for seat conflicts
+   */
   private static $conflict_query = <<<'SQL'
     select  time_slots.id as time_slot_id,
             ba.id as booking_id_a,
@@ -64,6 +76,11 @@ class SeatController extends Controller
 
   SQL;
 
+
+
+  /**
+   * Show a page containing seat conflict in the system
+   */
   public function show_conflicts()
   {
     $conflicts = DB::select(self::$conflict_query);
@@ -72,6 +89,9 @@ class SeatController extends Controller
 
 
 
+  /**
+   * Show a page the allows the admin to view seats in the system
+   */
   public function seats_picker_admin(Request $request)
   {
     return view(
@@ -82,6 +102,11 @@ class SeatController extends Controller
     );
   }
 
+
+
+  /**
+   * Serve seat information for a given hall
+   */
   public function serve_seats(Request $request)
   {
     if (!$request->has('tsid')) return;
@@ -93,7 +118,14 @@ class SeatController extends Controller
     );
   }
 
-  public static function getSeats($time_slot_id)
+
+
+  /**
+   * Return the seats for a given time slot id
+   *
+   * This was added to be used internally, by various function in this class
+   */
+  private static function getSeats($time_slot_id)
   {
     $seatsRaw = TimeSlot::find($time_slot_id)
       ->seats()
@@ -101,6 +133,8 @@ class SeatController extends Controller
     $seatsCoded = $seatsRaw->map(fn($raw) => self::convertSeat($raw));
     return $seatsCoded;
   }
+
+
 
   /** Converts seat from array into a code format, like 'E01' */
   public static function convertSeat($raw)
@@ -110,6 +144,8 @@ class SeatController extends Controller
     $code .= sprintf('%02d', $c + 1);
     return $code;
   }
+
+
 
   public function recieve_seats(Request $request)
   {

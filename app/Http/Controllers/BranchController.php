@@ -13,6 +13,11 @@ class BranchController extends Controller
     "addr" => "Address"
   ];
 
+
+
+  /**
+   * List branches in the system
+   */
   public function browse()
   {
     // dd(Branch::get());
@@ -33,11 +38,21 @@ class BranchController extends Controller
     );
   }
 
+
+
+  /**
+   * Show a form for adding a new branch
+   */
   public function show_add()
   {
     return view('branch.add');
   }
 
+
+
+  /**
+   * Add a new branch to the system
+   */
   public function store(Request $request)
   {
     Branch::create($request->all());

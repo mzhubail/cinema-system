@@ -8,6 +8,9 @@ use Illuminate\Support\Str;
 
 class HallController extends Controller
 {
+  /**
+   * Show a form for adding a new hall
+   */
   public function show_add()
   {
     return view(
@@ -18,6 +21,11 @@ class HallController extends Controller
     );
   }
 
+
+
+  /**
+   * Store a new hall
+   */
   public function store(Request $request)
   {
     $letter = Str::upper($request->letter);
@@ -26,13 +34,17 @@ class HallController extends Controller
       die("branch not found");
     }
     $hall = new Hall(['letter' => $letter]);
-    // dd($branch->halls());
     $branch->halls()->save($hall);
 
     session()->flash('message', ["Hall Added succefully", "info"]);
     return redirect()->back();
   }
 
+
+
+  /**
+   * Show a page for listing halls information depending on selected branch
+   */
   public function browse(Request $request)
   {
     return view(
@@ -44,7 +56,12 @@ class HallController extends Controller
     );
   }
 
-  public function show_halls(Request $request)
+
+
+  /**
+   * Serve the halls information for the given branch
+   */
+  public function serve_halls(Request $request)
   {
     if (!$request->has('bid'))
       die();

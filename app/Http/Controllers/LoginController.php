@@ -18,6 +18,11 @@ class LoginController extends Controller
     return view('login');
   }
 
+
+
+  /**
+   * Log the user into the system
+   */
   public function login()
   {
     $request = request();
