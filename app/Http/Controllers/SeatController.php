@@ -39,10 +39,43 @@ class SeatController extends Controller
     return $count !== 0;
   }
 
+  private static $conflict_query = <<<'SQL'
+    select  time_slots.id as time_slot_id,
+            ba.id as booking_id_a,
+            sa.id as seat_id_a,
+            sa.row as row_a,
+            sa.column as column_a,
+            bb.id as booking_id_b,
+            sb.id as seat_id_b,
+            sb.row as row_b,
+            sb.column as column_b
+    from    time_slots,
+            bookings ba, bookings bb,
+            seats sa, seats sb
+    where   time_slots.id = ba.time_slot_id
+    and     time_slots.id = bb.time_slot_id
+    and     ba.id < bb.id
+
+    and     sa.booking_id = ba.id
+    and     sb.booking_id = bb.id
+
+    and     sa.row = sb.row AND sa.column = sb.column
+    order by time_slots.id
+
+  SQL;
+
+  public function show_conflicts()
+  {
+    $conflicts = DB::select(self::$conflict_query);
+    return view('seat.conflict_table', ['conflicts' => $conflicts]);
+  }
+
+
+
   public function seats_picker_admin(Request $request)
   {
     return view(
-      'booking.choose_seats',
+      'seat.choose_seats',
       [
         'branches' => Branch::get(),
       ]
@@ -65,15 +98,17 @@ class SeatController extends Controller
     $seatsRaw = TimeSlot::find($time_slot_id)
       ->seats()
       ->get(['row', 'column']);
-    // Convert seats from array into a code format, like 'E01'
-    // TODO: move into separate function
-    $seatsCoded = $seatsRaw->map(function ($raw) {
-      ['row' => $r, 'column' => $c] = $raw;
-      $code = chr(ord('A') + $r);
-      $code .= sprintf('%02d', $c + 1);
-      return $code;
-    });
+    $seatsCoded = $seatsRaw->map(fn($raw) => self::convertSeat($raw));
     return $seatsCoded;
+  }
+
+  /** Converts seat from array into a code format, like 'E01' */
+  public static function convertSeat($raw)
+  {
+    ['row' => $r, 'column' => $c] = $raw;
+    $code = chr(ord('A') + $r);
+    $code .= sprintf('%02d', $c + 1);
+    return $code;
   }
 
   public function recieve_seats(Request $request)

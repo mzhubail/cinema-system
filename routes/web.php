@@ -103,12 +103,11 @@ Route::get('/add_time_slot', [TimeSlotController::class, 'show_add']);
 Route::post('/add_time_slot', [TimeSlotController::class, 'store']);
 
 Route::get('/browse_time_slots', [TimeSlotController::class, 'browse']);
-// TODO: fix route link
-Route::get('/show_conflicts', [TimeSlotController::class, 'show_conflicts']);
+Route::get('/show_time_conflicts', [TimeSlotController::class, 'show_conflicts']);
 
 
 Route::get('/browse_bookings', [BookingController::class, 'browse']);
-Route::get('/show_booking_conflicts', [BookingController::class, 'show_conflicts']);
+Route::get('/show_seat_conflicts', [SeatController::class, 'show_conflicts']);
 
 // TODO: remove.  These are only intended for testing
 Route::get('/add_booking', [BookingController::class, 'show_add']);
