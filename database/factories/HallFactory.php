@@ -11,18 +11,18 @@ use Illuminate\Support\Str;
  */
 class HallFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        return [
-            'letter' => Str::upper(
-                fake()->unique()->randomLetter()
-            ),
-            'branch_id' => fake()->randomElement(Branch::select('id')->get()),
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    return [
+      'letter' => Str::upper(
+        fake()->unique()->randomLetter()
+      ),
+      'branch_id' => fake()->randomElement(Branch::select('id')->get()),
+    ];
+  }
 }

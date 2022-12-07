@@ -86,31 +86,6 @@ class BookingController extends Controller
     return $query->count() !== 0;
   }
 
-  public function seats_picker_user(Request $request)
-  {
-    $seatsRaw =
-      TimeSlot::find(1)
-      // fake()->randomElement(TimeSlot::get())
-      ->seats()
-      ->get(['row', 'column']);
-
-    // Convert seats from array into a code format, like 'E01'
-    $seatsCode = $seatsRaw->map(function ($item) {
-      ['row' => $r, 'column' => $c] = $item;
-      $code = chr(ord('A') + $r);
-      $code .= sprintf('%02d', $c + 1);
-      return $code;
-    });
-
-    return view(
-      'booking.choose_seats',
-      [
-        'seats' => $seatsCode,
-        'branches' => Branch::get(),
-      ]
-    );
-  }
-
   public function recieve_seats(Request $request)
   {
     dd($request->all());

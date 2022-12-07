@@ -16,9 +16,12 @@ $(document).ready(() => {
 
   resetSeats(pushedSeats);
 
-  $('.seat:not(.occupied)').click(
-    e => $(e.target).toggleClass('selected')
-  )
+  allowSelection = true
+  if (allowSelection)
+    $('.seat:not(.occupied)').click(
+      e => $(e.target).toggleClass('selected')
+    )
+
   $('#tmp').click(e => {
     console.log([...$('.seat.selected')])
     let seats = [...$('.seat.selected')]

@@ -10,19 +10,19 @@ use Illuminate\Support\Str;
  */
 class BranchFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        return [
-            'name' => Str::beforeLast(
-                fake()->sentence(nbWords: 2, variableNbWords: false),
-                '.'
-            ),
-            'addr' => fake()->address(),
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    return [
+      'name' => Str::beforeLast(
+        fake()->sentence(nbWords: 2, variableNbWords: false),
+        '.'
+      ),
+      'addr' => fake()->address(),
+    ];
+  }
 }

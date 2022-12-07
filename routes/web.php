@@ -28,20 +28,20 @@ use App\Models\Booking;
 // });
 
 Route::match(["get", "post"], '/test', function (Request $request) {
-    // $request->session()->flush();
-    $request->session()->put("name", "J");
-    $x = $request->session()->get("name");
-    return view(
-        'test_view',
-        [
-            "r" => $request,
-            "is_session_set" => $x,
-        ]
-    );
+  // $request->session()->flush();
+  $request->session()->put("name", "J");
+  $x = $request->session()->get("name");
+  return view(
+    'test_view',
+    [
+      "r" => $request,
+      "is_session_set" => $x,
+    ]
+  );
 });
 
 Route::get('/login', [LoginController::class, 'show'])
-    ->name("login");
+  ->name("login");
 // Route::get('/login', function () { return (new LoginController())->show(); } );
 Route::post('/login', [LoginController::class, 'login']);
 // Route::post('/login', 'LoginController@login');
@@ -51,7 +51,7 @@ Route::post('/login', [LoginController::class, 'login']);
 // });
 
 Route::resource('customer', CustomerController::class)
-    ->only(['index', 'store']);
+  ->only(['index', 'store']);
 
 
 Route::view('test_show_user_template', 'show_user');
@@ -72,23 +72,23 @@ Route::post('/add_branch', [BranchController::class, 'store']);
 Route::get('/browse_branches', [BranchController::class, 'browse']);
 
 Route::get('/', function () {
-    if (session()->has('isAdmin')) {
-        return session("isAdmin") ?
-            view('home.admin') :
-            view('home.customer');
-    } else {
-        return redirect('login');
-    }
+  if (session()->has('isAdmin')) {
+    return session("isAdmin") ?
+      view('home.admin') :
+      view('home.customer');
+  } else {
+    return redirect('login');
+  }
 })
-->name('home');
+  ->name('home');
 
 Route::any('view_session', function () {
-    dd(session()->all());
+  dd(session()->all());
 });
 
 Route::get('/logout', function () {
-    session()->flush();
-    return redirect('login');
+  session()->flush();
+  return redirect('login');
 });
 
 

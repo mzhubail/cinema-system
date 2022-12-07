@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'addr',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'name',
+    'addr',
+  ];
 
-    /** Returns the halls belonging to this branch */
-    public function halls() {
-        return $this->hasMany(Hall::class);
-    }
+  /** Returns the halls belonging to this branch */
+  public function halls()
+  {
+    return $this->hasMany(Hall::class);
+  }
 }
