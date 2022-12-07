@@ -14,7 +14,8 @@ $(document).ready(() => {
     }
   });
 
-  resetSeats(pushedSeats);
+  if (typeof pushedSeats !== 'undefined')
+    resetSeats(pushedSeats);
 
   allowSelection = true
   if (allowSelection)
@@ -37,6 +38,10 @@ $(document).ready(() => {
       })
   })
 })
+
+// TODO: disable seat selection when no time slot is chosen
+// TODO: add a message to be displayed in case the hall is full
+// TOOD: fix changing branch doesn't reset timeslots
 
 function seatsPickerHandler(element) {
   tsid = element.value

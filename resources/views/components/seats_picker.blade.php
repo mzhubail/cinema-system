@@ -45,13 +45,33 @@
     .seat-row>div:nth-child(10) {
       margin-right: 16px;
     }
+
+    /* Prevent user from accidentally selecting the seats like a text
+     *
+     * Fetched from:
+     * https://stackoverflow.com/questions/2326004/prevent-selection-in-html
+     */
+    #rows-container {
+      -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+
+      /*
+        Introduced in IE 10.
+        See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+      */
+      -ms-user-select: none;
+      user-select: none;
+    }
   </style>
 @endpush
 
 @push('scripts')
-  <script>
-    pushedSeats = {{ Illuminate\Support\Js::from($seats) }};
-  </script>
+  @isset($seats)
+    <script>
+      pushedSeats = {{ Illuminate\Support\Js::from($seats) }};
+    </script>
+  @endisset
   <script src="assets/seats-picker.js"></script>
 @endpush
 
@@ -84,7 +104,8 @@
       </div>
       <div class="form-group col-md-6">
         <label for="hall-input"> Hall </label>
-        <select class="form-control" name="hid" id="hall-input" onchange="timeSlotsSelectHandler(this)" disabled> </select>
+        <select class="form-control" name="hid" id="hall-input" onchange="timeSlotsSelectHandler(this)" disabled>
+        </select>
       </div>
     </div>
     <div class="form-group">

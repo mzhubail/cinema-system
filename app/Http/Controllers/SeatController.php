@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,26 +39,45 @@ class SeatController extends Controller
     return $count !== 0;
   }
 
+  public function seats_picker_admin(Request $request)
+  {
+    return view(
+      'booking.choose_seats',
+      [
+        'branches' => Branch::get(),
+      ]
+    );
+  }
+
   public function serve_seats(Request $request)
   {
     if (!$request->has('tsid')) return;
 
-    $seatsRaw =
-      TimeSlot::find($request->tsid)
-      // fake()->randomElement(TimeSlot::get())
+    $seats = self::getSeats($request->tsid);
+
+    return response()->json(
+      $seats
+    );
+  }
+
+  public static function getSeats($time_slot_id)
+  {
+    $seatsRaw = TimeSlot::find($time_slot_id)
       ->seats()
       ->get(['row', 'column']);
-
     // Convert seats from array into a code format, like 'E01'
     // TODO: move into separate function
-    $seatsCode = $seatsRaw->map(function ($item) {
-      ['row' => $r, 'column' => $c] = $item;
+    $seatsCoded = $seatsRaw->map(function ($raw) {
+      ['row' => $r, 'column' => $c] = $raw;
       $code = chr(ord('A') + $r);
       $code .= sprintf('%02d', $c + 1);
       return $code;
     });
-    return response()->json(
-      $seatsCode
-    );
+    return $seatsCoded;
+  }
+
+  public function recieve_seats(Request $request)
+  {
+    dd($request->all());
   }
 }

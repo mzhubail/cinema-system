@@ -3,5 +3,5 @@
 @section('title', '')
 
 @section('main')
-  @include('components.seats_picker', ['seats' => $seats])
+  @include('components.seats_picker')
 @endsection
