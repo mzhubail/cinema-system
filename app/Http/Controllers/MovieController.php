@@ -27,7 +27,7 @@ class MovieController extends Controller
 
   public function show_add_movie()
   {
-    return view('add_movie');
+    return view('movie.add');
   }
 
   public function store(Request $request)
@@ -53,7 +53,7 @@ class MovieController extends Controller
     if ($movie === null)
       die("No movie was found");
     return view(
-      'movie_details',
+      'movie.details',
       [
         'movie' => $movie,
         'formatted_duration' => self::minutesToDuration($movie->duration),
@@ -64,11 +64,10 @@ class MovieController extends Controller
   public function browse()
   {
     $movies = Movie::get();
-    // $movies = Movie::factory()->count(2)->create();
+
     if ($movies->isEmpty()) {
-      // TODO: place error in a dedicated page
       session()->flash('message', ["Sorry, no movies where found", "error"]);
-      return redirect('/');
+      return redirect()->back();
     }
 
     // Format duration
@@ -88,7 +87,7 @@ class MovieController extends Controller
     ];
 
     return view(
-      'browse_movies',
+      'movie.browse',
       [
         'movies' => $movies,
         'header' => $header,
