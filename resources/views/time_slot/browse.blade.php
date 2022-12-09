@@ -12,7 +12,7 @@
           <select class="form-control" id="movie-input" onchange="timeSlotsTableHandler(this)">
             <option hidden disabled selected value> -- Choose a movie -- </option>
             @foreach ($movies as $movie)
-              <option value="{{ $movie['id'] }}">
+              <option value="{{ $movie['id'] }}" @selected($movie['id'] == $movie_id)>
                 {{ $movie['title'] }}
               </option>
             @endforeach

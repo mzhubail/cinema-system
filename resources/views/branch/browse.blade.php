@@ -21,10 +21,10 @@
               <td>{{ $branch[$k] }}</td>
             @endforeach
             <td>
-              <a href="edit_branch.php?id={{ $branch['id'] }}"> Edit </a>
+              <a href="edit_branch?bid={{ $branch['id'] }}"> Edit </a>
             </td>
             <td>
-              <a href="browse_halls.php?id={{ $branch['id'] }}"> Browse Halls </a>
+              <a href="browse_halls?bid={{ $branch['id'] }}"> Browse Halls </a>
             </td>
           </tr>
         @endforeach

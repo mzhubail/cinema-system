@@ -88,12 +88,13 @@ class TimeSlotController extends Controller
   /**
    * Show a page for listing the time slots depending on the movie selected
    */
-  public function browse()
+  public function browse(Request $request)
   {
     return view(
       'time_slot.browse',
       [
         'movies' => Movie::get(),
+        'movie_id' => $request->mid,
       ]
     );
   }

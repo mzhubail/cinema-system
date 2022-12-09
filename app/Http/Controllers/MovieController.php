@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
@@ -110,5 +111,38 @@ class MovieController extends Controller
         'header' => $header,
       ]
     );
+  }
+
+
+
+  function show_edit(Request $request)
+  {
+    $movie = Movie::find($request->id);
+    if ($movie === null) {
+      session()->flash('message', ["Sorry, movie not found", "error"]);
+      return redirect()->back();
+    }
+    $movie->duration = self::minutesToDuration($movie->duration);
+    return view('movie.edit', ['movie' => $movie]);
+  }
+
+  function update(Request $request)
+  {
+    $input = $request->all();
+    $input['duration'] = self::durationToSeconds($input['duration']);
+
+    $movie = Movie::find($request->id);
+    if ($request->has('poster-img')) {
+      // Delete old image
+      Storage::delete($movie->img_path);
+      // Upload new image
+      $input['img_path'] = $request
+        ->file('poster-img')
+        ->storePublicly('posters');
+    }
+    $movie->fill($input);
+    $movie->save();
+    session()->flash('message', ["Movie updated succefully", "error"]);
+    return redirect()->back();
   }
 }

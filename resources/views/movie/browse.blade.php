@@ -22,7 +22,8 @@
               @endforeach
               <td>
                 <!-- TODO: Add admin functionalities instead of customer movie_details.php -->
-                <a href="/movie_details?id={{ $movie->id }}"> View details </a>
+                <a href="/movie_details?id={{ $movie->id }}" class="mr-2"> View details </a>
+                <a href="/edit_movie?id={{ $movie->id }}"> Edit </a>
               </td>
             </tr>
           @endforeach

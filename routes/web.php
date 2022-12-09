@@ -116,3 +116,6 @@ Route::post('/add_booking', [BookingController::class, 'store']);
 Route::get('/browse_seats', [SeatController::class, 'browse']);
 Route::get('/choose_seats', [SeatController::class, 'show_choose']);
 // Route::post('/choose_seats', [SeatController::class, 'recieve_seats']);
+
+Route::get('/edit_movie', [MovieController::class, 'show_edit']);
+Route::post('/edit_movie', [MovieController::class, 'update']);

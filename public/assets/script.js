@@ -19,7 +19,7 @@ $(document).ready(() => {
  * Assumes the existance of an empty container #ts-table for the output
  */
 function timeSlotsTableHandler(e) {
-  header = ["ID", "Branch Name", "Hall letter", "Date", "Time"];
+  header = ["ID", "Branch Name", "Hall letter", "Date", "Time", ""];
   mid = e.value
   $.getJSON(`api/get_time_slots?mid=${mid}`)
     .done((data) => {
@@ -45,6 +45,7 @@ function timeSlotsTableHandler(e) {
             <td> ${element.hall_letter} </td>
             <td> ${element.date} </td>
             <td> ${element.time} </td>
+            <td> <a href='/edit_time_slot?tsid=${element.id}'> Edit </a> </td>
           </tr>`
       });
       content += '</tbody> </table>'
