@@ -5,3 +5,4 @@
 @section('main')
   @include('components.seats_picker')
 @endsection
+

@@ -92,10 +92,10 @@ class SeatController extends Controller
   /**
    * Show a page the allows the admin to view seats in the system
    */
-  public function seats_picker_admin(Request $request)
+  public function browse(Request $request)
   {
     return view(
-      'seat.choose_seats',
+      'seat.browse',
       [
         'branches' => Branch::get(),
       ]
@@ -105,13 +105,34 @@ class SeatController extends Controller
 
 
   /**
-   * Serve seat information for a given hall
+   * Show a page that allows the user to pick his seats for the time slot he
+   * already chose
+   */
+  public function show_choose()
+  {
+    // if (session()->missing('time_slot'))
+    session()->put('time_slot', TimeSlot::find(24));
+    // else
+    //   dd(session('time_slot_id'));
+
+    // dd(session('time_slot')->seats);
+    $seats = self::getSeats(session('time_slot'));
+    return view(
+      'seat.choose',
+      ['seats' => $seats]
+    );
+  }
+
+
+
+  /**
+   * Serve seat information for a given Time Slot
    */
   public function serve_seats(Request $request)
   {
     if (!$request->has('tsid')) return;
 
-    $seats = self::getSeats($request->tsid);
+    $seats = self::getSeats(TimeSlot::find($request->tsid));
 
     return response()->json(
       $seats
@@ -121,16 +142,17 @@ class SeatController extends Controller
 
 
   /**
-   * Return the seats for a given time slot id
+   * Return the seats for a given time slot, the output is intended to be parsed
+   * by the seats_picker component
    *
    * This was added to be used internally, by various function in this class
    */
-  private static function getSeats($time_slot_id)
+  private static function getSeats($time_slot)
   {
-    $seatsRaw = TimeSlot::find($time_slot_id)
+    $seatsRaw = $time_slot
       ->seats()
       ->get(['row', 'column']);
-    $seatsCoded = $seatsRaw->map(fn($raw) => self::convertSeat($raw));
+    $seatsCoded = $seatsRaw->map(fn ($raw) => self::convertSeat($raw));
     return $seatsCoded;
   }
 

@@ -113,5 +113,6 @@ Route::get('/show_seat_conflicts', [SeatController::class, 'show_conflicts']);
 Route::get('/add_booking', [BookingController::class, 'show_add']);
 Route::post('/add_booking', [BookingController::class, 'store']);
 
-Route::get('/view_seats', [SeatController::class, 'seats_picker_admin']);
+Route::get('/browse_seats', [SeatController::class, 'browse']);
+Route::get('/choose_seats', [SeatController::class, 'show_choose']);
 // Route::post('/choose_seats', [SeatController::class, 'recieve_seats']);

@@ -3,9 +3,10 @@
     /* TODO: make responsive */
     .seat-row>div {
       display: inline-block;
-      height: 26px;
-      width: 22px;
-      margin: 5px;
+      height: 24px;
+      width: 20px;
+      margin: 6px;
+      font-size: 0.9rem;
     }
 
     .seat {
@@ -51,7 +52,7 @@
      * Fetched from:
      * https://stackoverflow.com/questions/2326004/prevent-selection-in-html
      */
-    #rows-container {
+    #seats-picker {
       -moz-user-select: -moz-none;
       -khtml-user-select: none;
       -webkit-user-select: none;
@@ -62,6 +63,11 @@
       */
       -ms-user-select: none;
       user-select: none;
+    }
+
+    #seats-picker.disabled {
+      opacity: 50%;
+      transition: opacity 500ms ease;
     }
   </style>
 @endpush
@@ -77,7 +83,14 @@
 
 
 <div class="card">
-  <h4 class="card-header">Choose your seats</h4>
+  <h4 class="card-header">
+    @isset($seats)
+      Choose your seats
+    @else
+      Browse seats
+    @endisset
+  </h4>
+
 
   {{-- TODO: add screen --}}
   <div class="card-body">
@@ -86,34 +99,37 @@
       <select id="time-slot-input"></select>
     </div> --}}
 
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="branch-input">Branch</label>
-        @isset($branches)
-          <select class="form-control" id="branch-input" onchange="hallsSelectHandler(this)">
-            <option hidden disabled selected value> -- Choose a branch -- </option>
-            @foreach ($branches as $branch)
-              <option value="{{ $branch['id'] }}">
-                {{ $branch['name'] }}
-              </option>
-            @endforeach
+    @isset($seats)
+    @else
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="branch-input">Branch</label>
+          @isset($branches)
+            <select class="form-control" id="branch-input" onchange="hallsSelectHandler(this)">
+              <option hidden disabled selected value> -- Choose a branch -- </option>
+              @foreach ($branches as $branch)
+                <option value="{{ $branch['id'] }}">
+                  {{ $branch['name'] }}
+                </option>
+              @endforeach
+            </select>
+          @else
+            <select class="form-control" id="branch-input"> </select>
+          @endisset
+        </div>
+        <div class="form-group col-md-6">
+          <label for="hall-input"> Hall </label>
+          <select class="form-control" name="hid" id="hall-input" onchange="timeSlotsSelectHandler(this)" disabled>
           </select>
-        @else
-          <select class="form-control" id="branch-input"> </select>
-        @endisset
+        </div>
       </div>
-      <div class="form-group col-md-6">
-        <label for="hall-input"> Hall </label>
-        <select class="form-control" name="hid" id="hall-input" onchange="timeSlotsSelectHandler(this)" disabled>
-        </select>
+      <div class="form-group">
+        <label for="time-slot-input"> Time Slot</label>
+        <select class="form-control" id="time-slot-input" onchange="seatsPickerHandler(this)" disabled> </select>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="time-slot-input"> Time Slot</label>
-      <select class="form-control" id="time-slot-input" onchange="seatsPickerHandler(this)" disabled> </select>
-    </div>
+    @endisset
 
-    <div id="rows-container" class="my-4">
+    <div id="seats-picker" class="my-4 disabled">
       <div class="seat-row">
         <div></div>
         @foreach (range(1, 15) as $j)
@@ -131,9 +147,22 @@
     </div>
 
 
-    <div class="price-container">
-      Total Price: <span id="price-output"></span>
+    <div class="row mx-3">
+      @isset($seats)
+        <div class="price-container">
+          Total Price: <span id="price-output"> 0 </span> BD
+        </div>
+      @endisset
+      <div class="legend seat-row" style="margin-left: auto">
+        <div class="seat"></div> available
+        <div class="seat selected"></div> selected
+        <div class="seat occupied"></div> occupied
+      </div>
     </div>
+
+    @isset($seats)
+      <button id="continue-btn" class="btn btn-primary mt-3" disabled>Continue</button>
+    @endisset
   </div>
 </div>
 

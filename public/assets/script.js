@@ -66,6 +66,10 @@ function timeSlotsSelectHandler(e) {
     return
   $.getJSON(`api/get_time_slots?hid=${hid}`)
     .done((data) => {
+      // Disable seats picker
+      if (typeof disableSeatsPicker !== 'undefined')
+        disableSeatsPicker();
+
       // Ensure time slots exist
       if (data.length === 0) {
         $("#time-slot-input")
@@ -96,6 +100,14 @@ function hallsSelectHandler(e) {
   bid = e.value
   $.getJSON(`api/get_halls?bid=${bid}`)
     .done((data) => {
+      // Disable time slot input
+      $("#time-slot-input")
+        .attr("disabled", "disabled")
+        .empty()
+      // Disable seats picker
+      if (typeof disableSeatsPicker !== 'undefined')
+        disableSeatsPicker();
+
       // Ensure halls exist
       if (data.length === 0) {
         $("#hall-input")
