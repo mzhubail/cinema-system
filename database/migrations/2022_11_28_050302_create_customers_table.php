@@ -21,6 +21,7 @@ return new class extends Migration
       $table->string("email");
       $table->date("birthday");
       $table->string("hash", 255);
+      // Make it a float
       $table->integer("credit")
         ->default(0);
 

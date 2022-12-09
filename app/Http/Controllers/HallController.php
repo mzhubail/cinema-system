@@ -71,4 +71,29 @@ class HallController extends Controller
     $halls_info = $branch->halls()->get(['letter', 'id']);
     return response()->json($halls_info);
   }
+
+
+  
+  public function show_edit(Request $request)
+  {
+    $hall = Hall::find($request->id);
+    if ($hall === null) {
+      session()->flash('message', ["Sorry, hall not found", "error"]);
+      return redirect()->back();
+    }
+    return view('hall.edit', ['hall' => $hall]);
+  }
+
+
+
+  public function update(Request $request)
+  {
+    $input = $request->all();
+
+    $hall = Hall::find($request->id);
+    $hall->fill($input);
+    $hall->save();
+    session()->flash('message', ["Hall updated succefully", "error"]);
+    return redirect()->back();
+  }
 }

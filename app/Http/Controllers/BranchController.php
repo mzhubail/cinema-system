@@ -59,4 +59,29 @@ class BranchController extends Controller
     session()->flash('message', ["Branch Added succefully", "info"]);
     return redirect()->refresh();
   }
+
+
+
+  public function show_edit(Request $request)
+  {
+    $branch = Branch::find($request->id);
+    if ($branch === null) {
+      session()->flash('message', ["Sorry, branch not found", "error"]);
+      return redirect()->back();
+    }
+    return view('branch.edit', ['branch' => $branch]);
+  }
+
+
+
+  public function update(Request $request)
+  {
+    $input = $request->all();
+
+    $branch = Branch::find($request->id);
+    $branch->fill($input);
+    $branch->save();
+    session()->flash('message', ["Branch updated succefully", "error"]);
+    return redirect()->back();
+  }
 }

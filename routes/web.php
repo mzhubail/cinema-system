@@ -119,3 +119,7 @@ Route::get('/choose_seats', [SeatController::class, 'show_choose']);
 
 Route::get('/edit_movie', [MovieController::class, 'show_edit']);
 Route::post('/edit_movie', [MovieController::class, 'update']);
+Route::get('/edit_branch', [BranchController::class, 'show_edit']);
+Route::post('/edit_branch', [BranchController::class, 'update']);
+Route::get('/edit_hall', [HallController::class, 'show_edit']);
+Route::post('/edit_hall', [HallController::class, 'update']);
