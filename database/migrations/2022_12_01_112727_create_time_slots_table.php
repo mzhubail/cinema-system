@@ -18,8 +18,10 @@ return new class extends Migration
     Schema::create('time_slots', function (Blueprint $table) {
       $table->id();
       $table->dateTime('start_time');
-      $table->foreignIdFor(Hall::class);
-      $table->foreignIdFor(Movie::class);
+      $table->foreignIdFor(Hall::class)
+        ->cascadeOnDelete();
+      $table->foreignIdFor(Movie::class)
+        ->cascadeOnDelete();
       $table->timestamps();
     });
     for ($i = 0; $i < 50; $i++)

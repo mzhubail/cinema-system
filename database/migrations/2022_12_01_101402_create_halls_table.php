@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +18,8 @@ return new class extends Migration
     Schema::create('halls', function (Blueprint $table) {
       $table->id();
       $table->char('letter');
-      $table->foreignId('branch_id')
-        ->constrained();
+      $table->foreignIdFor(Branch::class)
+        ->cascadeOnDelete();
       $table->timestamps();
     });
     Hall::factory()

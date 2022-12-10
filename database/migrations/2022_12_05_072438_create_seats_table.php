@@ -18,7 +18,8 @@ return new class extends Migration
   {
     Schema::create('seats', function (Blueprint $table) {
       $table->id();
-      $table->foreignIdFor(Booking::class);
+      $table->foreignIdFor(Booking::class)
+        ->cascadeOnDelete();
       $table->unsignedTinyInteger('row');
       $table->unsignedTinyInteger('column');
       $table->timestamps();

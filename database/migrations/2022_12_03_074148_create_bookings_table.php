@@ -25,9 +25,9 @@ return new class extends Migration
       );
 
       $table->foreignIdFor(TimeSlot::class)
-        ->constrained();
+        ->cascadeOnDelete();
       $table->foreignIdFor(Customer::class)
-        ->constrained();
+        ->cascadeOnDelete();
 
       $table->enum(
         'status',
