@@ -31,4 +31,22 @@ class TimeSlot extends Model
   {
     return $this->hasManyThrough(Seat::class, Booking::class);
   }
+
+  /** Get the movie of this time slot */
+  public function movie()
+  {
+    return $this->belongsTo(Movie::class);
+  }
+
+  /** Get the hall this time slot belongs to */
+  public function hall()
+  {
+    return $this->belongsTo(Hall::class);
+  }
+
+  /** Get the branch this time slot belongs to */
+  public function branch()
+  {
+    return $this->hall->branch();
+  }
 }

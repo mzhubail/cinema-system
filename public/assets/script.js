@@ -45,7 +45,7 @@ function timeSlotsTableHandler(e) {
             <td> ${element.hall_letter} </td>
             <td> ${element.date} </td>
             <td> ${element.time} </td>
-            <td> <a href='/edit_time_slot?tsid=${element.id}'> Edit </a> </td>
+            <td> <a href='/edit_time_slot?id=${element.id}'> Edit </a> </td>
           </tr>`
       });
       content += '</tbody> </table>'

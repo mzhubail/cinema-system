@@ -12,6 +12,7 @@ use App\Http\Controllers\HallController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\TimeSlotController;
 use App\Models\Booking;
+use App\Models\TimeSlot;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,3 +124,5 @@ Route::get('/edit_branch', [BranchController::class, 'show_edit']);
 Route::post('/edit_branch', [BranchController::class, 'update']);
 Route::get('/edit_hall', [HallController::class, 'show_edit']);
 Route::post('/edit_hall', [HallController::class, 'update']);
+Route::get('/edit_time_slot', [TimeSlotController::class, 'show_edit']);
+Route::post('/edit_time_slot', [TimeSlotController::class, 'update']);

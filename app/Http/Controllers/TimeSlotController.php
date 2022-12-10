@@ -124,7 +124,7 @@ class TimeSlotController extends Controller
         $query->get()
       );
 
-    // Serve time slot information by hall id, used when admin is selecting a seat
+      // Serve time slot information by hall id, used when admin is selecting a seat
     } elseif ($request->has('hid')) {
       return response()->json(
         Hall::find($request->hid)
@@ -181,5 +181,69 @@ class TimeSlotController extends Controller
       'time_slot.show_conflict',
       ['conflicts' => $conflicts]
     );
+  }
+
+
+
+  public function show_edit(Request $request)
+  {
+    $time_slot = TimeSlot::find($request->id);
+    if ($time_slot === null) {
+      session()->flash('message', ["Sorry, time slot not found", "error"]);
+      return redirect()->back();
+    }
+    $time_slot->start_time = new DateTimeImmutable($time_slot->start_time);
+    // dd(
+    //   $time_slot->start_time,
+    //   $time_slot->start_time->format("d/m/y"),
+    //   $time_slot->start_time->format("H:i"),
+    // );
+    return view('time_slot.edit', ['time_slot' => $time_slot]);
+  }
+
+
+
+  public function update(Request $request)
+  {
+    $input = $request->all();
+
+    $time_slot = TimeSlot::find($request->id);
+    $hall = $time_slot->hall;
+    // $hall = Hall::find($request->hid);
+    // $movie = Movie::find($request->mid);
+    $movie = $time_slot->movie;
+
+    // $time_slot->fill($input);
+    // $time_slot->save();
+
+    $datetime = $request->date . " " . $request->time;
+
+    DB::beginTransaction();
+    $time_slot->delete();
+
+    $conflicts = self::has_conflict(
+      $hall,
+      new DateTimeImmutable($datetime),
+      $movie->duration,
+    );
+    DB::rollBack();
+    if ($conflicts) {
+      session()->flash('message', ["Conflict!", "error"]);
+      return redirect()->back();
+    }
+
+    $time_slot = TimeSlot::find($request->id);
+    $time_slot->start_time = new DateTimeImmutable($datetime);
+    // $time_slot->save();
+    $time_slot->save();
+
+    // $time_slot = new TimeSlot();
+    // $time_slot->start_time = new DateTimeImmutable($datetime);
+    // $time_slot->movie_id = $request->mid;
+    // $hall = Hall::find($request->hid);
+    // $hall->time_slots()->save($time_slot);
+
+    session()->flash('message', ["Time slot updated succefully", "error"]);
+    return redirect()->back();
   }
 }

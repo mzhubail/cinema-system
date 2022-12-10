@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
           <label for="branch-input">Branch</label>
-          <select class="form-control" name="branch_id" id="branch-input" disabled>
+          <select class="form-control" id="branch-input" disabled>
               <option>
                 {{ $hall->branch->name }}
               </option>
