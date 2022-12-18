@@ -8,7 +8,10 @@ use Date;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Type\Time;
 
 class TimeSlotController extends Controller
@@ -72,7 +75,6 @@ class TimeSlotController extends Controller
       session()->flash('message', ["Conflict!", "error"]);
       return redirect()->refresh();
     }
-    return;
 
     $time_slot = new TimeSlot();
     $time_slot->start_time = new DateTimeImmutable($request->date . " " . $request->time);
@@ -245,5 +247,84 @@ class TimeSlotController extends Controller
 
     session()->flash('message', ["Time slot updated succefully", "error"]);
     return redirect()->back();
+  }
+
+
+
+  /**
+   * Show a page that allows the user to choose his desired time slot for the
+   * movie he already chose.
+   *
+   * Note that the movie id will be passed via GET parameter `mid`
+   */
+  public function show_choose(Request $request)
+  {
+    $mid = $request->mid;
+    $tss = Movie::find($mid)->time_slots;
+    $tmp =       Movie::find($mid)->time_slots()
+      ->withCasts(['start_time' => 'datetime'])->get()[0]->start_time;
+
+    $res = Movie::find($mid)->time_slots()
+      ->join('halls', 'halls.id', '=', 'hall_id')
+      ->join('branches', 'branches.id', '=', 'branch_id')
+      ->whereDay('start_time', '>=', now())
+      ->withCasts(['start_time' => 'datetime'])
+      ->select(['*', 'branches.name AS branch_name', 'time_slots.id as time_slot_id'])
+      ->orderBy('start_time', 'asc')
+      ->orderBy('start_time', 'asc')
+      ->get();
+    // $res->dd();
+
+    // $res_ = [];
+    foreach ($res as $r) {
+      [$date, $time] = [
+        $r->start_time->toFormattedDateString(),
+        // $r->start_time->toTimeString(),
+        $r->start_time,
+      ];
+      $res_[$date][$r->branch_name][] = [
+        'time' => $time,
+        'time_slot_id' => $r->time_slot_id,
+      ];
+    }
+    // dd($res->map(function ($item) {
+    //   return [$item->start_time->toRssString(), $item->start_time->isPast()];
+    // }));
+    // dd(
+    //   now()->toTimeString(),
+    //   now()->tzName,
+    //   DateTimeZone::listIdentifiers(),
+    // );
+
+    // dd(
+    //   $tss,
+    //   $tss[0]->start_time,
+    //   $tmp,
+    //   $res,
+    //   $res_,
+    // );
+    // $x = Str::of(array_keys($res_)[0]);
+    // dd(
+    //   $x,
+    //   $x->before(',')->snake()
+    // );
+
+    // TODO: sort data from database
+    // ksort($res_);
+    // foreach ($res_ as $date => $branches) {
+    //   ksort($branches);
+    //   foreach ($branches as $branch => $timings) {
+    //     // ksort($timings);
+    //     usort(
+    //       $timings,
+    //       fn ($a, $b) => $a['time'] < $b['time'] ? -1 : 1,
+    //     );
+    //   }
+    // }
+
+    return view(
+      'time_slot.choose',
+      ['time_slots' => $res_]
+    );
   }
 }

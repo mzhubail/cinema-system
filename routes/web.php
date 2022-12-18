@@ -126,3 +126,7 @@ Route::get('/edit_hall', [HallController::class, 'show_edit']);
 Route::post('/edit_hall', [HallController::class, 'update']);
 Route::get('/edit_time_slot', [TimeSlotController::class, 'show_edit']);
 Route::post('/edit_time_slot', [TimeSlotController::class, 'update']);
+
+
+
+Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);
