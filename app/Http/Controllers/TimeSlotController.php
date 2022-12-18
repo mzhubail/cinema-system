@@ -260,9 +260,6 @@ class TimeSlotController extends Controller
   public function show_choose(Request $request)
   {
     $mid = $request->mid;
-    $tss = Movie::find($mid)->time_slots;
-    $tmp =       Movie::find($mid)->time_slots()
-      ->withCasts(['start_time' => 'datetime'])->get()[0]->start_time;
 
     $res = Movie::find($mid)->time_slots()
       ->join('halls', 'halls.id', '=', 'hall_id')
@@ -273,9 +270,12 @@ class TimeSlotController extends Controller
       ->orderBy('start_time', 'asc')
       ->orderBy('start_time', 'asc')
       ->get();
-    // $res->dd();
 
-    // $res_ = [];
+    // Convert time slots into an suitable format for output code
+    //
+    // `$res_` will conatin an array with date being the key for the first
+    // level, branch name for the second level, and the third level will contain
+    // arrays of id and time
     foreach ($res as $r) {
       [$date, $time] = [
         $r->start_time->toFormattedDateString(),
@@ -287,44 +287,25 @@ class TimeSlotController extends Controller
         'time_slot_id' => $r->time_slot_id,
       ];
     }
-    // dd($res->map(function ($item) {
-    //   return [$item->start_time->toRssString(), $item->start_time->isPast()];
-    // }));
-    // dd(
-    //   now()->toTimeString(),
-    //   now()->tzName,
-    //   DateTimeZone::listIdentifiers(),
-    // );
-
-    // dd(
-    //   $tss,
-    //   $tss[0]->start_time,
-    //   $tmp,
-    //   $res,
-    //   $res_,
-    // );
-    // $x = Str::of(array_keys($res_)[0]);
-    // dd(
-    //   $x,
-    //   $x->before(',')->snake()
-    // );
-
-    // TODO: sort data from database
-    // ksort($res_);
-    // foreach ($res_ as $date => $branches) {
-    //   ksort($branches);
-    //   foreach ($branches as $branch => $timings) {
-    //     // ksort($timings);
-    //     usort(
-    //       $timings,
-    //       fn ($a, $b) => $a['time'] < $b['time'] ? -1 : 1,
-    //     );
-    //   }
-    // }
 
     return view(
       'time_slot.choose',
       ['time_slots' => $res_]
     );
+  }
+
+
+  function tmp(Request $request)
+  {
+    // dd(now());
+    // Used to retrieve coming soon movies
+    $q = Movie::whereDoesntHave('time_slots', function (Builder $query) {
+      $query->where('start_time', '<', now());
+    });
+    // dd(
+    //   $q,
+    //   $q->toSql(),
+    //   $q->get(),
+    // );
   }
 }
