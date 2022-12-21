@@ -23,7 +23,7 @@ return new class extends Migration
       $table->timestamps();
     });
     Hall::factory()
-      ->count(20)
+      ->count(10)
       ->create();
   }
 

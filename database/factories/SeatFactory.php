@@ -18,8 +18,14 @@ class SeatFactory extends Factory
    */
   public function definition()
   {
+    // Pick a booking that has no more than 7 seats already
     do {
       $booking = fake()->randomElement(Booking::get());
+      $booking->loadCount('seats');
+    } while ($booking->seats_count > 7);
+
+    // Pick row and column without conflict
+    do {
       $row = fake()->numberBetween(0, 4);
       $column = fake()->numberBetween(0, 14);
     } while (
@@ -30,6 +36,7 @@ class SeatFactory extends Factory
         $column
       )
     );
+
     return [
       'booking_id' => $booking->id,
       'row' => $row,

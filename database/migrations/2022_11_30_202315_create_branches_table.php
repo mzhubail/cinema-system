@@ -23,7 +23,7 @@ return new class extends Migration
       $table->unique('name');
     });
     Branch::factory()
-      ->count(6)
+      ->count(3)
       ->create();
   }
 

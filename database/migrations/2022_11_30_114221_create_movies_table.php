@@ -41,7 +41,9 @@ return new class extends Migration
       $table->string('img_path', 255);
       $table->timestamps();
     });
-    Movie::factory()->count(10)->create();
+    Movie::factory()
+      ->count(10)
+      ->create();
   }
 
   /**
