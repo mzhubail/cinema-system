@@ -108,19 +108,35 @@ class SeatController extends Controller
    * Show a page that allows the user to pick his seats for the time slot he
    * already chose
    */
-  public function show_choose()
+  public function show_choose(Request $request)
   {
     // if (session()->missing('time_slot'))
-    session()->put('time_slot', TimeSlot::find(24));
+    // session()->put('time_slot', TimeSlot::find(24));
     // else
     //   dd(session('time_slot_id'));
 
     // dd(session('time_slot')->seats);
-    $seats = self::getSeats(session('time_slot'));
+    $seats = self::getSeats(
+      TimeSlot::find($request->tsid)
+    );
     return view(
       'seat.choose',
       ['seats' => $seats]
     );
+  }
+
+
+  public function receive_chosen_seats(Request $request)
+  {
+    // now()->format
+    session()->put('time_slot', TimeSlot::find($request->time_slot_id));
+    session()->put('seats', $request->seats);
+    echo 'proceed';
+    //     print_r($request->time_slot_id);
+    //     echo '
+    // ';
+    //     print_r($request->seats);
+    return;
   }
 
 

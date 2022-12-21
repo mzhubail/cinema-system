@@ -116,7 +116,7 @@ Route::post('/add_booking', [BookingController::class, 'store']);
 
 Route::get('/browse_seats', [SeatController::class, 'browse']);
 Route::get('/choose_seats', [SeatController::class, 'show_choose']);
-// Route::post('/choose_seats', [SeatController::class, 'recieve_seats']);
+Route::post('/choose_seats', [SeatController::class, 'receive_chosen_seats']);
 
 Route::get('/edit_movie', [MovieController::class, 'show_edit']);
 Route::post('/edit_movie', [MovieController::class, 'update']);
@@ -130,3 +130,4 @@ Route::post('/edit_time_slot', [TimeSlotController::class, 'update']);
 
 
 Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);
+Route::get('/confirm_booking', [BookingController::class, 'confirm_booking']);

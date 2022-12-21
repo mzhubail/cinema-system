@@ -18,9 +18,9 @@ function updatePrice() {
   let price = 0
   $('#seats-picker .seat.selected').each(function () {
     if ("DE".includes(this.id[0]))
-      price += 3
+      price += 4
     else
-      price += 2
+      price += 3
   })
   $('#price-output')
     .empty()
@@ -50,18 +50,29 @@ $(document).ready(() => {
     )
   }
 
-  $('#tmp').click(e => {
-    console.log([...$('.seat.selected')])
-    let seats = [...$('.seat.selected')]
+  $('#continue-btn').click(e => {
+    let seats = [...$('#seats-picker .seat.selected')]
       .map((seat) => seat.id)
 
+    // Address of the current window
+    address = window.location.search
+    // Returns a URLSearchParams object instance
+    parameterList = new URLSearchParams(address)
+    // Get the time_slot_id
+    let tsid = parameterList.get('tsid')
+
+    // console.log({ ...seats })
     $.post(
       '/choose_seats',
-      { ...seats },
-      () => console.log('success')
+      {
+        time_slot_id: tsid,
+        seats: { ...seats },
+      },
     )
-      .always((response) => {
-        document.write([response.responseText]);
+      .done((data) => console.log(data))
+      .done((data) => {
+        if (data == 'proceed')
+          window.location = '/confirm_booking'
       })
   })
 })
