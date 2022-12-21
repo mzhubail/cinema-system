@@ -16,7 +16,7 @@
 
 @section('main')
   @empty($conflicts)
-    <h4>No booking conflicts where found</h4>
+    <h4>No seat conflicts where found</h4>
   @else
     <div class="card">
       <h4 class="card-header"> Booking Conflicts </h4>

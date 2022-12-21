@@ -19,5 +19,5 @@
   <a class="btn btn-primary" href="/show_seat_conflicts"> Show Seat conflicts </a>
   <br>
   <br>
-  <a class="btn btn-primary" href="/view_seats"> Show Seats </a>
+  <a class="btn btn-primary" href="/browse_seats"> Show Seats </a>
 @endsection

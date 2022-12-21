@@ -25,8 +25,22 @@
 
       text-align: center;
 
+    }
+
+    /* Style row and column indicators inside seats-picker */
+    #seats-picker .seat-row {
       font-weight: bold;
       color: gray;
+    }
+
+    .legend {
+      background-color: #f0f0f0;
+      padding: 3px 7px;
+      border-radius: 8px;
+    }
+
+    .legend>div:not(:first-child) {
+      margin-left: 16px;
     }
 
     .seat.occupied {
@@ -52,7 +66,8 @@
      * Fetched from:
      * https://stackoverflow.com/questions/2326004/prevent-selection-in-html
      */
-    #seats-picker {
+    #seats-picker,
+    .legend {
       -moz-user-select: -moz-none;
       -khtml-user-select: none;
       -webkit-user-select: none;
@@ -149,8 +164,8 @@
 
     <div class="row mx-3">
       @isset($seats)
-        <div class="price-container">
-          Total Price: <span id="price-output"> 0 </span> BD
+        <div class="price-container d-flex align-items-center">
+          Total Price: &nbsp; <span id="price-output"> 0 </span> &nbsp; BD
         </div>
       @endisset
       <div class="legend seat-row" style="margin-left: auto">
@@ -165,9 +180,3 @@
     @endisset
   </div>
 </div>
-
-<br>
-<br>
-<br>
-<br>
-<button class="btn btn-secondary" id="tmp">tmp</button>

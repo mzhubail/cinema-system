@@ -49,6 +49,7 @@
               @foreach ($branches as $branch => $timings)
                 <div class="row mb-3">
                   <div class="col-12 col-md-3  mb-2 mb-md-0  d-flex align-items-center">
+                    <span class="d-md-none text-muted"> Branch: &nbsp; </span>
                     {{ $branch }}
                   </div>
                   <div class="col">
@@ -56,7 +57,7 @@
                     <div class="btn-group btn-group-cond-vertical" role="group">
                       @foreach ($timings as ['time' => $time, 'time_slot_id' => $time_slot_id])
                         <a @class(['btn', 'btn-secondary', 'disabled' => $time->isPast()]) type="button" href="/choose_seats?tsid={{ $time_slot_id }}">
-                          {{ $time->toTimeString() }}
+                          {{ $time->format("H:i") }}
                         </a>
                       @endforeach
                     </div>
