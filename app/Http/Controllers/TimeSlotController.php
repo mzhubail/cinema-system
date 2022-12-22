@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Movie, Branch, TimeSlot, Hall};
-use Date;
 use DateInterval;
-use DateTime;
 use DateTimeImmutable;
-use DateTimeZone;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Ramsey\Uuid\Type\Time;
 
 class TimeSlotController extends Controller
 {
@@ -306,6 +302,11 @@ class TimeSlotController extends Controller
     //   $q,
     //   $q->toSql(),
     //   $q->get(),
+    // );
+    // return Blade::render(
+    //   '<x-movie-card/>',
+    //   ['name' => 'Julian Bashir'],
+    //   deleteCachedView: true,
     // );
   }
 }

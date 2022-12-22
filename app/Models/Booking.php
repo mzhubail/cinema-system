@@ -32,6 +32,6 @@ class Booking extends Model
   /** Get the seats of this booking */
   public function seats()
   {
-    return $this->hasMany(Seats::class);
+    return $this->hasMany(Seat::class);
   }
 }

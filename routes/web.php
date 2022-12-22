@@ -131,3 +131,6 @@ Route::post('/edit_time_slot', [TimeSlotController::class, 'update']);
 
 Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);
 Route::get('/confirm_booking', [BookingController::class, 'confirm_booking']);
+
+
+Route::get('/test', [TimeSlotController::class, 'tmp']);
