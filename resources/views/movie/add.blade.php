@@ -12,18 +12,17 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="title-input">Title</label>
-              <input class="form-control" type="text" name="title" id="title-input">
+              <x-input name="title" />
             </div>
             <div class="form-group col-md-6">
-              <label for="rYear-input">Release year</label>
-              <input class="form-control" type="number" name="release_year" id="rYear-input">
+              <label for="release_year-input">Release year</label>
+              <x-input type="number" name="release_year" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="duration-input">Duration</label>
-              <input class="form-control" type="time" max="03:00" min="00:00" name="duration"
-                id="duration-input">
+              <x-input type="time" max="03:00" min="00:00" name="duration" />
             </div>
             <div class="form-group col-md-6">
               <label for="lang-input">Language</label>
@@ -38,22 +37,25 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="rating-input">Rating</label>
-              <input class="form-control" type="number" max="10.0" min="0.0" step="0.1" name="rating"
-                id="rating-input">
+              <x-input type="number" max="10.0" min="0.0" step="0.1" name="rating" />
             </div>
 
             <div class="form-group col-md-6">
               <label for="genre-input">Genre</label>
               <select class="form-control" name="genre" id="genre-input">
                 @foreach (config('constants.genres') as $genre)
-                    <option value='{{ $genre }}'> {{ ucfirst($genre) }} </option>
+                  <option value='{{ $genre }}'> {{ ucfirst($genre) }} </option>
                 @endforeach
               </select>
             </div>
           </div>
           <div class="form-group">
             <label for="movie-desc">Description</label>
-            <textarea class="form-control" name="desc" id="movie-desc" cols="30" rows="10"></textarea>
+            <textarea class="form-control" name="desc" id="movie-desc" cols="30" rows="10">
+              @if (old('desc') !== null)
+                {{ old('desc') }}
+              @endif
+            </textarea>
           </div>
           <div class="form-group custom-file mb-3">
             <!-- MAX_FILE_SIZE must precede the file input field -->

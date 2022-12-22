@@ -73,13 +73,31 @@
     </div>
   </nav>
 
+  @if ($errors->any())
+    <header>
+      <div class="alert alert-danger border text-center" role="alert">
+        @foreach ($errors->all() as $error)
+          @if (!$loop->first)
+            <br>
+          @endif
+          {{ $error }}
+        @endforeach
+      </div>
+    </header>
+  @endif
+
   @if (session()->has('message'))
-    <?php [$content, $code] = session('message'); ?>
+    @php
+      if (gettype(session('message')) == 'array') {
+          [$content, $code] = session('message');
+      } else {
+          $content = session('message');
+      }
+    @endphp
+
     <header>
       <div class="alert alert-primary border text-center" role="alert">
         {{ $content }}
-        {{-- {{ print_r(session('alert'), true); }} --}}
-        {{-- <?php dd(session('message')); ?> --}}
       </div>
     </header>
   @endif

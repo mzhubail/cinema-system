@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MovieRequest;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class MovieController extends Controller
 {
@@ -43,16 +45,28 @@ class MovieController extends Controller
   /**
    * Store a new movie in database
    */
-  public function store(Request $request)
+  public function store(MovieRequest $request)
   {
-    // Add image validation
+    // Require Image, used try-catch to override with my own message
+    try {
+      $request->validate([
+        'poster-img' => 'required',
+      ]);
+    } catch (ValidationException $e) {
+      throw ValidationException::withMessages(['A poster image is required']);
+    }
+
+    $input = $request->validated();
+
     $input = $request->all();
+    // Convert duration
     $input['duration'] = self::durationToSeconds($input['duration']);
+    // Store image
     $input['img_path'] = $request
       ->file('poster-img')
       ->storePublicly('posters');
     Movie::create($input);
-    session()->flash('message', ["Movie Added succefully", "error"]);
+    session()->flash('message', "Movie Added succefully");
     return redirect()->refresh();
   }
 

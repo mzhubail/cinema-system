@@ -16,7 +16,7 @@ return new class extends Migration
   {
     Schema::create('movies', function (Blueprint $table) {
       $table->id();
-      $table->string('title');
+      $table->string('title', 31);
       $table->integer(
         'release_year',
         autoIncrement: false,
