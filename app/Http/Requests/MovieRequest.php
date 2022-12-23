@@ -44,10 +44,11 @@ class MovieRequest extends FormRequest
    *
    * @return array
    */
-  // public function attributes()
-  // {
-  //   return [
-  //     'desc' => 'description',
-  //   ];
-  // }
+  public function attributes()
+  {
+    return [
+      'desc' => 'description',
+      'poster-img' => 'poster image',
+    ];
+  }
 }

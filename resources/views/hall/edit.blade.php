@@ -11,7 +11,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="letter-input">Letter</label>
-          <input type="text" class="form-control" name="letter" id="letter-input" value="{{ $hall->letter }}">
+          <x-input name="letter" :value="$hall->letter" />
         </div>
         <div class="form-group">
           <label for="branch-input">Branch</label>

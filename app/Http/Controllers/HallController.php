@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HallRequest;
 use Illuminate\Http\Request;
 use App\Models\{Branch, Hall};
 use Illuminate\Support\Str;
@@ -26,17 +27,18 @@ class HallController extends Controller
   /**
    * Store a new hall
    */
-  public function store(Request $request)
+  public function store(HallRequest $request)
   {
+    // TODO: check for letter uiqueness
     $letter = Str::upper($request->letter);
-    $branch = Branch::find($request->branch_id);
+    $branch = Branch::find($request->id);
     if ($branch === null) {
       die("branch not found");
     }
     $hall = new Hall(['letter' => $letter]);
     $branch->halls()->save($hall);
 
-    session()->flash('message', ["Hall Added succefully", "info"]);
+    session()->flash('message', "Hall Added succefully");
     return redirect()->back();
   }
 
@@ -86,14 +88,12 @@ class HallController extends Controller
 
 
 
-  public function update(Request $request)
+  public function update(HallRequest $request)
   {
-    $input = $request->all();
-
     $hall = Hall::find($request->id);
-    $hall->fill($input);
+    $hall->letter = Str::upper($request->letter);
     $hall->save();
-    session()->flash('message', ["Hall updated succefully", "error"]);
+    session()->flash('message', "Hall updated succefully");
     return redirect()->back();
   }
 }

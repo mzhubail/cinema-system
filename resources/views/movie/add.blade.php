@@ -52,10 +52,8 @@
           <div class="form-group">
             <label for="movie-desc">Description</label>
             <textarea class="form-control" name="desc" id="movie-desc" cols="30" rows="10">
-              @if (old('desc') !== null)
-                {{ old('desc') }}
-              @endif
-            </textarea>
+@if (old('desc') !== null){{ old('desc') }}@endif
+</textarea>
           </div>
           <div class="form-group custom-file mb-3">
             <!-- MAX_FILE_SIZE must precede the file input field -->

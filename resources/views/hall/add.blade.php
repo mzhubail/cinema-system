@@ -10,13 +10,13 @@
       <div class="card-body">
         <div class="form-group">
           <label for="letter-input">Letter</label>
-          <input type="text" class="form-control" name="letter" id="letter-input">
+          <x-input name="letter" />
         </div>
         <div class="form-group">
           <label for="branch-input">Branch</label>
-          <select class="form-control" name="branch_id" id="branch-input">
+          <select class="form-control" name="id" id="branch-input">
             @foreach ($branches as $branch)
-              <option value="{{ $branch['id'] }}">
+              <option value="{{ $branch['id'] }}" @selected(old('id') === $branch['id'])>
                 {{ $branch['name'] }}
               </option>
             @endforeach
