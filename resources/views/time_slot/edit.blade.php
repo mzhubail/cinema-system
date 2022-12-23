@@ -6,7 +6,7 @@
   <div class="container" style="max-width: var(--breakpoint-md);">
     <form method="post">
       @csrf
-      <input type="hidden" name="id" value="{{ $time_slot->id }}">
+      <input type="hidden" name="time_slot" value="{{ $time_slot->id }}">
       <div class="card">
         <h4 class="card-header"> Add time slot </h4>
         <div class="card-body">
@@ -39,13 +39,11 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date-input">Time slot date</label>
-              <input class="form-control" type="date" name="date" id="date-input"
-                value="{{ $time_slot->start_time->format('Y-m-d') }}">
+              <x-input type="date" name="date" :value="$time_slot->start_time->format('Y-m-d')" />
             </div>
             <div class="form-group col-md-6">
               <label for="time-input">Time slot time</label>
-              <input class="form-control" type="time" name="time" id="time-input"
-                value="{{ $time_slot->start_time->format('H:i') }}">
+              <x-input type="time" name="time" :value="$time_slot->start_time->format('H:i')" />
             </div>
           </div>
           <div class="form-group">

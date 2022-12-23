@@ -12,7 +12,7 @@
           <div class="form-group">
             <label for="branch-input">Movie</label>
             @isset($movies)
-              <select class="form-control" name="mid" id="movie-input">
+              <select class="form-control" name="movie" id="movie-input">
                 <option hidden disabled selected value> -- Choose a movie -- </option>
                 @foreach ($movies as $movie)
                   <option value="{{ $movie['id'] }}">
@@ -21,7 +21,7 @@
                 @endforeach
               </select>
             @else
-              <select class="form-control" name="mid" id="movie-input"> </select>
+              <select class="form-control" name="movie" id="movie-input"> </select>
 
             @endisset
           </div>
@@ -43,18 +43,18 @@
             </div>
             <div class="form-group col-md-6">
               <label for="hall-input"> Hall </label>
-              <select class="form-control" name="hid" id="hall-input" disabled>
+              <select class="form-control" name="hall" id="hall-input" disabled>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date-input">Time slot date</label>
-              <input class="form-control" type="date" name="date" id="date-input">
+              <x-input type="date" name="date" />
             </div>
             <div class="form-group col-md-6">
               <label for="time-input">Time slot time</label>
-              <input class="form-control" type="time" name="time" id="time-input">
+              <x-input type="time" name="time" />
             </div>
           </div>
           <div class="form-group">

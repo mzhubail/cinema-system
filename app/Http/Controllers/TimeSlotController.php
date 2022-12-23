@@ -62,21 +62,27 @@ class TimeSlotController extends Controller
    */
   public function store(Request $request)
   {
+    $request->validate([
+      'movie' => 'required|exists:movies,id',
+      'hall' => 'required|exists:halls,id',
+      'date' => 'required|date_format:Y-m-d',
+      'time' => 'required|date_format:H:i',
+    ]);
+
     $datetime = new DateTimeImmutable($request->date . " " . $request->time);
 
     if (self::has_conflict(
-      Hall::find($request->hid),
+      Hall::find($request->hall),
       $datetime,
-      Movie::find($request->mid)->duration,
+      Movie::find($request->movie)->duration,
     )) {
-      session()->flash('message', ["Conflict!", "error"]);
-      return redirect()->refresh();
+      throw ValidationException::withMessages(["Time conflict was found"]);
     }
 
     $time_slot = new TimeSlot();
     $time_slot->start_time = $datetime;
-    $time_slot->movie_id = $request->mid;      // TODO: do not assign movie_id directly
-    $hall = Hall::find($request->hid);
+    $time_slot->movie_id = $request->movie;      // TODO: do not assign movie_id directly
+    $hall = Hall::find($request->hall);
     $hall->time_slots()->save($time_slot);
     session()->flash('message', ["Time slot added succefully", "info"]);
     return redirect()->refresh();
@@ -204,7 +210,11 @@ class TimeSlotController extends Controller
 
   public function update(Request $request)
   {
-    $input = $request->all();
+    $request->validate([
+      'time_slot' => 'required|exists:time_slots,id',
+      'date' => 'required|date_format:Y-m-d',
+      'time' => 'required|date_format:H:i',
+    ]);
 
     $time_slot = TimeSlot::find($request->id);
     $hall = $time_slot->hall;
@@ -236,7 +246,7 @@ class TimeSlotController extends Controller
     $time_slot->start_time = $datetime;
     $time_slot->save();
 
-    session()->flash('message', ["Time slot updated succefully", "error"]);
+    session()->flash('message', "Time slot updated succefully");
     return redirect()->back();
   }
 
