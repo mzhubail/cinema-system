@@ -10,11 +10,11 @@
       <div class="card-body">
         <div class="form-group">
           <label for="name-input">Name:</label>
-          <input class="form-control" type="text" name="name" id="name-input">
+          <x-input name="name" />
         </div>
         <div class="form-group">
           <label for="address-input">Address:</label>
-          <input class="form-control" type="text" name="addr" id="address-input">
+          <x-input name="address" />
         </div>
         <div class="d-flex justify-content-end">
           <input class="btn btn-primary" type="submit" value="Add branch">

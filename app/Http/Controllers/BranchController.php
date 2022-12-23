@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Branch;
+use Illuminate\Validation\Rule;
 
 class BranchController extends Controller
 {
@@ -55,8 +56,15 @@ class BranchController extends Controller
    */
   public function store(Request $request)
   {
-    Branch::create($request->all());
-    session()->flash('message', ["Branch Added succefully", "info"]);
+    $request->validate([
+      'name' => 'required|unique:branches|min:3|max:31',
+      'address' => 'required|min:5|max:63',
+    ]);
+    Branch::create([
+      'name' => $request->name,
+      'addr' => $request->address
+    ]);
+    session()->flash('message', "Branch Added succefully");
     return redirect()->refresh();
   }
 
@@ -76,12 +84,25 @@ class BranchController extends Controller
 
   public function update(Request $request)
   {
-    $input = $request->all();
+    $request->validate([
+      'branch' => 'required|exists:branches,id',
+    ]);
+    $branch = Branch::find($request->branch);
 
-    $branch = Branch::find($request->id);
-    $branch->fill($input);
+    $request->validate([
+      'name' => [
+        'required', 'min:3', 'max:31',
+        Rule::unique('branches', 'name')->ignore($branch->id)
+      ],
+      'address' => 'required|min:5|max:63',
+    ]);
+
+    $branch->fill([
+      'name' => $request->name,
+      'addr' => $request->address
+    ]);
     $branch->save();
-    session()->flash('message', ["Branch updated succefully", "error"]);
+    session()->flash('message', "Branch updated succefully");
     return redirect()->back();
   }
 }
