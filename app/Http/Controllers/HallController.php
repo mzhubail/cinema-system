@@ -27,11 +27,16 @@ class HallController extends Controller
   /**
    * Store a new hall
    */
-  public function store(HallRequest $request)
+  public function store(Request $request)
   {
+    $request->validate([
+      'letter' => 'required|alpha|size:1',
+      'branch' => 'required|exists:branches,id',
+    ]);
+
     // TODO: check for letter uiqueness
     $letter = Str::upper($request->letter);
-    $branch = Branch::find($request->id);
+    $branch = Branch::find($request->branch);
     if ($branch === null) {
       die("branch not found");
     }
@@ -75,7 +80,7 @@ class HallController extends Controller
   }
 
 
-  
+
   public function show_edit(Request $request)
   {
     $hall = Hall::find($request->id);
@@ -88,8 +93,13 @@ class HallController extends Controller
 
 
 
-  public function update(HallRequest $request)
+  public function update(Request $request)
   {
+    $request->validate([
+      'hall' => 'required|exists:halls,id',
+      'letter' => 'required|alpha|size:1',
+    ]);
+
     $hall = Hall::find($request->id);
     $hall->letter = Str::upper($request->letter);
     $hall->save();

@@ -14,9 +14,9 @@
         </div>
         <div class="form-group">
           <label for="branch-input">Branch</label>
-          <select class="form-control" name="id" id="branch-input">
+          <select class="form-control" name="branch" id="branch-input">
             @foreach ($branches as $branch)
-              <option value="{{ $branch['id'] }}" @selected(old('id') === $branch['id'])>
+              <option value="{{ $branch['id'] }}" @selected(old('branch') === $branch['id'])>
                 {{ $branch['name'] }}
               </option>
             @endforeach

@@ -5,7 +5,7 @@
 @section('main')
   <form method="post" class="container" style="max-width: var(--breakpoint-sm);">
     @csrf
-    <input type="hidden" name="id" value="{{ $hall->id }}">
+    <input type="hidden" name="hall" value="{{ $hall->id }}">
     <div class="card">
       <h4 class="card-header">Edit Hall</h4>
       <div class="card-body">
