@@ -4,28 +4,26 @@
 
 @section('main')
   <div class="container" style="max-width: var(--breakpoint-md);">
-    <form action="/edit_movie" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
       @csrf
-      <input type="hidden" name="id" value={{ $movie->id }}>
+      <input type="hidden" name="movie" value={{ $movie->id }}>
       <div class="card">
         <h4 class="card-header">Edit movie</h4>
         <div class="card-body">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="title-input">Title</label>
-              <input class="form-control" type="text" name="title" id="title-input" value="{{ $movie->title }}">
+              <x-input name="title" :value="$movie->title" />
             </div>
             <div class="form-group col-md-6">
-              <label for="rYear-input">Release year</label>
-              <input class="form-control" type="number" name="release_year" id="rYear-input"
-                value="{{ $movie->release_year }}">
+              <label for="release_year-input">Release year</label>
+              <x-input type="number" name="release_year" :value="$movie->release_year" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="duration-input">Duration</label>
-              <input class="form-control" type="time" max="03:00" min="00:00" name="duration" id="duration-input"
-                value="{{ $movie->duration }}">
+              <x-input type="time" max="03:00" min="00:00" name="duration" :value="$movie->duration" />
             </div>
             <div class="form-group col-md-6">
               <label for="lang-input">Language</label>
@@ -40,8 +38,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="rating-input">Rating</label>
-              <input class="form-control" type="number" max="10.0" min="0.0" step="0.1" name="rating"
-                id="rating-input" value="{{ $movie->rating }}">
+              <x-input type="number" max="10.0" min="0.0" step="0.1" name="rating" :value="$movie->rating" />
             </div>
 
             <div class="form-group col-md-6">
@@ -55,7 +52,9 @@
           </div>
           <div class="form-group">
             <label for="movie-desc">Description</label>
-            <textarea class="form-control" name="desc" id="movie-desc" cols="30" rows="10"> {{ $movie->desc }} </textarea>
+            <textarea class="form-control" name="desc" id="movie-desc" cols="30" rows="10">
+@if (old('desc') !== null){{ old('desc') }}@else{{ $movie->desc }}@endif
+</textarea>
           </div>
           <div class="form-group custom-file mb-3">
             <!-- MAX_FILE_SIZE must precede the file input field -->

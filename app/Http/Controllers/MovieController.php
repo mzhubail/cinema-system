@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MovieRequest;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class MovieController extends Controller
@@ -45,18 +46,29 @@ class MovieController extends Controller
   /**
    * Store a new movie in database
    */
-  public function store(MovieRequest $request)
+  public function store(Request $request)
   {
-    // Require Image, used try-catch to override with my own message
-    try {
-      $request->validate([
-        'poster-img' => 'required',
-      ]);
-    } catch (ValidationException $e) {
-      throw ValidationException::withMessages(['A poster image is required']);
-    }
-
-    $input = $request->validated();
+    Validator::make(
+      data: $request->all(),
+      rules: [
+        'title' => 'required|unique:movies|min:5|max:31',
+        'release_year' => 'required|integer|min:1980|max:2024',
+        'duration' => 'required|date_format:H:i',
+        'lang' => ['required', Rule::in(['ar', 'en', 'hu'])],
+        // TODO: validate number of decimals
+        'rating' => 'required|numeric',
+        'genre' => ['required', Rule::in(config('constants.genres'))],
+        'desc' => 'required|min:15|max:511|',
+        'poster-img' => 'required|image|max:512',
+      ],
+      messages: [
+        'poster-img.required' => 'A poster image is required',
+      ],
+      customAttributes: [
+        'desc' => 'description',
+        'poster-img' => 'poster image',
+      ],
+    )->validate();
 
     $input = $request->all();
     // Convert duration
@@ -142,10 +154,42 @@ class MovieController extends Controller
 
   function update(Request $request)
   {
+    $request->validate([
+      'movie' => 'required|exists:movies,id',
+    ]);
+    $movie = Movie::find($request->movie);
+    // dd($movie->title);
+
+    Validator::make(
+      data: $request->all(),
+      rules: [
+        'title' => [
+          'required',
+          Rule::unique('movies', 'title')->ignore($movie->id),
+          'min:5',
+          'max:31',
+        ],
+        'release_year' => 'required|integer|min:1980|max:2024',
+        'duration' => 'required|date_format:H:i',
+        'lang' => ['required', Rule::in(['ar', 'en', 'hu'])],
+        // TODO: validate number of decimals
+        'rating' => 'required|numeric',
+        'genre' => ['required', Rule::in(config('constants.genres'))],
+        'desc' => 'required|min:15|max:511|',
+        'poster-img' => 'image|max:512',
+      ],
+      messages: [
+        'poster-img.required' => 'A poster image is required',
+      ],
+      customAttributes: [
+        'desc' => 'description',
+        'poster-img' => 'poster image',
+      ],
+    )->validate();
+
     $input = $request->all();
     $input['duration'] = self::durationToSeconds($input['duration']);
 
-    $movie = Movie::find($request->id);
     if ($request->has('poster-img')) {
       // Delete old image
       Storage::delete($movie->img_path);
