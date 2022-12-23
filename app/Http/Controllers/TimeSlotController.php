@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class TimeSlotController extends Controller
 {
@@ -61,11 +62,11 @@ class TimeSlotController extends Controller
    */
   public function store(Request $request)
   {
-    $datetime = $request->date . " " . $request->time;
+    $datetime = new DateTimeImmutable($request->date . " " . $request->time);
 
     if (self::has_conflict(
       Hall::find($request->hid),
-      new DateTimeImmutable($datetime),
+      $datetime,
       Movie::find($request->mid)->duration,
     )) {
       session()->flash('message', ["Conflict!", "error"]);
@@ -73,7 +74,7 @@ class TimeSlotController extends Controller
     }
 
     $time_slot = new TimeSlot();
-    $time_slot->start_time = new DateTimeImmutable($request->date . " " . $request->time);
+    $time_slot->start_time = $datetime;
     $time_slot->movie_id = $request->mid;      // TODO: do not assign movie_id directly
     $hall = Hall::find($request->hid);
     $hall->time_slots()->save($time_slot);
@@ -207,39 +208,33 @@ class TimeSlotController extends Controller
 
     $time_slot = TimeSlot::find($request->id);
     $hall = $time_slot->hall;
-    // $hall = Hall::find($request->hid);
-    // $movie = Movie::find($request->mid);
     $movie = $time_slot->movie;
 
-    // $time_slot->fill($input);
-    // $time_slot->save();
+    $datetime = new DateTimeImmutable($request->date . " " . $request->time);
 
-    $datetime = $request->date . " " . $request->time;
-
+    // In order to get around the way has_conflict is implemented, I check
+    // conflict for update by pretending to delete the time slot and add a new
+    // one.  I them roll that back of course.
     DB::beginTransaction();
     $time_slot->delete();
 
     $conflicts = self::has_conflict(
       $hall,
-      new DateTimeImmutable($datetime),
+      $datetime,
       $movie->duration,
     );
     DB::rollBack();
     if ($conflicts) {
-      session()->flash('message', ["Conflict!", "error"]);
-      return redirect()->back();
+      // session()->flash('message', ["Conflict!", "error"]);
+      // return redirect()->back();
+      throw ValidationException::withMessages(["Time conflict was found"]);
     }
 
+    // I have to retrieve a new instance of time slot, because the previous one
+    // was before the transaction
     $time_slot = TimeSlot::find($request->id);
-    $time_slot->start_time = new DateTimeImmutable($datetime);
-    // $time_slot->save();
+    $time_slot->start_time = $datetime;
     $time_slot->save();
-
-    // $time_slot = new TimeSlot();
-    // $time_slot->start_time = new DateTimeImmutable($datetime);
-    // $time_slot->movie_id = $request->mid;
-    // $hall = Hall::find($request->hid);
-    // $hall->time_slots()->save($time_slot);
 
     session()->flash('message', ["Time slot updated succefully", "error"]);
     return redirect()->back();
