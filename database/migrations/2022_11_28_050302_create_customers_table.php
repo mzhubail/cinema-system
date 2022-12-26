@@ -16,9 +16,9 @@ return new class extends Migration
   {
     Schema::create('customers', function (Blueprint $table) {
       $table->id();
-      $table->string("fName");
-      $table->string("lName");
-      $table->string("email");
+      $table->string("fName", 31);
+      $table->string("lName", 31);
+      $table->string("email", 31);
       $table->date("birthday");
       $table->string("hash", 255);
       // Make it a float

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -26,6 +27,10 @@ class LoginController extends Controller
   public function login()
   {
     $request = request();
+    $request->validate([
+      'email' => 'required',
+      'password' => 'required',
+    ]);
 
     foreach (config('admin_credentials') as $id => list($email, $hash)) {
       if (
@@ -45,16 +50,18 @@ class LoginController extends Controller
       ->first();
 
     if ($customer === null) {
-      session()->flash('message', ["Email doesn't exist", "error"]);
-      return redirect()->back();
+      // session()->flash('message', ["Email doesn't exist", "error"]);
+      // return redirect()->back();
+      throw ValidationException::withMessages(['Invalid Email or password']);
     }
 
     if (!password_verify(
       password: $request->password,
       hash: $customer->hash
     )) {
-      session()->flash('message', ["Invalid password", "error"]);
-      return redirect()->back();
+      // session()->flash('message', ["Invalid password", "error"]);
+      // return redirect()->back();
+      throw ValidationException::withMessages(['Invalid Email or password']);
     }
 
     session([

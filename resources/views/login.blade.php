@@ -9,26 +9,18 @@
       <h4 class="card-header">Login</h4>
       <div class="card-body">
         <div class="form-group row">
-          <label class="col-md-3 col-form-label" for="inputEmail_">Email</label>
+          <label class="col-md-3 col-form-label" for="email-input">E-mail</label>
           <div class="col-md-9">
-            <input type="email" class="form-control" id="inputEmail_" name="email" autocomplete="off">
+            <x-input type="email" name="email" autocomplete="off" />
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-md-3 cold-form-label" for="inputPassword4">Password</label>
+          <label class="col-md-3 col-form-label" for="password-input">Password</label>
           <div class="col-md-9">
-            <input type="password" class="form-control" id="inputPassword4" name="password">
+            <x-input type="password" name="password" />
           </div>
         </div>
-        <div class="form-group">
-          <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="c99">
-            <label class="custom-control-label" for="c99">
-              Remember me
-            </label>
-          </div>
-        </div>
-        <div class="form-group">Don't have an account yet? <a href="./register">Sign up</a> </div>
+        <div class="form-group">Don't have an account yet? <a href="./register"> Register </a> </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Sign in</button>
         </div>

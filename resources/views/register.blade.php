@@ -10,40 +10,40 @@
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputEmail_">First name</label>
-            <input type="text" class="form-control" id="inputEmail_" name="fName">
+            <label for="fName-input">First name</label>
+            <x-input name="fName" />
           </div>
           <div class="form-group col-md-6">
-            <label for="inputPassword4">Last name</label>
-            <input type="text" class="form-control" id="inputPassword4" name="lName">
+            <label for="lName-input">Last name</label>
+            <x-input name="lName" />
           </div>
         </div>
         <div class="form-group">
           <label for="email-input">E-mail</label>
-          <input class="form-control" type="email" id="email-input" name="email" autocomplete="off">
+          <x-input type="email" name="email" autocomplete="off" />
         </div>
         <div class="form-group">
-          <label for="bday-input">Birthday</label>
-          <input class="form-control" type="date" id="bday-input" name="birthday">
+          <label for="birthday-input">Birthday</label>
+          <x-input type="date" name="birthday" />
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="pass-input">Password</label>
-            <input type="password" class="form-control" id="pass-input" name="password">
+            <label for="password-input">Password</label>
+            <x-input type="password" name="password" />
           </div>
           <div class="form-group col-md-6">
-            <label for="pass-conf">Confirm password</label>
-            <input type="password" class="form-control" id="pass-conf">
+            <label for="password_confirmation-input">Confirm password</label>
+            <x-input type="password" name="password_confirmation" />
           </div>
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input class="custom-control-input" type="checkbox" id="c99">
             <label class="custom-control-label" for="c99">
               Remember me
             </label>
           </div>
-        </div>
+        </div> --}}
         <div class="form-group">Already have an account? <a href="./login">Log in</a> </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Sign in</button>
