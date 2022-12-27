@@ -18,11 +18,13 @@
 
       <p class="description px-5">{{ $movie->desc }}</p>
 
-      <a href="/choose_time_slot?mid={{ $movie->id }}">
-        <button type="button" class="btn-lg btn-primary float-right">
-          Book
-        </button>
-      </a>
+      @if (session()->has('isAdmin') && !session('isAdmin'))
+        <a href="/choose_time_slot?mid={{ $movie->id }}">
+          <button type="button" class="btn-lg btn-primary float-right">
+            Book
+          </button>
+        </a>
+      @endif
     </div>
   </div>
 

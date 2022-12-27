@@ -47,7 +47,6 @@ class RegisterController extends Controller
         'lName' => 'last name',
       ],
     )->validate();
-    die('Passed');
 
     $input = $request->all();
     $input["hash"] = password_hash(
