@@ -40,6 +40,8 @@ return new class extends Migration
       $table->string('desc', 511);
       $table->string('img_path', 255);
       $table->timestamps();
+
+      $table->fullText('title');
     });
     Movie::factory()
       ->count(10)

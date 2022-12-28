@@ -30,4 +30,16 @@ class Movie extends Model
   {
     return $this->hasMany(TimeSlot::class);
   }
+
+
+  /**
+   * Perform full text search in movie title
+   *
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public static function searchTitle(string $query)
+  {
+    return
+      Movie::whereFullText('title', $query);
+  }
 }
