@@ -31,13 +31,13 @@ class BookingController extends Controller
   {
   }
 
-  public function confirm_booking()
+  public function show_confirm_booking()
   {
     // dd(
     //   session()->all()
     // );
     if (session()->missing('time_slot') || session()->missing('seats'))
-      dd('');
+      return redirect()->route('home');
     $time_slot = session('time_slot');
     $seats = session('seats');
 
@@ -48,5 +48,39 @@ class BookingController extends Controller
       'time_slot' => $time_slot,
       'seats' => $seats,
     ]);
+  }
+
+  public function confirm_booking(Request $request)
+  {
+    $time_slot = session('time_slot');
+    $seats = session('seats');
+
+    DB::beginTransaction();
+    $booking = Booking::create([
+      'time_slot_id' => $time_slot->id,
+      'customer_id' => session('userId'),
+    ]);
+
+    session()->forget(['time_slot_id', 'seats']);
+
+    foreach ($seats as $seat) {
+      preg_match('/^(\w)(\d{2})$/', $seat, $matches);
+      [$row, $column] = [
+        ord($matches[1]) - 65,
+        $matches[2] - 1
+      ];
+      Seat::create([
+        'booking_id' => $booking->id,
+        'row' => $row,
+        'column' => $column,
+      ]);
+      $tmp[] = [$row, $column];
+    }
+    // dd($tmp);
+
+    DB::commit();
+
+    session()->flash('message', 'Booking added succefully');
+    return redirect()->back();
   }
 }

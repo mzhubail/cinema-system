@@ -92,7 +92,9 @@ Route::middleware('auth.customer')->group(function () {
   Route::post('/choose_seats', [SeatController::class, 'receive_chosen_seats']);
 
   Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);
-  Route::get('/confirm_booking', [BookingController::class, 'confirm_booking']);
+
+  Route::get('/confirm_booking', [BookingController::class, 'show_confirm_booking']);
+  Route::post('/confirm_booking', [BookingController::class, 'confirm_booking']);
 });
 
 
