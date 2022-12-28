@@ -1,6 +1,5 @@
 @push('styles')
   <style>
-    /* TODO: make responsive */
     .seat-row>div {
       display: inline-block;
       height: 24px;
@@ -84,6 +83,29 @@
       opacity: 50%;
       transition: opacity 500ms ease;
     }
+
+    /* Responsive */
+    /* TODO: test admin view */
+    @media (max-width: 576px) {
+      /* Decrease size of seats */
+      .seat-row>div {
+        height: 18px;
+        width: 15px;
+        margin: 3px;
+        font-size: 0.6rem;
+      }
+
+      /* Handle the positioning and spacing of the price and legened */
+      #legend-container {
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+
+      .legend {
+        margin: 0 !important;
+        margin-bottom: 1rem !important;
+      }
+    }
   </style>
 @endpush
 
@@ -162,7 +184,7 @@
     </div>
 
 
-    <div class="row mx-3">
+    <div id="legend-container" class="row mx-3">
       @isset($seats)
         <div class="price-container d-flex align-items-center">
           Total Price: &nbsp; <span id="price-output"> 0 </span> &nbsp; BD
