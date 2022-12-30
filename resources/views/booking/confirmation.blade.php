@@ -14,8 +14,12 @@
           <div class="col"> {{ $time_slot->movie->title }} </div>
         </div> --}}
         <div class="row">
-          <div class="col-12 col-md-3 text-md-muted"> User ID </div>
+          <div class="col-12 col-md-3 text-md-muted"> Customer ID </div>
           <div class="col"> {{ session('userId') }} </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-3 text-md-muted"> Email </div>
+          <div class="col"> {{ session('customer')->email }} </div>
         </div>
         <br>
         <div class="row">
@@ -28,7 +32,7 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-3 text-md-muted"> Duration </div>
-          <div class="col"> {{ $time_slot->movie->duration }} </div>
+          <div class="col"> {{ \App\Models\Movie::minutesToDuration($time_slot->movie->duration) }} </div>
         </div>
         <br>
         <div class="row">
@@ -45,11 +49,11 @@
           <div class="col"> {{ count($seats) }} </div>
         </div>
         <div class="row">
-          <div class="col-12 col-md-3 text-md-muted"> Seats </div>
+          <div class="col-12 col-md-3 text-md-muted text-wrap"> Seats </div>
           <div class="col"> {{ join(', ', $seats) }} </div>
         </div>
         <button type="submit" class="btn btn-primary float-right mt-4">
-          Confirm booking
+          Proceed to payment
         </button>
       </div>
     </div>

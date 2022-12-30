@@ -45,7 +45,7 @@ class LoginController extends Controller
       }
     }
 
-    $customer = Customer::select('id', 'hash')
+    $customer = Customer::select('id', 'hash', 'email')
       ->where('email', $request->email)
       ->first();
 
@@ -66,6 +66,7 @@ class LoginController extends Controller
 
     session([
       'userId' => $customer->id,
+      'customer' => $customer,
       'isAdmin' => false,
     ]);
 
