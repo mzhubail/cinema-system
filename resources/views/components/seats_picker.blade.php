@@ -129,13 +129,7 @@
   </h4>
 
 
-  {{-- TODO: add screen --}}
   <div class="card-body">
-    {{-- <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="time-slot-input"></label>
-      <select id="time-slot-input"></select>
-    </div> --}}
-
     @isset($seats)
     @else
       <div class="form-row">
@@ -167,6 +161,22 @@
     @endisset
 
     <div id="seats-picker" class="my-4 disabled">
+      <div class="my-4 mx-5" style="
+      perspective: 1300px;
+      display:flex;
+      justify-content: center;
+      ">
+        <div class="screen"
+          style="
+          display: inline-block;
+          width: var(--breakpoint-sm);
+          height: 20px;
+          background-color: #a8c5d6;
+          clip-path: polygon(100% 0, 96% 100%, 4% 100%, 0 0);
+      ">
+        </div>
+      </div>
+
       <div class="seat-row">
         <div></div>
         @foreach (range(1, 15) as $j)
