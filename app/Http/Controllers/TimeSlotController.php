@@ -265,7 +265,8 @@ class TimeSlotController extends Controller
     $res = Movie::find($mid)->time_slots()
       ->join('halls', 'halls.id', '=', 'hall_id')
       ->join('branches', 'branches.id', '=', 'branch_id')
-      ->whereDay('start_time', '>=', now())
+      ->where('start_time', '>=', now())
+      ->where('start_time', '<', now()->addWeeks(2))
       ->withCasts(['start_time' => 'datetime'])
       ->select(['*', 'branches.name AS branch_name', 'time_slots.id as time_slot_id'])
       ->orderBy('start_time', 'asc')
@@ -277,6 +278,7 @@ class TimeSlotController extends Controller
     // `$res_` will conatin an array with date being the key for the first
     // level, branch name for the second level, and the third level will contain
     // arrays of id and time
+    $res_ = [];
     foreach ($res as $r) {
       [$date, $time] = [
         $r->start_time->toFormattedDateString(),
@@ -288,6 +290,8 @@ class TimeSlotController extends Controller
         'time_slot_id' => $r->time_slot_id,
       ];
     }
+
+    $res_ = array_slice($res_, 0, 5);
 
     return view(
       'time_slot.choose',

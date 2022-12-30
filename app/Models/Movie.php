@@ -59,14 +59,19 @@ class Movie extends Model
     return
       // Must have at least one time slot
       movie::has('time_slots')
+      // Doesn't have a time slot before the past week
+      ->wheredoesnthave('time_slots', function (builder $query) {
+        $query->whereDate('start_time', '<', now()->subWeek());
+      })
       // Must have at least one time slot in the past week
       ->whereHas('time_slots', function (Builder $query) {
         $query->whereDate('start_time', '<', now())
           ->whereDate('start_time', '>', now()->subWeek());
       })
-      // Doesn't have a time slot before the past week
-      ->wheredoesnthave('time_slots', function (builder $query) {
-        $query->whereDate('start_time', '<', now()->subWeek());
+      // Must have at least one time slot in the next two weeks
+      ->whereHas('time_slots', function (Builder $query) {
+        $query->whereDate('start_time', '>', now())
+          ->whereDate('start_time', '<', now()->addWeeks(2));
       });
   }
 
@@ -85,7 +90,8 @@ class Movie extends Model
       ->whereHas('time_slots', function (Builder $query) {
         $query->whereDate('start_time', '>', now())
           ->whereDate('start_time', '<', now()->addWeeks(2));
-      });
+      })
+      ->limit(15);
   }
 
 
