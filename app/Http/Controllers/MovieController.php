@@ -11,28 +11,6 @@ use Illuminate\Validation\ValidationException;
 
 class MovieController extends Controller
 {
-  /** Converts duration from hh:mm format to number of seconds */
-  static public function durationToSeconds(string $duration): int | null
-  {
-    if (preg_match('/^(\d{1,2}):(\d{2})$/', $duration, $matches)) {
-      return ($matches[1] * 60) + $matches[2];
-    } else {
-      return null;
-    }
-  }
-
-
-
-  /** Converts duration from number of minutes to hh:mm format */
-  static public function minutesToDuration(int $minutes): string
-  {
-    $h = $minutes / 60;
-    $m = $minutes % 60;
-    return sprintf("%02d:%02d", $h, $m);
-  }
-
-
-
   /**
    * Show the form for adding a movie
    */
@@ -72,7 +50,7 @@ class MovieController extends Controller
 
     $input = $request->all();
     // Convert duration
-    $input['duration'] = self::durationToSeconds($input['duration']);
+    $input['duration'] = Movie::durationToSeconds($input['duration']);
     // Store image
     $input['img_path'] = $request
       ->file('poster-img')
@@ -95,7 +73,7 @@ class MovieController extends Controller
       'movie.details',
       [
         'movie' => $movie,
-        'formatted_duration' => self::minutesToDuration($movie->duration),
+        'formatted_duration' => Movie::minutesToDuration($movie->duration),
       ]
     );
   }
@@ -116,7 +94,7 @@ class MovieController extends Controller
 
     // Format duration
     $movies->transform(function ($movie) {
-      $movie['duration'] = self::minutesToDuration($movie['duration']);
+      $movie['duration'] = Movie::minutesToDuration($movie['duration']);
       return $movie;
     });
 
@@ -148,7 +126,7 @@ class MovieController extends Controller
       session()->flash('message', ["Sorry, movie not found", "error"]);
       return redirect()->back();
     }
-    $movie->duration = self::minutesToDuration($movie->duration);
+    $movie->duration = Movie::minutesToDuration($movie->duration);
     return view('movie.edit', ['movie' => $movie]);
   }
 
@@ -188,7 +166,7 @@ class MovieController extends Controller
     )->validate();
 
     $input = $request->all();
-    $input['duration'] = self::durationToSeconds($input['duration']);
+    $input['duration'] = Movie::durationToSeconds($input['duration']);
 
     if ($request->has('poster-img')) {
       // Delete old image
