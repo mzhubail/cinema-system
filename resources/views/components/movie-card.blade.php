@@ -2,11 +2,10 @@
 
 <div class="col mb-4">
   <div class="card">
-    <div style="background:url({{ $movie->img_path }}) no-repeat center center / cover; height: 350px; width: 100%">
-    </div>
-    {{-- <a href="/movie_details?id={{ $movie->id }}">
-      <img src="{{ $movie->img_path }}" class="card-img-top" alt="...">
-    </a> --}}
+    <a href="/movie_details?id={{ $movie->id }}">
+      <div style="background:url({{ $movie->img_path }}) no-repeat center center / cover; height: 350px; width: 100%">
+      </div>
+    </a>
     <div class="card-body">
       <h5 class="card-title"> {{ $movie->title }} </h5>
       <div class="text-muted"> Language </div>
