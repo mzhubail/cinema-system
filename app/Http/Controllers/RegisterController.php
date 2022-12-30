@@ -55,6 +55,7 @@ class RegisterController extends Controller
     );
 
     Customer::create($input);
+    session()->flash('message', 'Account created successfully');
     return redirect("login");
   }
 }

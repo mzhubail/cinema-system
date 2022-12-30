@@ -59,7 +59,7 @@ class Movie extends Model
     return
       // Must have at least one time slot
       movie::has('time_slots')
-      // Must have at least on time slot in the past week
+      // Must have at least one time slot in the past week
       ->whereHas('time_slots', function (Builder $query) {
         $query->whereDate('start_time', '<', now())
           ->whereDate('start_time', '>', now()->subWeek());
