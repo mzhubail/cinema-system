@@ -161,21 +161,24 @@
     @endisset
 
     <div id="seats-picker" class="my-4 disabled">
-      <div class="my-4 mx-5" style="
-      perspective: 1300px;
-      display:flex;
-      justify-content: center;
-      ">
-        <div class="screen"
+      @isset($seats)
+        <div class="my-4 mx-5"
           style="
-          display: inline-block;
-          width: var(--breakpoint-sm);
-          height: 20px;
-          background-color: #a8c5d6;
-          clip-path: polygon(100% 0, 96% 100%, 4% 100%, 0 0);
-      ">
+            perspective: 1300px;
+            display:flex;
+            justify-content: center;
+          ">
+          <div class="screen"
+            style="
+              display: inline-block;
+              width: var(--breakpoint-sm);
+              height: 20px;
+              background-color: #a8c5d6;
+              clip-path: polygon(100% 0, 96% 100%, 4% 100%, 0 0);
+            ">
+          </div>
         </div>
-      </div>
+      @endisset
 
       <div class="seat-row">
         <div></div>
