@@ -39,6 +39,10 @@
     </svg>
   @endfor
 
-  <span style="font-size: 1.5em;" class="pl-3">{{ $rating }}</span>
-  <span style="font-size: 0.8em; font-weight: 300; align-self: end;" class="pl-2 text-muted">/ 10</span>
+  <span style="font-size: 2em; font-weight: 300;" class="pl-3">
+    {{ $rating }}
+  </span>
+  <span style="font-size: 0.9em; font-weight: bold; align-self: end;" class="pl-2 text-muted">
+    / 10
+  </span>
 </div>

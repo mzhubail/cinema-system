@@ -9,7 +9,7 @@
       <img class="rounded-lg" src="{{ asset($movie->img_path) }}" style="width: 100%;" alt="">
     </div>
     <div class="col">
-      <h2 class="display-5 text-capitarize text-center mb-3"> {{ $movie->title }} </h2>
+      <h2 class="display-4 text-capitarize text-center mb-3" style="font-size: 3rem;"> {{ $movie->title }} </h2>
       <div class="text-muted text-center mb-4 row">
         <p class="col-4">
           {{-- Globe Icon --}}
