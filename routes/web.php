@@ -95,6 +95,9 @@ Route::middleware('auth.customer')->group(function () {
 
   Route::get('/confirm_booking', [BookingController::class, 'show_confirm_booking']);
   Route::post('/confirm_booking', [BookingController::class, 'confirm_booking']);
+
+  Route::get('/coming_soon', [MovieController::class, 'browse_coming_soon']);
+  Route::get('/new_arrival', [MovieController::class, 'browse_new_arrival']);
 });
 
 

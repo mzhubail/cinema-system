@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Movie extends Model
 {
@@ -29,6 +30,44 @@ class Movie extends Model
   public function time_slots()
   {
     return $this->hasMany(TimeSlot::class);
+  }
+
+  /**
+   * get coming soon movies
+   *
+   * @return \illuminate\database\eloquent\builder
+   */
+  public static function coming_soon()
+  {
+    return
+      // Must have at least one time slot
+      movie::has('time_slots')
+      // Doesn't have a time slot in the past
+      ->wheredoesnthave('time_slots', function (builder $query) {
+        $query->wheredate('start_time', '<', now());
+      });
+  }
+
+
+  /**
+   * get new arrivals
+   *
+   * @return \illuminate\database\eloquent\builder
+   */
+  public static function new_arrival()
+  {
+    return
+      // Must have at least one time slot
+      movie::has('time_slots')
+      // Must have at least on time slot in the past week
+      ->whereHas('time_slots', function (Builder $query) {
+        $query->whereDate('start_time', '<', now())
+          ->whereDate('start_time', '>', now()->subWeek());
+      })
+      // Doesn't have a time slot before the past week
+      ->wheredoesnthave('time_slots', function (builder $query) {
+        $query->whereDate('start_time', '<', now()->subWeek());
+      });
   }
 
 

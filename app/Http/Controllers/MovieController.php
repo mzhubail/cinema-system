@@ -117,6 +117,28 @@ class MovieController extends Controller
     );
   }
 
+  /**
+   * List the coming soon moview
+   */
+  public function browse_coming_soon()
+  {
+    return view(
+      'movie.coming_soon',
+      ['movies' => Movie::coming_soon()->get()]
+    );
+  }
+
+  /**
+   * List new arrivals
+   */
+  public function browse_new_arrival()
+  {
+    return view(
+      'movie.new_arrival',
+      ['movies' => Movie::new_arrival()->get()]
+    );
+  }
+
 
 
   function show_edit(Request $request)
