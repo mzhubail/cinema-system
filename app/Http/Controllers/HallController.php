@@ -44,7 +44,7 @@ class HallController extends Controller
     $branch->halls()->save($hall);
 
     session()->flash('message', "Hall Added succefully");
-    return redirect()->back();
+    return back();
   }
 
 
@@ -86,7 +86,7 @@ class HallController extends Controller
     $hall = Hall::find($request->id);
     if ($hall === null) {
       session()->flash('message', ["Sorry, hall not found", "error"]);
-      return redirect()->back();
+      return back();
     }
     return view('hall.edit', ['hall' => $hall]);
   }
@@ -104,6 +104,6 @@ class HallController extends Controller
     $hall->letter = Str::upper($request->letter);
     $hall->save();
     session()->flash('message', "Hall updated succefully");
-    return redirect()->back();
+    return back();
   }
 }

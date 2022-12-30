@@ -65,7 +65,7 @@ class BranchController extends Controller
       'addr' => $request->address
     ]);
     session()->flash('message', "Branch Added succefully");
-    return redirect()->refresh();
+    return back();
   }
 
 
@@ -75,7 +75,7 @@ class BranchController extends Controller
     $branch = Branch::find($request->id);
     if ($branch === null) {
       session()->flash('message', ["Sorry, branch not found", "error"]);
-      return redirect()->back();
+      return back();
     }
     return view('branch.edit', ['branch' => $branch]);
   }
@@ -103,6 +103,6 @@ class BranchController extends Controller
     ]);
     $branch->save();
     session()->flash('message', "Branch updated succefully");
-    return redirect()->back();
+    return back();
   }
 }

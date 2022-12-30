@@ -57,7 +57,7 @@ class MovieController extends Controller
       ->storePublicly('posters');
     Movie::create($input);
     session()->flash('message', "Movie Added succefully");
-    return redirect()->refresh();
+    return back();
   }
 
   public function show(Request $request)
@@ -89,7 +89,7 @@ class MovieController extends Controller
 
     if ($movies->isEmpty()) {
       session()->flash('message', ["Sorry, no movies where found", "error"]);
-      return redirect()->back();
+      return back();
     }
 
     // Format duration
@@ -124,7 +124,7 @@ class MovieController extends Controller
     $movie = Movie::find($request->id);
     if ($movie === null) {
       session()->flash('message', ["Sorry, movie not found", "error"]);
-      return redirect()->back();
+      return back();
     }
     $movie->duration = Movie::minutesToDuration($movie->duration);
     return view('movie.edit', ['movie' => $movie]);
@@ -179,6 +179,6 @@ class MovieController extends Controller
     $movie->fill($input);
     $movie->save();
     session()->flash('message', ["Movie updated succefully", "error"]);
-    return redirect()->back();
+    return back();
   }
 }

@@ -81,6 +81,6 @@ class BookingController extends Controller
     DB::commit();
 
     session()->flash('message', 'Booking added succefully');
-    return redirect()->back();
+    return back();
   }
 }

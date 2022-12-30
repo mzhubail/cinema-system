@@ -85,7 +85,7 @@ class TimeSlotController extends Controller
     $hall = Hall::find($request->hall);
     $hall->time_slots()->save($time_slot);
     session()->flash('message', ["Time slot added succefully", "info"]);
-    return redirect()->refresh();
+    return back();
   }
 
 
@@ -195,7 +195,7 @@ class TimeSlotController extends Controller
     $time_slot = TimeSlot::find($request->id);
     if ($time_slot === null) {
       session()->flash('message', ["Sorry, time slot not found", "error"]);
-      return redirect()->back();
+      return back();
     }
     $time_slot->start_time = new DateTimeImmutable($time_slot->start_time);
     // dd(
@@ -247,7 +247,7 @@ class TimeSlotController extends Controller
     $time_slot->save();
 
     session()->flash('message', "Time slot updated succefully");
-    return redirect()->back();
+    return back();
   }
 
 
