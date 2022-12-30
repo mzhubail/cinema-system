@@ -24,7 +24,7 @@ return new class extends Migration
         ->cascadeOnDelete();
       $table->timestamps();
     });
-    for ($i = 0; $i < 200; $i++)
+    for ($i = 0; $i < 500; $i++)
       TimeSlot::factory()
         ->create();
   }

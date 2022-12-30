@@ -21,9 +21,20 @@ class TimeSlotFactory extends Factory
   {
     $movie = fake()->randomElement(Movie::select('id')->get());
     // Limit movies 1..3 with time slots in the future (i.e. coming soon)
-    $getStartTime = ($movie->id <= 3)
-      ? fn () => fake()->dateTimeBetween('+1 day', '+4 day')
-      : fn () => fake()->dateTimeBetween('-7 day', '+7 day');
+    // $getStartTime = ($movie->id <= 3)
+    //   ? fn () => fake()->dateTimeBetween('+1 day', '+4 day')
+    //   : fn () => fake()->dateTimeBetween('-7 day', '+7 day');
+
+    // Coming soon
+    if ($movie->id <= 4)
+      $getStartTime = fn () => fake()->dateTimeBetween('+1 day', '+8 day');
+    // In the past
+    elseif ($movie->id <= 8)
+      $getStartTime = fn () => fake()->dateTimeBetween('-14 day', '-8 day');
+    elseif ($movie->id <= 10)
+      $getStartTime = fn () => fake()->dateTimeBetween('-7 day', '+21 day');
+    else
+      $getStartTime = fn () => fake()->dateTimeBetween('-16 day', '+35 day');
 
     do {
       $start_time = $getStartTime();

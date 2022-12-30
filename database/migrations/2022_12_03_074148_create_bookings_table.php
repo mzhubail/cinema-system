@@ -38,7 +38,7 @@ return new class extends Migration
     // Booking::factory()
     //   ->count(100)
     //   ->create();
-    for ($i = 0; $i < 650; $i++)
+    for ($i = 0; $i < 1000; $i++)
       Booking::factory()
         ->count(1)
         ->create();
