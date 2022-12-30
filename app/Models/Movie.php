@@ -72,6 +72,24 @@ class Movie extends Model
 
 
   /**
+   * get movies to be displayed in the home page
+   *
+   * @return \illuminate\database\eloquent\builder
+   */
+  public static function home_page_movies()
+  {
+    return
+      // Must have at least one time slot
+      movie::has('time_slots')
+      // Must have at least one time slot in the next two weeks
+      ->whereHas('time_slots', function (Builder $query) {
+        $query->whereDate('start_time', '>', now())
+          ->whereDate('start_time', '<', now()->addWeeks(2));
+      });
+  }
+
+
+  /**
    * Perform full text search in movie title
    *
    * @return \Illuminate\Database\Eloquent\Builder

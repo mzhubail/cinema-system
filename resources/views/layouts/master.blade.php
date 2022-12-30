@@ -115,9 +115,14 @@
 
   <?php } ?> --}}
 
-  <main class="container py-5">
+  @if (isset($without_container) && $without_container)
     @yield('main')
-  </main>
+  @else
+    <main class="container py-5">
+      @yield('main')
+    </main>
+  @endif
+
 
   <!-- <footer class="small text-center text-muted">
 Data provided for free by <a href="https://iextrading.com/developer">IEX</a>. View <a href="https://iextrading.com/api-exhibit-a/">IEX’s Terms of Use</a>.

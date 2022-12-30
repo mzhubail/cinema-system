@@ -12,6 +12,7 @@ use App\Http\Controllers\HallController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\TimeSlotController;
 use App\Models\Booking;
+use App\Models\Movie;
 use App\Models\TimeSlot;
 
 /*
@@ -108,7 +109,10 @@ Route::middleware('require.login')->group(function () {
   Route::get('/', function () {
     return session("isAdmin") ?
       view('home.admin') :
-      view('home.customer');
+      view(
+        'home.customer',
+        ['movies' => Movie::home_page_movies()->get()]
+      );
   })->name('home');
 });
 
