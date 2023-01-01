@@ -20,6 +20,7 @@
       Unavailable
     @else
       <div class="card">
+        <h4 class="card-header">Choose Time</h4>
         <div class="card-body">
           <ul class="nav nav-pills flex-column flex-md-row justify-content-center" id="myTab" role="tablist">
             {{-- Each date has its own tab button --}}
