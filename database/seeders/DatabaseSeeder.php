@@ -25,22 +25,34 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
+    $branch_count =
+      fn () => 3;
+    $hall_count =
+      fn () => 4;
+    $time_slot_count =
+      fn () => fake()->numberBetween(25, 40);
+    $booking_count =
+      fn () => fake()->numberBetween(3, 4);
+    $seat_count =
+      fn () => fake()->numberBetween(2, 4);
+
+
     $customers =
       Customer::factory(10)->create();
     $movies =
-      Movie::factory(5)->create();
+      Movie::factory(20)->create();
 
     // $movies = Movie::get();
     // $customers = Customer::get();
 
     // Branches
-    foreach (range(1, 3) as $i) {
+    foreach (range(1, $branch_count()) as $i) {
       $branch = Branch::factory()->create();
       $letters = collect([]);
 
       // Halls
       // foreach (range(1, fake()->numberBetween(2,4)) as $j) {
-      foreach (range(1, 3) as $j) {
+      foreach (range(1, $hall_count()) as $j) {
         // Check for letter uniqueness
         do {
           $letter = Str::upper(
@@ -54,18 +66,19 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Time Slots
-        foreach (range(1, 10) as $k) {
+        foreach (range(1, $time_slot_count()) as $k) {
           $movie = fake()->randomElement($movies);
 
           // Pick date interval
           if ($movie->id <= 4)
             $getStartTime = fn () => fake()->dateTimeBetween('+1 day', '+8 day'); // Coming soon
-          elseif ($movie->id <= 8)
+          elseif ($movie->id <= 7)
             $getStartTime = fn () => fake()->dateTimeBetween('-14 day', '-8 day'); // In the past
-          elseif ($movie->id <= 10)
-            $getStartTime = fn () => fake()->dateTimeBetween('-7 day', '+21 day');
+          // elseif ($movie->id <= 10)
           else
-            $getStartTime = fn () => fake()->dateTimeBetween('-16 day', '+35 day');
+            $getStartTime = fn () => fake()->dateTimeBetween('-3 day', '+18 day');
+          // else
+          //   $getStartTime = fn () => fake()->dateTimeBetween('-16 day', '+35 day');
 
           // Check for time conflict
           do {
@@ -89,12 +102,12 @@ class DatabaseSeeder extends Seeder
           $all_seats = collect([]);
 
           // Bookings
-          foreach (range(1, 4) as $l) {
+          foreach (range(1, $booking_count()) as $l) {
             $customer = fake()->randomElement($customers);
 
             $current_seats = collect([]);
             // Seats
-            foreach (range(1, 4) as $m) {
+            foreach (range(1, $seat_count()) as $m) {
               // Check for seat conflict
               do {
                 $row = fake()->numberBetween(0, 4);
