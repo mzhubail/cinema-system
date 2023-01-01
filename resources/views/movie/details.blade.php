@@ -51,7 +51,7 @@
         </p>
 
         <div class="d-flex align-items-center my-3">
-          <x-rating rating="9" />
+          <x-rating :rating="$movie->rating" />
 
           @if (session()->has('isAdmin') && !session('isAdmin'))
             <a class="ml-auto" href="/choose_time_slot?mid={{ $movie->id }}">

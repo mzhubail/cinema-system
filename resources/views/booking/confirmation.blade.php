@@ -28,7 +28,7 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-3 text-md-muted"> Start time </div>
-          <div class="col"> {{ $time_slot->start_time }} </div>
+          <div class="col"> {{ (new Illuminate\Support\Carbon($time_slot->start_time))->format('Y-m-d H:i') }} </div>
         </div>
         <div class="row">
           <div class="col-12 col-md-3 text-md-muted"> Duration </div>
@@ -56,6 +56,17 @@
           <div class="col-12 col-md-3 text-md-muted text-wrap"> Price </div>
           <div class="col"> {{ $price }} BD </div>
         </div>
+        <br>
+        {{-- <div class="row">
+          <div class="col-12 col-md-3 text-md-muted text-wrap"> Date </div>
+          <div class="col"> {{ now()->toFormattedDateString() }} </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-3 text-md-muted text-wrap"> Time </div>
+          <div class="col"> {{ now()->toTimeString() }} </div>
+        </div> --}}
+        Date: {{ now()->toDateString() }} <br>
+        Time: {{ now()->format('H:i') }}
         <button type="submit" class="btn btn-primary float-right mt-4">
           Proceed to payment
         </button>

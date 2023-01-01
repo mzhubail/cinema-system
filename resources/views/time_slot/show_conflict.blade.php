@@ -3,38 +3,55 @@
 
 @section('title', 'Browse Branches')
 
-@section('style')
+@push('styles')
   <style>
-    tr :nth-child(1) {
-      border-right: 2px solid #dee2e6;
-    }
+    /* tr :nth-child(1) {
+          border-right: 2px solid #dee2e6;
+        }
 
-    tr :nth-child(6) {
-      border-right: 2px solid #dee2e6;
+        tr :nth-child(6) {
+          border-right: 2px solid #dee2e6;
+        } */
+    tr:nth-of-type(2n) td {
+      border-bottom: 3px solid #dee2e6;
     }
   </style>
-@endsection
+@endpush
 
 @section('main')
   @empty($conflicts)
     <h4>No Time Slot conflicts where found</h4>
+    <span class="mb-3 float-right">
+      Date: {{ now()->toDateString() }} <br>
+      Time: {{ now()->format('H:i') }}
+    </span>
   @else
     <div class="card">
       <h4 class="card-header"> Time Slot Conflicts </h4>
       <div class="card-body">
         <div class="container">
+          <span class="mb-3 float-right">
+            Date: {{ now()->toDateString() }} <br>
+            Time: {{ now()->format('H:i') }}
+          </span>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th> Hall ID </th>
+                  {{-- <th> Hall ID </th>
                   @foreach (range(1, 2) as $i)
                     <th> Time Slot ID </th>
                     <th> Movie Title </th>
                     <th> Start Time </th>
                     <th> Duration </th>
                     <th> End Time </th>
-                  @endforeach
+                  @endforeach --}}
+                  <th> Hall ID </th>
+                  <th> Time Slot ID </th>
+                  <th> Movie Title </th>
+                  <th> Start Time </th>
+                  <th> Duration </th>
+                  <th> End Time </th>
                 </tr>
               </thead>
               <tbody>
@@ -49,6 +66,9 @@
                     <td> {{ $conflict->start_time_a }} </td>
                     <td> {{ $conflict->duration_a }} </td>
                     <td> {{ $conflict->end_time_a }} </td>
+                  </tr>
+                  <tr>
+                    <td> {{ $conflict->hall_id }} </td>
                     <td> {{ $conflict->id_b }} </td>
                     <td> {{ $conflict->title_b }} </td>
                     <td> {{ $conflict->start_time_b }} </td>
