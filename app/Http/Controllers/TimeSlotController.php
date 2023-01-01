@@ -24,17 +24,14 @@ class TimeSlotController extends Controller
 
     $query = $hall->time_slots()
       ->join('movies', 'movies.id', '=', 'time_slots.movie_id')
-      ->where('start_time', '<=', $endTime)
-      // TODO: maybe use `whereRaw`
-      ->where(
-        DB::raw('ADDTIME(start_time, SEC_TO_TIME(duration * 60))'),
-        '>=',
-        $start_time
+      ->whereRaw(
+        'start_time <= ?',
+        [$endTime]
       )
-      ->select([
-        '*',
-        DB::raw('ADDTIME(start_time, SEC_TO_TIME(duration * 60)) as endTime'),
-      ]);
+      ->whereRaw(
+        'ADDTIME(start_time, SEC_TO_TIME(duration * 60)) >= ?',
+        [$start_time],
+      );
 
     return $query->count() !== 0;
   }
@@ -262,7 +259,7 @@ class TimeSlotController extends Controller
   {
     $mid = $request->mid;
 
-    $res = Movie::find($mid)->time_slots()
+    $time_slots = Movie::find($mid)->time_slots()
       ->join('halls', 'halls.id', '=', 'hall_id')
       ->join('branches', 'branches.id', '=', 'branch_id')
       ->where('start_time', '>=', now())
@@ -270,32 +267,30 @@ class TimeSlotController extends Controller
       ->withCasts(['start_time' => 'datetime'])
       ->select(['*', 'branches.name AS branch_name', 'time_slots.id as time_slot_id'])
       ->orderBy('start_time', 'asc')
-      ->orderBy('start_time', 'asc')
       ->get();
 
     // Convert time slots into an suitable format for output code
     //
-    // `$res_` will conatin an array with date being the key for the first
+    // `$structured` will conatin an array with date being the key for the first
     // level, branch name for the second level, and the third level will contain
     // arrays of id and time
-    $res_ = [];
-    foreach ($res as $r) {
+    $structured = [];
+    foreach ($time_slots as $r) {
       [$date, $time] = [
         $r->start_time->toFormattedDateString(),
-        // $r->start_time->toTimeString(),
         $r->start_time,
       ];
-      $res_[$date][$r->branch_name][] = [
+      $structured[$date][$r->branch_name][] = [
         'time' => $time,
         'time_slot_id' => $r->time_slot_id,
       ];
     }
 
-    $res_ = array_slice($res_, 0, 5);
+    $structured = array_slice($structured, 0, 5);
 
     return view(
       'time_slot.choose',
-      ['time_slots' => $res_]
+      ['time_slots' => $structured]
     );
   }
 
