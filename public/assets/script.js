@@ -173,6 +173,51 @@ function hallsTableHandler(e) {
 }
 
 
+/**
+ * Used in /browse_bookings_by_customer to fetch a given customer's booking info
+ * and output them in a table
+ *
+ * Assumes the existance of an empty container #ts-table for the output
+ */
+function bookingsByCustomerHandler(e) {
+  header = ["ID", "Movie Title", "Movie Time", "Booking Time", "Price"];
+  cid = e.value
+  $.getJSON(`/api/get_bookings?cid=${cid}`)
+    .done((data) => {
+      if (data.length === 0) {
+        // TODO: add message to be displayed in case no bookings exist
+        $("#ts-table")
+          .css("display", "none")
+        return
+      }
+      content = '<table class="table table-striped">'
+      content += newTag(
+        "thead",
+        newRow(
+          header.map(s => newCell(s)).join(" ")
+        )
+      );
+      content += "<tbody>"
+      data.forEach(element => {
+        j = element
+        content += `<tr>
+            <td> ${element.id} </td>
+            <td> ${element.movie_title} </td>
+            <td> ${element.movie_time} </td>
+            <td> ${element.booking_time} </td>
+            <td> ${element.price} </td>
+          </tr>`
+      });
+      content += '</tbody> </table>'
+      $("#ts-table")
+        .empty()
+        .append(content)
+        .css("display", "block")
+    })
+}
+
+
+
 // Used for .custom-file-input
 function setFilename(elem) {
   if (elem.files.length == 0) return

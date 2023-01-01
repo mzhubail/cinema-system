@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Branch;
+use App\Models\Customer;
 use App\Models\Seat;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
@@ -24,8 +25,11 @@ class BookingController extends Controller
     // dd($request->all());
   }
 
-  public function browse()
+  public function browse_by_customer()
   {
+    return view('booking.browse_by_customer', [
+      'customers' => Customer::select(['id', 'email'])->get()
+    ]);
   }
 
   public function show_bookings()
@@ -106,5 +110,29 @@ class BookingController extends Controller
 
     session()->flash('message', 'Booking added succefully');
     return back();
+  }
+
+
+  public function serve_bookings(Request $request)
+  {
+    $query = DB::table('bookings')
+      ->join('time_slots', 'time_slots.id', '=', 'time_slot_id')
+      ->join('movies', 'movies.id', '=', 'movie_id')
+      // ->select(['bookings.*', 'customer_id', 'time_slot_id']);
+      ->select([
+        'bookings.id',
+        'bookings.price',
+        'bookings.created_at AS booking_time',
+        DB::raw('DATE_FORMAT(time_slots.start_time, "%d-%m-%Y %H:%i") AS movie_time'),
+        'movies.title AS movie_title',
+      ]);
+
+    if ($request->has('cid')) {
+      $bookings = $query->where('customer_id', '=', $request->cid)
+        ->get();
+      return response()->json($bookings);
+    } elseif ($request->has('tsid')) {
+    } else
+      return response(status: 400);
   }
 }

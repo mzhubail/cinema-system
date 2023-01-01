@@ -80,7 +80,7 @@ Route::middleware(['auth.admin'])->group(function () {
   Route::get('/show_time_conflicts', [TimeSlotController::class, 'show_conflicts']);
   Route::get('/show_seat_conflicts', [SeatController::class, 'show_conflicts']);
 
-  Route::get('/browse_bookings', [BookingController::class, 'browse']);
+  Route::get('/browse_bookings_by_customer', [BookingController::class, 'browse_by_customer']);
 
 
   Route::get('/browse_seats', [SeatController::class, 'browse']);

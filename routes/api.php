@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HallController;
@@ -28,10 +29,10 @@ Route::get('/get_time_slots', [TimeSlotController::class, 'serve_time_slots']);
 
 Route::get('/get_seats', [SeatController::class, 'serve_seats']);
 
+Route::get('/get_bookings', [BookingController::class, 'serve_bookings']);
+
+
 Route::get('/search', [MovieController::class, 'search']);
 
-
-// TODO: Perhaps remove
-Route::get('/get_bookings', [TimeSlotController::class, 'show_bookings']);
 
 Route::get('/testing/has_conflict', [SeatController::class, 'check_has_conflict']);
