@@ -9,6 +9,7 @@ use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class BookingController extends Controller
 {
@@ -69,6 +70,17 @@ class BookingController extends Controller
         ord($matches[1]) - 65,
         $matches[2] - 1
       ];
+
+      // TODO: test this, maybe
+      if (SeatController::has_conflict(
+        $time_slot,
+        $row,
+        $column,
+      ))
+        throw ValidationException::withMessages([
+          'Sorry seat is already taken'
+        ]);
+
       Seat::create([
         'booking_id' => $booking->id,
         'row' => $row,

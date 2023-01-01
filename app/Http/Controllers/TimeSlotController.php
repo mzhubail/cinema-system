@@ -221,7 +221,7 @@ class TimeSlotController extends Controller
 
     // In order to get around the way has_conflict is implemented, I check
     // conflict for update by pretending to delete the time slot and add a new
-    // one.  I them roll that back of course.
+    // one.  I then roll back that change of course.
     DB::beginTransaction();
     $time_slot->delete();
 
