@@ -21,14 +21,12 @@ return new class extends Migration
       $table->string("email", 31);
       $table->date("birthday");
       $table->string("hash", 255);
-      // Make it a float
       $table->integer("credit")
         ->default(0);
 
       $table->timestamps();
 
       $table->unique("email");
-      // $table->primary('id');
     });
     Customer::factory()
       ->count(10)

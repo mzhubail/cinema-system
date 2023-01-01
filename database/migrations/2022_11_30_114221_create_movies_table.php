@@ -26,7 +26,7 @@ return new class extends Migration
         'lang',
         ['ar', 'en', 'hu']
       );
-      $table->integer('duration');
+      $table->unsignedTinyInteger('duration');
       $table->decimal(
         'rating',
         total: 2,

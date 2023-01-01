@@ -33,6 +33,8 @@ return new class extends Migration
         'status',
         ['pending', 'complete', 'canceled', 'suspended']
       )->default('pending');
+
+      $table->unsignedTinyInteger('price');
       $table->timestamps();
     });
     // Booking::factory()
