@@ -3,6 +3,7 @@ const input = document.getElementById('search-box'),
   moviesContainer = document.getElementById('movies-container'),
   suggestionsContainer = document.getElementById('suggestions-container');
 
+// Handles suggestions
 input.addEventListener('keyup', function () {
   let v = input.value
   if (v == '')
@@ -15,6 +16,8 @@ input.addEventListener('keyup', function () {
   r.send()
 })
 
+
+// Handles results
 form.addEventListener('submit', function (e) {
   e.preventDefault()
   const r = new XMLHttpRequest()
@@ -23,6 +26,6 @@ form.addEventListener('submit', function (e) {
       ? this.responseText
       : 'Sorry, no movies were found';
   }
-  r.open('get', `/api/search?q=${input.value}&m=cards`)
+  r.open('get', `/api/search?q=${input.value}&m=result`)
   r.send()
 })

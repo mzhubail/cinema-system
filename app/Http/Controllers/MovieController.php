@@ -151,8 +151,8 @@ class MovieController extends Controller
 
   public function search(Request $request)
   {
-    if ($request->missing('m'))
-      return;
+    if ($request->missing('m') || $request->missing('q'))
+      return response('', 400);   // Bad request
 
     // Must have at least one time slot in the next two weeks
     $query = Movie::whereHas('time_slots', function (Builder $query) {
@@ -160,13 +160,14 @@ class MovieController extends Controller
         ->whereDate('start_time', '<', now()->addWeeks(2));
     });
 
+    // Split by words
     $words = Str::of($request->q)
       ->split('/[\s]+/');
     foreach ($words as $word)
       $query->where('title', 'LIKE', "%$word%");
 
 
-    if ($request->m == 'cards') {
+    if ($request->m == 'result') {
       $movies = $query->get();
       foreach ($movies as $movie)
         echo Blade::render(
