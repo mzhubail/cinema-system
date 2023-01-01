@@ -43,9 +43,6 @@ return new class extends Migration
 
       $table->fullText('title');
     });
-    Movie::factory()
-      ->count(25)
-      ->create();
   }
 
   /**

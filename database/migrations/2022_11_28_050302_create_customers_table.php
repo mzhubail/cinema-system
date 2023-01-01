@@ -28,19 +28,6 @@ return new class extends Migration
 
       $table->unique("email");
     });
-    Customer::factory()
-      ->count(10)
-      ->create();
-    // $passwords = Customer::factory()::$passwords;
-    // $passwords = join("  ", $passwords);
-    // DB::statement(
-    //     "ALTER TABLE `customers` comment :passwords",
-    //     [':passwords' => $passwords]
-    // );
-    // DB::statement(
-    //     DB::raw("ALTER TABLE `customers` comment ?"),
-    //     [$passwords]
-    // );
   }
 
   /**

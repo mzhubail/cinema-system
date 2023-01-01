@@ -23,9 +23,6 @@ return new class extends Migration
         ->cascadeOnDelete();
       $table->timestamps();
     });
-    Hall::factory()
-      ->count(10)
-      ->create();
   }
 
   /**

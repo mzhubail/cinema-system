@@ -24,9 +24,6 @@ return new class extends Migration
       $table->unsignedTinyInteger('column');
       $table->timestamps();
     });
-    for ($i = 0; $i < 5000; $i++)
-      Seat::factory()
-        ->create();
   }
 
   /**

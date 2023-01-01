@@ -37,13 +37,6 @@ return new class extends Migration
       $table->unsignedTinyInteger('price');
       $table->timestamps();
     });
-    // Booking::factory()
-    //   ->count(100)
-    //   ->create();
-    for ($i = 0; $i < 1000; $i++)
-      Booking::factory()
-        ->count(1)
-        ->create();
   }
 
   /**
