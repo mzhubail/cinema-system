@@ -217,6 +217,48 @@ function bookingsByCustomerHandler(e) {
 }
 
 
+/**
+ * Used in /browse_bookings_by_time_slot to fetch a given booking info inside a
+ * given time slot and output them in a table
+ *
+ * Assumes the existance of an empty container #ts-table for the output
+ */
+function bookingsByTimeSlotHandler(e) {
+  header = ["ID", "Movie Title", "Movie Time", "Booking Time", "Price"];
+  tsid = e.value
+  $.getJSON(`/api/get_bookings?tsid=${tsid}`)
+    .done((data) => {
+      if (data.length === 0) {
+        // TODO: add message to be displayed in case no bookings exist
+        $("#ts-table")
+          .css("display", "none")
+        return
+      }
+      content = '<table class="table table-striped">'
+      content += newTag(
+        "thead",
+        newRow(
+          header.map(s => newCell(s)).join(" ")
+        )
+      );
+      content += "<tbody>"
+      data.forEach(element => {
+        j = element
+        content += `<tr>
+            <td> ${element.id} </td>
+            <td> ${element.movie_title} </td>
+            <td> ${element.movie_time} </td>
+            <td> ${element.booking_time} </td>
+            <td> ${element.price} </td>
+          </tr>`
+      });
+      content += '</tbody> </table>'
+      $("#ts-table")
+        .empty()
+        .append(content)
+        .css("display", "block")
+    })
+}
 
 // Used for .custom-file-input
 function setFilename(elem) {

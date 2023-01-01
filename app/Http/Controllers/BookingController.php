@@ -32,6 +32,13 @@ class BookingController extends Controller
     ]);
   }
 
+  public function browse_by_time_slot()
+  {
+    return view('booking.browse_by_time_slot', [
+      'branches' => Branch::select(['id', 'name'])->get(),
+    ]);
+  }
+
   public function show_bookings()
   {
   }
@@ -132,6 +139,9 @@ class BookingController extends Controller
         ->get();
       return response()->json($bookings);
     } elseif ($request->has('tsid')) {
+      $bookings = $query->where('time_slot_id', '=', $request->tsid)
+        ->get();
+      return response()->json($bookings);
     } else
       return response(status: 400);
   }

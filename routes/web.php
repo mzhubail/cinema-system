@@ -81,6 +81,7 @@ Route::middleware(['auth.admin'])->group(function () {
   Route::get('/show_seat_conflicts', [SeatController::class, 'show_conflicts']);
 
   Route::get('/browse_bookings_by_customer', [BookingController::class, 'browse_by_customer']);
+  Route::get('/browse_bookings_by_time_slot', [BookingController::class, 'browse_by_time_slot']);
 
 
   Route::get('/browse_seats', [SeatController::class, 'browse']);
