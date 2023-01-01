@@ -42,16 +42,12 @@ class DatabaseSeeder extends Seeder
     $movies =
       Movie::factory(20)->create();
 
-    // $movies = Movie::get();
-    // $customers = Customer::get();
-
     // Branches
     foreach (range(1, $branch_count()) as $i) {
       $branch = Branch::factory()->create();
       $letters = collect([]);
 
       // Halls
-      // foreach (range(1, fake()->numberBetween(2,4)) as $j) {
       foreach (range(1, $hall_count()) as $j) {
         // Check for letter uniqueness
         do {
@@ -74,11 +70,8 @@ class DatabaseSeeder extends Seeder
             $getStartTime = fn () => fake()->dateTimeBetween('+1 day', '+8 day'); // Coming soon
           elseif ($movie->id <= 7)
             $getStartTime = fn () => fake()->dateTimeBetween('-14 day', '-8 day'); // In the past
-          // elseif ($movie->id <= 10)
           else
             $getStartTime = fn () => fake()->dateTimeBetween('-3 day', '+18 day');
-          // else
-          //   $getStartTime = fn () => fake()->dateTimeBetween('-16 day', '+35 day');
 
           // Check for time conflict
           do {
@@ -112,7 +105,10 @@ class DatabaseSeeder extends Seeder
               do {
                 $row = fake()->numberBetween(0, 4);
                 $column = fake()->numberBetween(0, 14);
-              } while ($all_seats->contains([$row, $column]));
+              } while (
+                config('constants.avoid_conflicts') &&
+                $all_seats->contains([$row, $column])
+              );
               $current_seats->push([$row, $column]);
               $all_seats->push([$row, $column]);
             }
