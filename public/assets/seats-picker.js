@@ -1,3 +1,5 @@
+let price;
+
 function resetSeats(seats) {
   $('#seats-picker .seat').each(function () {
     if (seats.includes(this.id))
@@ -15,7 +17,7 @@ function disableSeatsPicker() {
 }
 
 function updatePrice() {
-  let price = 0
+  price = 0
   $('#seats-picker .seat.selected').each(function () {
     if ("DE".includes(this.id[0]))
       price += 4
@@ -67,6 +69,7 @@ $(document).ready(() => {
       {
         time_slot_id: tsid,
         seats: { ...seats },
+        price: price,
       },
     )
       .done((data) => console.log(data))

@@ -52,6 +52,10 @@
           <div class="col-12 col-md-3 text-md-muted text-wrap"> Seats </div>
           <div class="col"> {{ join(', ', $seats) }} </div>
         </div>
+        <div class="row">
+          <div class="col-12 col-md-3 text-md-muted text-wrap"> Price </div>
+          <div class="col"> {{ $price }} BD </div>
+        </div>
         <button type="submit" class="btn btn-primary float-right mt-4">
           Proceed to payment
         </button>

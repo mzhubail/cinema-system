@@ -37,17 +37,25 @@ class BookingController extends Controller
     // dd(
     //   session()->all()
     // );
-    if (session()->missing('time_slot') || session()->missing('seats'))
+    if (
+      session()->missing('time_slot') ||
+      session()->missing('seats') ||
+      session()->missing('price')
+    )
       return redirect()->route('home');
     $time_slot = session('time_slot');
     $seats = session('seats');
+    $price = session('price');
 
-    // $time_slot->start_time = Str::after($time_slot->start_time, 'time: ');
-    // dd($time_slot->start_time);
+    // Note that the price we show in booking confirmation is taken from the
+    // client, and thus is inherently unreliable.  However, the price inserted
+    // in the database (see `confirm_booking`) is calculated on the server, and
+    // could be used for billing.
 
     return view('booking.confirmation', [
       'time_slot' => $time_slot,
       'seats' => $seats,
+      'price' => $price,
     ]);
   }
 
@@ -60,7 +68,9 @@ class BookingController extends Controller
     $booking = Booking::create([
       'time_slot_id' => $time_slot->id,
       'customer_id' => session('userId'),
+      'price' => 1,
     ]);
+    $price = 0;
 
     session()->forget(['time_slot_id', 'seats']);
 
@@ -86,9 +96,11 @@ class BookingController extends Controller
         'row' => $row,
         'column' => $column,
       ]);
-      $tmp[] = [$row, $column];
+      $price += Seat::price($row, $column);
     }
-    // dd($tmp);
+
+    $booking->price = $price;
+    $booking->save();
 
     DB::commit();
 

@@ -117,8 +117,7 @@ class DatabaseSeeder extends Seeder
               $all_seats->push([$row, $column]);
             }
 
-            // TODO: change price calculation
-            $price = $current_seats->count() * 3;
+            $price = Seat::total_price($current_seats);
 
             $booking = Booking::create([
               'payment_method' => fake()->randomElement(config('constants.payment_methods')),

@@ -131,6 +131,7 @@ class SeatController extends Controller
     // now()->format
     session()->put('time_slot', TimeSlot::find($request->time_slot_id));
     session()->put('seats', $request->seats);
+    session()->put('price', $request->price);
     echo 'proceed';
     //     print_r($request->time_slot_id);
     //     echo '

@@ -21,6 +21,7 @@ class Booking extends Model
     'row',
     'seats_start',
     'seats_end',
+    'price',
   ];
 
   /** Get the time_slot this booking belongs to */
