@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\TimeSlotController;
 
@@ -26,6 +27,8 @@ Route::get('/get_halls', [HallController::class, 'serve_halls']);
 Route::get('/get_time_slots', [TimeSlotController::class, 'serve_time_slots']);
 
 Route::get('/get_seats', [SeatController::class, 'serve_seats']);
+
+Route::get('/search', [MovieController::class, 'search']);
 
 
 // TODO: Perhaps remove

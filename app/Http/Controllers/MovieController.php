@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use Blade;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -140,6 +143,48 @@ class MovieController extends Controller
   }
 
 
+
+  public function show_search()
+  {
+    return view('movie.search');
+  }
+
+  public function search(Request $request)
+  {
+    if ($request->missing('m'))
+      return;
+
+    // Must have at least one time slot in the next two weeks
+    $query = Movie::whereHas('time_slots', function (Builder $query) {
+      $query->whereDate('start_time', '>', now())
+        ->whereDate('start_time', '<', now()->addWeeks(2));
+    });
+
+    $words = Str::of($request->q)
+      ->split('/[\s]+/');
+    foreach ($words as $word)
+      $query->where('title', 'LIKE', "%$word%");
+
+
+    if ($request->m == 'cards') {
+      $movies = $query->get();
+      foreach ($movies as $movie)
+        echo Blade::render(
+          '<x-movie-card :movie="$movie" />',
+          ['movie' => $movie]
+        );
+    } elseif ($request->m == 'suggest') {
+      $movies = $query
+        ->select(['id', 'title'])
+        ->get();
+      foreach ($movies as $movie) {
+        echo Blade::render(
+          '<x-search-suggestion :movie="$movie" />',
+          ['movie' => $movie]
+        );
+      }
+    }
+  }
 
   function show_edit(Request $request)
   {

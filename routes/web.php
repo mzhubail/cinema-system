@@ -99,6 +99,8 @@ Route::middleware('auth.customer')->group(function () {
 
   Route::get('/coming_soon', [MovieController::class, 'browse_coming_soon']);
   Route::get('/new_arrival', [MovieController::class, 'browse_new_arrival']);
+
+  Route::get('/search', [MovieController::class, 'show_search']);
 });
 
 
