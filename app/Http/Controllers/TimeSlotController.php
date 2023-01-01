@@ -180,7 +180,7 @@ class TimeSlotController extends Controller
   {
     $conflicts = DB::select(self::$conflict_query);
     return view(
-      'time_slot.show_conflict',
+      'time_slot.conflict',
       ['conflicts' => $conflicts]
     );
   }

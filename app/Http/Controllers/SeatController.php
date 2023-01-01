@@ -84,7 +84,7 @@ class SeatController extends Controller
   public function show_conflicts()
   {
     $conflicts = DB::select(self::$conflict_query);
-    return view('seat.conflict_table', ['conflicts' => $conflicts]);
+    return view('seat.conflict', ['conflicts' => $conflicts]);
   }
 
 

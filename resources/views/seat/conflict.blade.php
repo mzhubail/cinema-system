@@ -4,14 +4,6 @@
 
 @push('styles')
   <style>
-    /* .custom-alignment {
-            text-align: center !important;
-          }
-
-          .custom-alignment th {
-            vertical-align: middle !important;
-          } */
-
     tr:nth-of-type(2n) td {
       border-bottom: 3px solid #dee2e6;
     }
@@ -37,7 +29,7 @@
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
-                <tr class="custom-alignment">
+                <tr>
                   <th> Time Slot ID </th>
                   <th> Booking ID </th>
                   <th> Seat ID </th>

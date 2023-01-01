@@ -1,17 +1,9 @@
-{{-- TODO: rename to conflict.blade.php --}}
 @extends('layouts.master')
 
-@section('title', 'Browse Branches')
+@section('title', 'Time Slot Conflicts')
 
 @push('styles')
   <style>
-    /* tr :nth-child(1) {
-          border-right: 2px solid #dee2e6;
-        }
-
-        tr :nth-child(6) {
-          border-right: 2px solid #dee2e6;
-        } */
     tr:nth-of-type(2n) td {
       border-bottom: 3px solid #dee2e6;
     }
