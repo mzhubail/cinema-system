@@ -41,7 +41,7 @@ Route::get('/logout', function () {
 
 
 // Only accessible by admin
-Route::middleware(['auth.admin'])->group(function () {
+Route::middleware(['MyAuth:admin'])->group(function () {
   Route::get('/add_movie', [MovieController::class, 'show_add_movie']);
   Route::post('/add_movie', [MovieController::class, 'store']);
 
@@ -89,7 +89,7 @@ Route::middleware(['auth.admin'])->group(function () {
 
 
 // Only accessible by customer
-Route::middleware('auth.customer')->group(function () {
+Route::middleware('MyAuth:customerLoggedIn')->group(function () {
   Route::get('/choose_seats', [SeatController::class, 'show_choose']);
   Route::post('/choose_seats', [SeatController::class, 'receive_chosen_seats']);
 
@@ -106,7 +106,7 @@ Route::middleware('auth.customer')->group(function () {
 
 
 // Accessible by both admin and customer
-Route::middleware('require.login')->group(function () {
+Route::middleware('MyAuth:loggedIn')->group(function () {
   Route::get('/movie_details', [MovieController::class, 'show']);
 
   Route::get('/', function () {
