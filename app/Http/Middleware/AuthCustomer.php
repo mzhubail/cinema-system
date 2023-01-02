@@ -16,9 +16,10 @@ class AuthCustomer
    */
   public function handle(Request $request, Closure $next)
   {
-    if (session()->missing('isAdmin'))
-      return redirect('login');
-    else if (session('isAdmin'))
+    if (session()->missing('isAdmin')) {
+      session()->put('location', url()->full());
+      return response()->view('login_required');
+    } else if (session('isAdmin'))
       return redirect()->back();
     else
       return $next($request);

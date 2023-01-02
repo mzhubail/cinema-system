@@ -70,6 +70,6 @@ class LoginController extends Controller
       'isAdmin' => false,
     ]);
 
-    return redirect('/');
+    return redirect(session('location', '/'));
   }
 }
