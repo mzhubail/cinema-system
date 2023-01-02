@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     $branch_count =
-      fn () => 3;
+      fn () => 5;
     $hall_count =
       fn () => 4;
     $time_slot_count =

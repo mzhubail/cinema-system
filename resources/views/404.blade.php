@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Not Foung')
+@section('title', 'Not Found')
 
 @section('main')
 

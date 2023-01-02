@@ -56,7 +56,7 @@
                     <td> {{ $conflict->id_a }} </td>
                     <td> {{ $conflict->title_a }} </td>
                     <td> {{ $conflict->start_time_a }} </td>
-                    <td> {{ $conflict->duration_a }} </td>
+                    <td> {{ \App\Models\Movie::minutesToDuration($conflict->duration_a) }} </td>
                     <td> {{ $conflict->end_time_a }} </td>
                   </tr>
                   <tr>
@@ -64,7 +64,7 @@
                     <td> {{ $conflict->id_b }} </td>
                     <td> {{ $conflict->title_b }} </td>
                     <td> {{ $conflict->start_time_b }} </td>
-                    <td> {{ $conflict->duration_b }} </td>
+                    <td> {{ \App\Models\Movie::minutesToDuration($conflict->duration_b) }} </td>
                     <td> {{ $conflict->end_time_b }} </td>
                   </tr>
                 @endforeach
