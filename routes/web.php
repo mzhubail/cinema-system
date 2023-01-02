@@ -146,3 +146,6 @@ Route::post('/add_booking', [BookingController::class, 'store']);
 
 
 Route::get('/test', [TimeSlotController::class, 'tmp']);
+
+
+Route::fallback(fn () => view('404'));

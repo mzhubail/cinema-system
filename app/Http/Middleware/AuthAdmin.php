@@ -17,9 +17,11 @@ class AuthAdmin
   public function handle(Request $request, Closure $next)
   {
     if (session()->missing('isAdmin'))
-      return redirect('login');
+      // return redirect('login');
+      return response()->view('404');
     else if (!session('isAdmin'))
-      return redirect()->back();
+      // return redirect()->back();
+      return response()->view('404');
     else
       return $next($request);
   }
