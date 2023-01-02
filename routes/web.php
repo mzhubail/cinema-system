@@ -36,7 +36,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/logout', function () {
   session()->flush();
-  return redirect('login');
+  return redirect('/');
 });
 
 
@@ -88,15 +88,19 @@ Route::middleware(['MyAuth:admin'])->group(function () {
 });
 
 
-// Only accessible by customer
+// Only accessible by logged in customer
 Route::middleware('MyAuth:customerLoggedIn')->group(function () {
   Route::get('/choose_seats', [SeatController::class, 'show_choose']);
   Route::post('/choose_seats', [SeatController::class, 'receive_chosen_seats']);
 
-  Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);
-
   Route::get('/confirm_booking', [BookingController::class, 'show_confirm_booking']);
   Route::post('/confirm_booking', [BookingController::class, 'confirm_booking']);
+});
+
+
+// Accessible by any customer
+Route::middleware('MyAuth:customer')->group(function () {
+  Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);
 
   Route::get('/coming_soon', [MovieController::class, 'browse_coming_soon']);
   Route::get('/new_arrival', [MovieController::class, 'browse_new_arrival']);
@@ -105,19 +109,16 @@ Route::middleware('MyAuth:customerLoggedIn')->group(function () {
 });
 
 
-// Accessible by both admin and customer
-Route::middleware('MyAuth:loggedIn')->group(function () {
-  Route::get('/movie_details', [MovieController::class, 'show']);
+// Accessible by everyone
+Route::get('/movie_details', [MovieController::class, 'show']);
 
-  Route::get('/', function () {
-    return session("isAdmin") ?
-      view('home.admin') :
-      view(
-        'home.customer',
-        ['movies' => Movie::home_page_movies()->get()]
-      );
-  })->name('home');
-});
+Route::get('/', function () {
+  return session("isAdmin", false)
+    ?  view('home.admin')
+    : view('home.customer', [
+      'movies' => Movie::home_page_movies()->get()
+    ]);
+})->name('home');
 
 
 
