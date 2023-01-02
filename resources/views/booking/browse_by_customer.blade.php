@@ -2,6 +2,15 @@
 
 @section('title', 'Browse Bookings')
 
+@push('styles')
+  <style>
+    td:nth-child(5) {
+      text-align: right;
+      padding-right: 2rem;
+    }
+  </style>
+@endpush
+
 @section('main')
   <div class="card">
     <h4 class="card-header">Browse Bookings</h4>
@@ -23,4 +32,3 @@
     </div>
   </div>
 @endsection
-

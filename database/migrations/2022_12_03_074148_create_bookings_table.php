@@ -29,12 +29,17 @@ return new class extends Migration
       $table->foreignIdFor(Customer::class)
         ->cascadeOnDelete();
 
-      $table->enum(
-        'status',
-        ['pending', 'complete', 'canceled', 'suspended']
-      )->default('pending');
+      // $table->enum(
+      //   'status',
+      //   ['pending', 'complete', 'canceled', 'suspended']
+      // )->default('pending');
 
-      $table->unsignedTinyInteger('price');
+      $table->decimal(
+        'price',
+        total: 5,
+        places: 3,
+        unsigned: true
+      );
       $table->timestamps();
     });
   }

@@ -26,7 +26,7 @@ function updatePrice() {
   })
   $('#price-output')
     .empty()
-    .append(price)
+    .append(price.toFixed(3))
   if (price == 0)
     $('#continue-btn').attr('disabled', 'disabled')
   else

@@ -200,7 +200,7 @@
     <div id="legend-container" class="row mx-3">
       @isset($seats)
         <div class="price-container d-flex align-items-center">
-          Total Price: &nbsp; <span id="price-output"> 0 </span> &nbsp; BD
+          Total Price: &nbsp; <span id="price-output"> 0.000 </span> &nbsp; BD
         </div>
       @endisset
       <div class="legend seat-row" style="margin-left: auto">

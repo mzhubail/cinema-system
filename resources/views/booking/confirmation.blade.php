@@ -54,7 +54,7 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-3 text-md-muted text-wrap"> Price </div>
-          <div class="col"> {{ $price }} BD </div>
+          <div class="col"> {{ sprintf('%.3f', $price) }} BD </div>
         </div>
         <br>
         {{-- <div class="row">
