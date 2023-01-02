@@ -1,7 +1,7 @@
 @props(['movie' => fake()->randomElement(App\Models\Movie::get())])
 
 <div class="col mb-4">
-  <div class="card">
+  <div class="card shadow">
     <a href="/movie_details?id={{ $movie->id }}">
       <div style="background:url({{ $movie->img_path }}) no-repeat center center / cover; height: 350px; width: 100%">
       </div>

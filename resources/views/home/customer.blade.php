@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('main')
-  <div class="jumbotron jumbotron-fluid">
+  <div class="jumbotron jumbotron-fluid shadow">
     <div class="container">
       <x-glider>
         <x-movie-card />

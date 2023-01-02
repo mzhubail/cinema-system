@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
 
 
     $customers =
-      Customer::factory(10)->create();
+      Customer::factory(50)->create();
     $movies =
       Movie::factory(20)->create();
 
