@@ -22,6 +22,7 @@ return new class extends Migration
       $table->foreignIdFor(Branch::class)
         ->cascadeOnDelete();
       $table->timestamps();
+      $table->unique(['letter', 'branch_id']);
     });
   }
 

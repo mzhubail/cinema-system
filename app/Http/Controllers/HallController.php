@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HallRequest;
 use Illuminate\Http\Request;
 use App\Models\{Branch, Hall};
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class HallController extends Controller
 {
@@ -34,17 +36,22 @@ class HallController extends Controller
       'branch' => 'required|exists:branches,id',
     ]);
 
-    // TODO: check for letter uiqueness
-    $letter = Str::upper($request->letter);
-    $branch = Branch::find($request->branch);
-    if ($branch === null) {
-      die("branch not found");
-    }
-    $hall = new Hall(['letter' => $letter]);
-    $branch->halls()->save($hall);
+    try {
+      $letter = Str::upper($request->letter);
+      $branch = Branch::find($request->branch);
+      if ($branch === null) {
+        die("branch not found");
+      }
+      $hall = new Hall(['letter' => $letter]);
+      $branch->halls()->save($hall);
 
-    session()->flash('message', "Hall Added succefully");
-    return back();
+      session()->flash('message', "Hall Added succefully");
+      return back();
+    } catch (QueryException $e) {
+      throw $e->errorInfo[1] == 1062
+        ? ValidationException::withMessages(['Hall letter is already taken'])
+        : $e;
+    }
   }
 
 
@@ -100,10 +107,16 @@ class HallController extends Controller
       'letter' => 'required|alpha|size:1',
     ]);
 
-    $hall = Hall::find($request->id);
-    $hall->letter = Str::upper($request->letter);
-    $hall->save();
-    session()->flash('message', "Hall updated succefully");
-    return back();
+    try {
+      $hall = Hall::find($request->id);
+      $hall->letter = Str::upper($request->letter);
+      $hall->save();
+      session()->flash('message', "Hall updated succefully");
+      return back();
+    } catch (QueryException $e) {
+      throw $e->errorInfo[1] == 1062
+        ? ValidationException::withMessages(['Hall letter is already taken'])
+        : $e;
+    }
   }
 }
