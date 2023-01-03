@@ -24,7 +24,7 @@ class MovieFactory extends Factory
       'release_year' => fake()->year(),
       'lang' => fake()->randomElement(["ar", "en", "hu"]),
       'duration' => fake()->numberBetween(0, 180),
-      'rating' => fake()->randomFloat(1, 0, 10),
+      'rating' => fake()->randomFloat(1, 0, 9.9),
       'genre' => fake()->randomElement(config('constants.genres')),
       'desc' => fake()->realText(maxNbChars: 400),
       'img_path' => fake()->randomElement(Storage::files('posters')),

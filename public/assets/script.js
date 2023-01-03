@@ -205,7 +205,7 @@ function bookingsByCustomerHandler(e) {
             <td> ${element.movie_title} </td>
             <td> ${element.movie_time} </td>
             <td> ${element.booking_time} </td>
-            <td> ${element.price.toFixed(3)} </td>
+            <td> ${parseFloat(element.price).toFixed(3)} </td>
           </tr>`
       });
       content += '</tbody> </table>'
@@ -249,7 +249,7 @@ function bookingsByTimeSlotHandler(e) {
             <td> ${element.movie_title} </td>
             <td> ${element.movie_time} </td>
             <td> ${element.booking_time} </td>
-            <td> ${element.price.toFixed(3)} </td>
+            <td> ${parseFloat(element.price).toFixed(3)} </td>
           </tr>`
       });
       content += '</tbody> </table>'
