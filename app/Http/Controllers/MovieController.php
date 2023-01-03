@@ -164,7 +164,7 @@ class MovieController extends Controller
     $words = Str::of($request->q)
       ->split('/[\s]+/');
     foreach ($words as $word)
-      $query->where('title', 'LIKE', "%$word%");
+      $query->whereRaw("LOWER(title) LIKE LOWER('%$word%')");
 
 
     if ($request->m == 'result') {

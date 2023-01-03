@@ -21,7 +21,3 @@
     <x-movie-cards-container :movies="$movies" />
   </main>
 @endsection
-
-@push('styles')
-  <link rel="stylesheet" type="text/css" href="assets/glider.css">
-@endpush

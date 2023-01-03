@@ -8,6 +8,9 @@
   <div role="tablist" class="dots"></div>
 </div>
 
+@push('styles')
+  <link rel="stylesheet" type="text/css" href="assets/glider.css">
+@endpush
 
 @push('scripts')
   <script src="assets/glider.js"></script>
