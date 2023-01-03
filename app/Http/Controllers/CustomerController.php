@@ -36,7 +36,7 @@ class CustomerController extends Controller
         'fName' => 'required|alpha|min:3|max:31',
         'lName' => 'required|alpha|min:3|max:31',
         'email' => 'required|email:rfc,dns',
-        'birthday' => 'required|date_format:Y-m-d',
+        'birthday' => 'required|date_format:Y-m-d|before:-18 years',
         'password' => [
           'required',
           Password::min(8)
@@ -51,6 +51,9 @@ class CustomerController extends Controller
       customAttributes: [
         'fName' => 'first name',
         'lName' => 'last name',
+      ],
+      messages: [
+        'birthday.before' => 'You have to be older than 18 years',
       ],
     )->validate();
 
@@ -152,11 +155,14 @@ class CustomerController extends Controller
         'fName' => 'required|alpha|min:3|max:31',
         'lName' => 'required|alpha|min:3|max:31',
         'email' => 'required|email:rfc,dns',
-        'birthday' => 'required|date_format:Y-m-d',
+        'birthday' => 'required|date_format:Y-m-d|before:-18 years',
       ],
       customAttributes: [
         'fName' => 'first name',
         'lName' => 'last name',
+      ],
+      messages: [
+        'birthday.before' => 'You have to be older than 18 years',
       ],
     )->validate();
 
