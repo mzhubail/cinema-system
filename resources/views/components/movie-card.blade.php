@@ -1,4 +1,5 @@
-@props(['movie' => fake()->randomElement(App\Models\Movie::get())])
+{{-- @props(['movie' => fake()->randomElement(App\Models\Movie::get())]) --}}
+@props(['movie'])
 
 <div class="col mb-4">
   <div class="card shadow">

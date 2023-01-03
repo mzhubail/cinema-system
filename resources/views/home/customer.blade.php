@@ -6,14 +6,10 @@
   <div class="jumbotron jumbotron-fluid shadow">
     <div class="container">
       <x-glider>
-        <x-movie-card />
-        <x-movie-card />
-        <x-movie-card />
-        <x-movie-card />
-        <x-movie-card />
-        <x-movie-card />
-        <x-movie-card />
-        <x-movie-card />
+        {{-- @foreach ($movies->shift(8) as $movie) --}}
+        @foreach ($movies->slice(0, 8)->reverse() as $movie)
+          <x-movie-card :movie="$movie" />
+        @endforeach
       </x-glider>
     </div>
   </div>

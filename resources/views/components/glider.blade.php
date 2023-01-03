@@ -30,7 +30,7 @@
           prev: '.glider-prev',
           next: '.glider-next'
         },
-        // rewind: true,
+        rewind: true,
         responsive: [{
           // screens greater than >= 576px
           breakpoint: 576,
