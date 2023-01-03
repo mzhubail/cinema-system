@@ -1,4 +1,5 @@
 let price;
+const seatsCountError = document.getElementById('seats-count-error')
 
 function resetSeats(seats) {
   $('#seats-picker .seat').each(function () {
@@ -44,12 +45,18 @@ $(document).ready(() => {
     resetSeats(pushedSeats);
 
     // Allow seat selection
-    $('#seats-picker .seat:not(.occupied)').click(
-      e => {
-        $(e.target).toggleClass('selected')
-        updatePrice()
+    $('#seats-picker .seat:not(.occupied)').click(e => {
+      if (
+        $('#seats-picker .seat.selected').length >= 10 &&
+        !e.target.classList.contains('selected')
+      ) {
+        seatsCountError.style.display = 'block'
+        return
       }
-    )
+      seatsCountError.style.display = 'none'
+      $(e.target).toggleClass('selected')
+      updatePrice()
+    })
   }
 
   $('#continue-btn').click(e => {

@@ -160,8 +160,11 @@
       </div>
     @endisset
 
-    <div id="seats-picker" class="my-4 disabled">
+    <div id="seats-picker" class="mb-4 disabled">
       @isset($seats)
+        <div id="seats-count-error" class="alert alert-danger" style="display:none">
+          The maximum number of allowed seats is 10
+        </div>
         <div class="my-4 mx-5"
           style="
             perspective: 1300px;
