@@ -145,4 +145,37 @@ class BookingController extends Controller
     } else
       return response(status: 400);
   }
+
+
+  public function sales_by_branch()
+  {
+    $sql = <<<SQL
+      SELECT    branches.id AS branch_id,
+                branches.name AS branch_name,
+                COUNT(*) AS bookings_count,
+                SUM(price) AS total_profit
+      FROM      `bookings`
+        JOIN    `time_slots`
+        ON      time_slot_id = time_slots.id
+        JOIN    `halls`
+        ON      hall_id = halls.id
+        JOIN    `branches`
+        ON      branch_id = branches.id
+      WHERE     bookings.created_at > ?
+      GROUP BY  branches.id, branches.name
+    SQL;
+
+    $data = DB::select(
+      $sql,
+      [now()->subDays(30)]
+    );
+    $data = collect($data);
+    $data->each(function ($item) {
+      $item->total_profit = (float) $item->total_profit;
+    });
+    // dd($data);
+    return view('booking.sales_by_branch', [
+      'branches' => $data,
+    ]);
+  }
 }

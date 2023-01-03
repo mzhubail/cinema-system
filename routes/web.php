@@ -85,6 +85,9 @@ Route::middleware(['MyAuth:admin'])->group(function () {
 
 
   Route::get('/browse_seats', [SeatController::class, 'browse']);
+
+
+  Route::get('/sales_by_branch', [BookingController::class, 'sales_by_branch']);
 });
 
 
