@@ -136,31 +136,9 @@ Route::get('/', function () {
 
 
 
-Route::match(["get", "post"], '/test', function (Request $request) {
-  // $request->session()->flush();
-  $request->session()->put("name", "J");
-  $x = $request->session()->get("name");
-  return view(
-    'test_view',
-    [
-      "r" => $request,
-      "is_session_set" => $x,
-    ]
-  );
-});
-
-
-Route::any('view_session', function () {
-  dd(session()->all());
-});
-
-
-// TODO: remove.  These are only intended for testing
-Route::get('/add_booking', [BookingController::class, 'show_add']);
-Route::post('/add_booking', [BookingController::class, 'store']);
-
-
-Route::get('/test', [TimeSlotController::class, 'tmp']);
+// Route::any('view_session', function () {
+//   dd(session()->all());
+// });
 
 
 Route::fallback(fn () => view('404'));

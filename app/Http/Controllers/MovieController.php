@@ -187,7 +187,7 @@ class MovieController extends Controller
     }
   }
 
-  function show_edit(Request $request)
+  public function show_edit(Request $request)
   {
     $movie = Movie::find($request->id);
     if ($movie === null) {
@@ -198,7 +198,7 @@ class MovieController extends Controller
     return view('movie.edit', ['movie' => $movie]);
   }
 
-  function update(Request $request)
+  public function update(Request $request)
   {
     $request->validate([
       'movie' => 'required|exists:movies,id',

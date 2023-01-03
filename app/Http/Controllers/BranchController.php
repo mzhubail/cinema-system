@@ -21,7 +21,6 @@ class BranchController extends Controller
    */
   public function browse()
   {
-    // dd(Branch::get());
     $branches = Branch::get();
 
     if ($branches->isEmpty()) {

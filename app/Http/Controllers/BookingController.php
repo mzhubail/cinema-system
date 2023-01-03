@@ -14,17 +14,6 @@ use Illuminate\Validation\ValidationException;
 
 class BookingController extends Controller
 {
-  // TODO: remove
-  public function show_add()
-  {
-    return view('booking.add');
-  }
-
-  public function store(Request $request)
-  {
-    // dd($request->all());
-  }
-
   public function browse_by_customer()
   {
     return view('booking.browse_by_customer', [
@@ -37,10 +26,6 @@ class BookingController extends Controller
     return view('booking.browse_by_time_slot', [
       'branches' => Branch::select(['id', 'name'])->get(),
     ]);
-  }
-
-  public function show_bookings()
-  {
   }
 
   public function show_confirm_booking()

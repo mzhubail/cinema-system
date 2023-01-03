@@ -33,6 +33,3 @@ Route::get('/get_bookings', [BookingController::class, 'serve_bookings']);
 
 
 Route::get('/search', [MovieController::class, 'search']);
-
-
-Route::get('/testing/has_conflict', [SeatController::class, 'check_has_conflict']);

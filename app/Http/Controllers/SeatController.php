@@ -9,20 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class SeatController extends Controller
 {
-  // TODO: remove, used for testing
-  public function check_has_conflict(Request $request)
-  {
-    dd(
-      SeatController::has_conflict(
-        TimeSlot::find($request->ts),
-        $request->row,
-        $request->column
-      )
-    );
-  }
-
-
-
   /**
    * Check if the given seat within the time slot would conflict with other seats
    */
@@ -182,12 +168,5 @@ class SeatController extends Controller
     $code = chr(ord('A') + $r);
     $code .= sprintf('%02d', $c + 1);
     return $code;
-  }
-
-
-
-  public function recieve_seats(Request $request)
-  {
-    dd($request->all());
   }
 }

@@ -195,11 +195,7 @@ class TimeSlotController extends Controller
       return back();
     }
     $time_slot->start_time = new DateTimeImmutable($time_slot->start_time);
-    // dd(
-    //   $time_slot->start_time,
-    //   $time_slot->start_time->format("d/m/y"),
-    //   $time_slot->start_time->format("H:i"),
-    // );
+
     return view('time_slot.edit', ['time_slot' => $time_slot]);
   }
 
@@ -292,25 +288,5 @@ class TimeSlotController extends Controller
       'time_slot.choose',
       ['time_slots' => $structured]
     );
-  }
-
-
-  function tmp(Request $request)
-  {
-    // dd(now());
-    // Used to retrieve coming soon movies
-    $q = Movie::whereDoesntHave('time_slots', function (Builder $query) {
-      $query->where('start_time', '<', now());
-    });
-    // dd(
-    //   $q,
-    //   $q->toSql(),
-    //   $q->get(),
-    // );
-    // return Blade::render(
-    //   '<x-movie-card/>',
-    //   ['name' => 'Julian Bashir'],
-    //   deleteCachedView: true,
-    // );
   }
 }
