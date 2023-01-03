@@ -26,11 +26,11 @@
             </div>
             <div class="form-group col-md-6">
               <label for="lang-input">Language</label>
-              <select class="form-control" name="lang" id="lang-input">
-                <option value="en">English</option>
-                <option value="ar">Arabic</option>
-                <option value="Hu">Hindi</option>
-              </select>
+              <x-select name="lang" :values="[
+                  'en' => 'English',
+                  'ar' => 'Arabic',
+                  'Hu' => 'Hindi',
+              ]" />
             </div>
           </div>
 
@@ -42,11 +42,7 @@
 
             <div class="form-group col-md-6">
               <label for="genre-input">Genre</label>
-              <select class="form-control" name="genre" id="genre-input">
-                @foreach (config('constants.genres') as $genre)
-                  <option value='{{ $genre }}'> {{ ucfirst($genre) }} </option>
-                @endforeach
-              </select>
+              <x-select name="genre" :values="collect(config('constants.genres'))->mapWithKeys(fn($item, $key) => [$item => ucfirst($item)])" />
             </div>
           </div>
           <div class="form-group">
