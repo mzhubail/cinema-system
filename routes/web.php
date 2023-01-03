@@ -97,6 +97,9 @@ Route::middleware('MyAuth:customerLoggedIn')->group(function () {
 
   Route::get('/confirm_booking', [BookingController::class, 'show_confirm_booking']);
   Route::post('/confirm_booking', [BookingController::class, 'confirm_booking']);
+
+  Route::get('/edit_profile', [CustomerController::class, 'show_edit']);
+  Route::post('/edit_profile', [CustomerController::class, 'update']);
 });
 
 

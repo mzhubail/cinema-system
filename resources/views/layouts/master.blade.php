@@ -73,7 +73,7 @@
           </li>
           @if (!session('isAdmin'))
             <li class="nav-item">
-              <a href="edit_profile.php" class="d-none d-md-block nav-link py-0
+              <a href="/edit_profile" class="d-none d-md-block nav-link py-0
             align-middle"
                 style="font-size: 1.7rem;">
                 <i class="d-inline-block bi bi-person-circle" width="25px"></i>
