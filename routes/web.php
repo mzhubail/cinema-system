@@ -100,6 +100,9 @@ Route::middleware('MyAuth:customerLoggedIn')->group(function () {
 
   Route::get('/edit_profile', [CustomerController::class, 'show_edit']);
   Route::post('/edit_profile', [CustomerController::class, 'update']);
+
+  Route::get('/current_bookings', [BookingController::class, 'current']);
+  Route::get('/booking_history', [BookingController::class, 'history']);
 });
 
 

@@ -116,7 +116,7 @@ class BookingController extends Controller
     DB::commit();
 
     session()->flash('message', 'Booking added succefully');
-    return back();
+    return redirect('/');
   }
 
 
@@ -176,6 +176,37 @@ class BookingController extends Controller
     // dd($data);
     return view('booking.sales_by_branch', [
       'branches' => $data,
+    ]);
+  }
+
+
+  private function list_bookings_query() {
+    return session('customer')->bookings()
+      ->join('time_slots', 'time_slot_id', '=', 'time_slots.id')
+      ->join('movies', 'movie_id', '=', 'movies.id')
+      ->withCasts(['start_time' => 'datetime'])
+      ->select(['time_slots.id', 'movies.title AS movie_title', 'start_time']);
+  }
+
+  public function current(Request $request)
+  {
+    $bookings = $this->list_bookings_query()
+      ->where('start_time', '>', now())
+      ->get();
+
+    return view('booking.current', [
+      'bookings' => $bookings,
+    ]);
+  }
+
+
+  public function history()
+  {
+    $bookings = $this->list_bookings_query()
+      ->get();
+
+    return view('booking.history', [
+      'bookings' => $bookings,
     ]);
   }
 }

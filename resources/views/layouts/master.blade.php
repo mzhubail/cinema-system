@@ -60,8 +60,8 @@
               Manage Bookings
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Current Bookings</a>
-              <a class="dropdown-item" href="#">Booking history</a>
+              <a class="dropdown-item" href="/current_bookings">Current Bookings</a>
+              <a class="dropdown-item" href="/booking_history">Booking history</a>
             </div>
           </li>
         </ul>
@@ -92,7 +92,7 @@
 
   @if ($errors->any())
     <header>
-      <div class="alert alert-danger border text-center" role="alert">
+      <div class="alert alert-danger border text-center mb-0" role="alert">
         @foreach ($errors->all() as $error)
           @if (!$loop->first)
             <br>
@@ -113,7 +113,7 @@
     @endphp
 
     <header>
-      <div class="alert alert-primary alert-dismissible fade show border text-center" role="alert">
+      <div class="alert alert-primary alert-dismissible fade show border text-center mb-0" role="alert">
         {{ $content }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
