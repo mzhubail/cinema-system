@@ -106,6 +106,12 @@ Route::middleware('MyAuth:customerLoggedIn')->group(function () {
 });
 
 
+// Accessible by any logged in user
+Route::middleware('MyAuth:loggedIn')->group(function () {
+  Route::get('/booking_details', [BookingController::class, 'details']);
+});
+
+
 // Accessible by any customer
 Route::middleware('MyAuth:customer')->group(function () {
   Route::get('/choose_time_slot', [TimeSlotController::class, 'show_choose']);

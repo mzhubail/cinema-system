@@ -24,6 +24,12 @@ class Booking extends Model
     'price',
   ];
 
+  /** Get the customer this booking belongs to */
+  public function customer()
+  {
+    return $this->belongsTo(Customer::class);
+  }
+
   /** Get the time_slot this booking belongs to */
   public function time_slot()
   {
@@ -34,5 +40,20 @@ class Booking extends Model
   public function seats()
   {
     return $this->hasMany(Seat::class);
+  }
+
+  /** Get the movie of this booking */
+  public function movie() {
+    return $this->time_slot->movie();
+  }
+
+  /** Get the hall of this booking */
+  public function hall() {
+    return $this->time_slot->hall();
+  }
+
+  /** Get the hall of this booking */
+  public function branch() {
+    return $this->time_slot->branch();
   }
 }

@@ -180,12 +180,13 @@ class BookingController extends Controller
   }
 
 
-  private function list_bookings_query() {
+  private function list_bookings_query()
+  {
     return session('customer')->bookings()
       ->join('time_slots', 'time_slot_id', '=', 'time_slots.id')
       ->join('movies', 'movie_id', '=', 'movies.id')
       ->withCasts(['start_time' => 'datetime'])
-      ->select(['time_slots.id', 'movies.title AS movie_title', 'start_time']);
+      ->select(['bookings.id', 'movies.title AS movie_title', 'start_time']);
   }
 
   public function current(Request $request)
@@ -207,6 +208,29 @@ class BookingController extends Controller
 
     return view('booking.history', [
       'bookings' => $bookings,
+    ]);
+  }
+
+
+  public function details(Request $request)
+  {
+    $request->validate([
+      'id' => 'required|exists:bookings,id',
+    ]);
+
+    $booking = Booking::find($request->id);
+
+    if (
+      session()->has('customer') &&
+      !$booking->customer->is(session('customer'))
+    )
+      throw ValidationException::withMessages(['You are not allowed to view that booking']);
+
+    $seats = $booking->seats
+      ->map(fn ($item) => SeatController::convertSeat($item));
+    return view('booking.details', [
+      'booking' => $booking,
+      'seats' => $seats,
     ]);
   }
 }

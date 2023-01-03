@@ -180,7 +180,7 @@ function hallsTableHandler(e) {
  * Assumes the existance of an empty container #ts-table for the output
  */
 function bookingsByCustomerHandler(e) {
-  header = ["ID", "Movie Title", "Movie Time", "Booking Time", "Price"];
+  header = ["ID", "Movie Title", "Movie Time", "Booking Time", "Price", ""];
   cid = e.value
   $.getJSON(`/api/get_bookings?cid=${cid}`)
     .done((data) => {
@@ -206,6 +206,7 @@ function bookingsByCustomerHandler(e) {
             <td> ${element.movie_time} </td>
             <td> ${element.booking_time} </td>
             <td> ${parseFloat(element.price).toFixed(3)} </td>
+            <td> <a href='/booking_details?id=${element.id}'> View Details </a> </td>
           </tr>`
       });
       content += '</tbody> </table>'
@@ -224,7 +225,7 @@ function bookingsByCustomerHandler(e) {
  * Assumes the existance of an empty container #ts-table for the output
  */
 function bookingsByTimeSlotHandler(e) {
-  header = ["ID", "Movie Title", "Movie Time", "Booking Time", "Price"];
+  header = ["ID", "Movie Title", "Movie Time", "Booking Time", "Price", ""];
   tsid = e.value
   $.getJSON(`/api/get_bookings?tsid=${tsid}`)
     .done((data) => {
@@ -250,6 +251,7 @@ function bookingsByTimeSlotHandler(e) {
             <td> ${element.movie_time} </td>
             <td> ${element.booking_time} </td>
             <td> ${parseFloat(element.price).toFixed(3)} </td>
+            <td> <a href='/booking_details?id=${element.id}'> View Details </a> </td>
           </tr>`
       });
       content += '</tbody> </table>'
