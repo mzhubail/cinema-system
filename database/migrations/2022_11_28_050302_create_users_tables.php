@@ -28,6 +28,16 @@ return new class extends Migration
 
       $table->unique("email");
     });
+
+    Schema::create('admins', function (Blueprint $table) {
+      $table->id();
+      $table->string("email", 31);
+      $table->string("hash", 255);
+
+      $table->timestamps();
+
+      $table->unique("email");
+    });
   }
 
   /**

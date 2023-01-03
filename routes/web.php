@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\HallController;
@@ -27,12 +26,12 @@ use App\Models\TimeSlot;
 */
 
 
-Route::get('/login', [LoginController::class, 'show'])
+Route::get('/login', [CustomerController::class, 'show_login'])
   ->name("login");
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [CustomerController::class, 'login']);
 
-Route::get('/register', [RegisterController::class, 'show']);
-Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/register', [CustomerController::class, 'show_register']);
+Route::post('/register', [CustomerController::class, 'register']);
 
 Route::get('/logout', function () {
   session()->flush();

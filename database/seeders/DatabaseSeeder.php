@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Http\Controllers\TimeSlotController;
+use App\Models\Admin;
 use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Customer;
@@ -41,6 +42,13 @@ class DatabaseSeeder extends Seeder
       Customer::factory(50)->create();
     $movies =
       Movie::factory(20)->create();
+
+    foreach (config('admin_credentials') as [$email, $hash])
+      Admin::create([
+        'email' => $email,
+        'hash' => $hash,
+      ]);
+
 
     // Branches
     foreach (range(1, $branch_count()) as $i) {
