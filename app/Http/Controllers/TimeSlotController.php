@@ -62,7 +62,7 @@ class TimeSlotController extends Controller
     $request->validate([
       'movie' => 'required|exists:movies,id',
       'hall' => 'required|exists:halls,id',
-      'date' => 'required|date_format:Y-m-d',
+      'date' => 'required|date_format:Y-m-d|after:now',
       'time' => 'required|date_format:H:i',
     ]);
 
@@ -205,7 +205,7 @@ class TimeSlotController extends Controller
   {
     $request->validate([
       'time_slot' => 'required|exists:time_slots,id',
-      'date' => 'required|date_format:Y-m-d',
+      'date' => 'required|date_format:Y-m-d|after:now',
       'time' => 'required|date_format:H:i',
     ]);
 
