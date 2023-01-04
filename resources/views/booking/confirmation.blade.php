@@ -3,7 +3,8 @@
 @section('title', 'Confirm Booking')
 
 @section('main')
-  <div class="card mx-auto" style="max-width: var(--breakpoint-sm);">
+  <form method="POST" class="card mx-auto" style="max-width: var(--breakpoint-sm);">
+    @csrf
     <h4 class="card-header">Booking Details</h4>
     <div class="card-body">
       <div class="row">

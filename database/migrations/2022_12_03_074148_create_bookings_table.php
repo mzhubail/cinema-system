@@ -19,20 +19,11 @@ return new class extends Migration
   {
     Schema::create('bookings', function (Blueprint $table) {
       $table->id();
-      $table->enum(
-        'payment_method',
-        ['paypal', 'apple-pay', 'benefit-pay']
-      );
 
       $table->foreignIdFor(TimeSlot::class)
         ->cascadeOnDelete();
       $table->foreignIdFor(Customer::class)
         ->cascadeOnDelete();
-
-      // $table->enum(
-      //   'status',
-      //   ['pending', 'complete', 'canceled', 'suspended']
-      // )->default('pending');
 
       $table->decimal(
         'price',

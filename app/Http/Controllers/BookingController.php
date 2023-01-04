@@ -110,7 +110,6 @@ class BookingController extends Controller
     $query = DB::table('bookings')
       ->join('time_slots', 'time_slots.id', '=', 'time_slot_id')
       ->join('movies', 'movies.id', '=', 'movie_id')
-      // ->select(['bookings.*', 'customer_id', 'time_slot_id']);
       ->select([
         'bookings.id',
         'bookings.price',
@@ -120,15 +119,17 @@ class BookingController extends Controller
       ]);
 
     if ($request->has('cid')) {
+      // Match on cutsomer_id
       $bookings = $query->where('customer_id', '=', $request->cid)
         ->get();
       return response()->json($bookings);
     } elseif ($request->has('tsid')) {
+      // Match on time_slot_id
       $bookings = $query->where('time_slot_id', '=', $request->tsid)
         ->get();
       return response()->json($bookings);
     } else
-      return response(status: 400);
+      return response(status: 400);   // Bad request
   }
 
 

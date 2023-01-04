@@ -21,8 +21,6 @@ return new class extends Migration
       $table->string("email", 31);
       $table->date("birthday");
       $table->string("hash", 255);
-      $table->integer("credit")
-        ->default(0);
 
       $table->timestamps();
 

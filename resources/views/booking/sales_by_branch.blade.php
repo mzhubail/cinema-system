@@ -23,10 +23,13 @@
       <h4 class="card-header"> Sales By Branch </h4>
       <div class="card-body">
         <div class="container">
-          <span class="mb-3 float-right">
-            Date: {{ now()->toDateString() }} <br>
-            Time: {{ now()->format('H:i') }}
-          </span>
+            <span>
+              Sales by branch in the last 30 days.
+            </span>
+            <span class="mb-3 float-right">
+              Date: {{ now()->toDateString() }} <br>
+              Time: {{ now()->format('H:i') }}
+            </span>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -56,7 +59,7 @@
                 @endforeach
                 <tr class="font-weight-bold">
                   <th> Total </th>
-                  <td>  </td>
+                  <td> </td>
                   <td> {{ $total_bookings }} </td>
                   <td> {{ sprintf('%.3f', $total_profit) }} </td>
                 </tr>

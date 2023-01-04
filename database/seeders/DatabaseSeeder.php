@@ -57,12 +57,15 @@ class DatabaseSeeder extends Seeder
 
       // Halls
       foreach (range(1, $hall_count()) as $j) {
+        // dump($branch->id, $letters);
         // Check for letter uniqueness
         do {
           $letter = Str::upper(
             fake()->randomLetter()
           );
         } while ($letters->contains($letter));
+        $letters->push($letter);
+        // echo "chosen letter, $letter\n";
 
         $hall = Hall::create([
           'letter' => $letter,
@@ -124,7 +127,6 @@ class DatabaseSeeder extends Seeder
             $price = Seat::total_price($current_seats);
 
             $booking = Booking::create([
-              'payment_method' => fake()->randomElement(config('constants.payment_methods')),
               'time_slot_id' => $time_slot->id,
               'customer_id' => $customer->id,
               'price' => $price,

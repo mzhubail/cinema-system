@@ -2,7 +2,18 @@
 
 @if ($bookings->isEmpty())
   <h4>No bookings to be shown</h4>
+
+  <span class="mb-3 float-right">
+    Date: {{ now()->toDateString() }} <br>
+    Time: {{ now()->format('H:i') }}
+  </span>
 @else
+  <div class="d-flex justify-content-end">
+    <span class="mb-3">
+      Date: {{ now()->toDateString() }} <br>
+      Time: {{ now()->format('H:i') }}
+    </span>
+  </div>
   <div class="d-flex justify-content-between px-3 rounded-lg my-3 font-weight-bold">
     <div class="mr-5">
       ID

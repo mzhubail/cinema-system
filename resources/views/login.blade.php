@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">Don't have an account yet? <a href="./register"> Register </a> </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary">Sign in</button>
+          <button type="submit" class="btn btn-primary"> Log in </button>
         </div>
       </div>
     </div>
