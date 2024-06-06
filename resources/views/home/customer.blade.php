@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('main')
-  <div class="jumbotron jumbotron-fluid shadow">
+  <div class="jumbotron jumbotron-fluid border-bottom">
     <div class="container">
       <x-glider>
         {{-- @foreach ($movies->shift(8) as $movie) --}}
