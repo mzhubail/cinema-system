@@ -1,5 +1,5 @@
 {{-- Recieves rating out of 10, and produces 5 star visualization --}}
-@props(['rating', 'color' => 'goldenrod'])
+@props(['rating', 'color' => 'goldenrod', 'show_number' => true])
 
 @php
   // To nearest integer
@@ -39,10 +39,12 @@
     </svg>
   @endfor
 
-  <span style="font-size: 2em; font-weight: 300;" class="pl-3">
-    {{ $rating }}
-  </span>
-  <span style="font-size: 0.9em; font-weight: bold; align-self: end;" class="pl-2 text-muted">
-    / 10
-  </span>
+  @if ($show_number)
+    <span style="font-size: 2em; font-weight: 300;" class="pl-3">
+      {{ $rating }}
+    </span>
+    <span style="font-size: 0.9em; font-weight: bold; align-self: end;" class="pl-2 text-muted">
+      / 10
+    </span>
+  @endif
 </div>

@@ -9,6 +9,8 @@
     </a>
     <div class="card-body">
       <h5 class="card-title"> {{ $movie->title }} </h5>
+      <div class="text-muted"> Rating </div>
+      <div class="my-1"> <x-rating :rating="$movie->rating" :show_number="false"/> </div>
       <div class="text-muted"> Language </div>
       <div class=""> {{ $movie->lang }}</div>
       <div class="text-muted"> Rating </div>
