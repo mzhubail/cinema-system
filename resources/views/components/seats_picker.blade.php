@@ -9,11 +9,12 @@
     }
 
     .seat {
-      background-color: grey;
-      border-radius: 20% 20% 0 0;
+      background-color: #f6f5fe;
+      border-radius: 25% 25% 0 0;
+      border: 1px solid var(--indigo);
 
       transition: background-color 200ms ease,
-        box-shadow 300ms ease;
+        box-shadow 200ms ease;
     }
 
     .seat-row {
@@ -43,16 +44,13 @@
     }
 
     .seat.occupied {
-      background-color: orangered;
+      background-color: var(--gray);
+      border: none;
     }
 
     .seat.selected {
-      background-color: greenyellow;
-      box-shadow: 0px 0px 15px greenyellow;
-    }
-
-    .seat:not(.selected):not(.occupied):hover {
-      box-shadow: 0px 0px 20px gray;
+      background-color: var(--indigo);
+      box-shadow: 0px 0px 5px var(--indigo);
     }
 
     .seat-row>div:nth-child(7),
@@ -176,7 +174,7 @@
               display: inline-block;
               width: var(--breakpoint-sm);
               height: 20px;
-              background-color: #a8c5d6;
+              background-color: #dae1f4;
               clip-path: polygon(100% 0, 96% 100%, 4% 100%, 0 0);
             ">
           </div>
